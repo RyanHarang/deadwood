@@ -7,7 +7,7 @@ public class Deadwood {
     }
 
     public int getDays() {
-        return 0;
+        return this.Days;
     }
 
     public int getNumDays() {

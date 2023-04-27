@@ -37,7 +37,11 @@ public class CurrencyManager {
     }
 
     public void wrapPay(Room room) {
-
+        //loop through all players in room
+        //for each player, check if main or extra
+        //call corresponding pay method for each player
+        //unless there are no mains in the entire room
+        //in which case nobody gets payed
     }
 
     private void mainPay(Player player) {
