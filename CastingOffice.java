@@ -1,6 +1,6 @@
-class CastingOffice {
+public class CastingOffice {
 
-    private info = int[5][3];
+    private int[][] info = int[5][3];
 
     public CastingOffice() {
         
@@ -8,6 +8,14 @@ class CastingOffice {
 
     public int[][] getInfo() {
         return this.info;
+    }
+    
+    public boolean validate(Player player) {
+        return false;
+    }
+
+    public void upgrade(Player player) {
+
     }
 
 }

@@ -1,5 +1,5 @@
-class Board {
-    private rooms = Room[];
+public class Board {
+    private Room[] room;
 
     public Board() {
         //set rooms
