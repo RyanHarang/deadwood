@@ -1,12 +1,12 @@
 public class Board {
-    private Room[] room;
+    private Room[] rooms;
 
     public Board() {
         //set rooms
         //set adjacencies?
     }
     
-    public void getRooms() {
+    public Room[] getRooms() {
         return this.rooms;
     }
 }

@@ -1,6 +1,6 @@
 public class CastingOffice {
 
-    private int[][] info = int[5][3];
+    private int[][] info;
 
     public CastingOffice() {
         
