@@ -11,7 +11,7 @@ public class Deadwood {
     }
 
     public int getNumDays() {
-        return this.players.length();
+        return this.players.length;
     }
 
     public Player[] getPlayers() {
