@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 public class Room{
-    private Role[] rooms;
+    private Role[] roles;
     private ArrayList<Player> actors;
     private Room[] adjacents;
     private String name;
@@ -13,27 +13,27 @@ public class Room{
     }
     //methods
     public Role[] getRoles(){
-
+        return roles;
     }
 
     public ArrayList<Player> getPlayers(){
-
+        return actors;
     }
 
     public Room[] getAdjacents(){
-
+        return adjacents;
     }
 
     public String getName(){
-
+        return name;
     }
 
     public int getShots(){
-
+        return shots;
     }
 
-    public Scene getScenes(){
-
+    public Scene getScene(){
+        return scene;
     }
 
     public void addPlayer(Player player){
@@ -53,13 +53,10 @@ public class Room{
     }
 
     public void setScene(Scene scene){
-        
+
     }
 
 
 
 
 }
-
-
-
