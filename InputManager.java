@@ -4,11 +4,11 @@ public class InputManager {
 
     }
 
-    public void newInput(string input) {
+    public void newInput(String input) {
 
     }
 
-    public void passInput(string input) {
+    public void passInput(String input) {
         
     }
 }
