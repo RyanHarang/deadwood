@@ -46,7 +46,7 @@ public class Player {
         this.name = name;
     }
 
-    public void setPracticeChips() {
+    public void addPracticeChip() {
         practiceChips++;
     }
 }
