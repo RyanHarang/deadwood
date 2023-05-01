@@ -3,13 +3,13 @@ public class Deadwood {
     private Player[] players;
 
     // constructor
-    public Deadwood(int numPlayers) {
+    public static void main(String[] args) {
         // set days
         // set players
     }
 
     // method to start a game
-    public void start() {
+    public void start(int numPlayers) {
 
     }
 

@@ -1,5 +1,5 @@
 public class Board {
-    private Room[] rooms;
+    private static Room[] rooms;
 
     public Board() {
         // set rooms

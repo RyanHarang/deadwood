@@ -1,8 +1,8 @@
 public class Role {
-    private static boolean isMain;
-    private static String name;
-    private static String line;
-    private static int rank;
+    private boolean isMain;
+    private String name;
+    private String line;
+    private int rank;
     private boolean occupied;
     private Player occupant;
 

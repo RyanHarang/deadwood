@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 public class Room {
-    private static Room[] adjacents;
-    private static String name;
-    private static int shots;
+    private Room[] adjacents;
+    private String name;
+    private int shots;
     private Role[] roles;
     private ArrayList<Player> actors;
     private Scene scene;
