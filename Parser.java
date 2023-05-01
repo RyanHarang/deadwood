@@ -21,7 +21,7 @@ public class Parser {
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = null;
             try {
-                doc = db.parse(filename);
+                doc = db.parse("xml/" + filename);
             } catch (Exception ex) {
                 System.out.println("XML parse failure");
                 ex.printStackTrace();
