@@ -22,7 +22,7 @@ public class CastingOffice {
     }
 
     // method that will check the validity of upgrade choices
-    public boolean validate(Player player) {
+    public boolean validate(Player player, int rank) {
         // asks location manager to ensure player is in Casting Office
         // ensures player has valid credit or money amounts to declare
         // the upgrade option they choose
@@ -31,7 +31,7 @@ public class CastingOffice {
 
     // method that will be called by validate for
     // legal upgrades to perform the upgrade
-    private void upgrade(Player player) {
+    private void upgrade(Player player, int rank) {
 
     }
 
