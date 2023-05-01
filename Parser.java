@@ -9,6 +9,7 @@ import java.io.File;
 
 public class Parser {
 
+    // constructor
     public Parser() {
 
     }
@@ -67,10 +68,13 @@ public class Parser {
      * }// method
      */
 
+    // method to take chunks of code representing objects
+    // and determine how to create objects
     public void parse(String input) {
 
     }
 
+    // method that will create objects of other classes
     private void apply(String input) {
 
     }

@@ -1,62 +1,65 @@
 import java.util.ArrayList;
-public class Room{
+
+public class Room {
+    private static Room[] adjacents;
+    private static String name;
+    private static int shots;
     private Role[] roles;
     private ArrayList<Player> actors;
-    private Room[] adjacents;
-    private String name;
-    private int shots;
     private Scene scene;
 
-    //constructor
-    public Room(Role[] roles, Room[] adj, String name, int shots){
+    // constructor
+    public Room(int shots, String name, Role[] roles, Room[] adj) {
 
     }
-    //methods
-    public Role[] getRoles(){
+
+    // getters
+    public Role[] getRoles() {
         return roles;
     }
 
-    public ArrayList<Player> getPlayers(){
+    public ArrayList<Player> getPlayers() {
         return actors;
     }
 
-    public Room[] getAdjacents(){
+    public Room[] getAdjacents() {
         return adjacents;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public int getShots(){
+    public int getShots() {
         return shots;
     }
 
-    public Scene getScene(){
+    public Scene getScene() {
         return scene;
     }
 
-    public void addPlayer(Player player){
-
+    // setters
+    public void setAdjacents(Room[] rooms) {
+        adjacents = rooms;
     }
 
-    public void removePlayer(Player player){
+    // might not be needed
+    /*
+     * public void setShots(int shots) {
+     * this.shots = shots;
+     * }
+     */
 
+    public void setScene(Scene scene) {
+        this.scene = scene;
     }
 
-    public void setAdjacents(Room[] rooms){
-
+    public void addPlayer(Player player) {
+        actors.add(player);
     }
 
-    public void setShots(int shots){
-
+    public void removePlayer(Player player) {
+        actors.remove(player);
     }
-
-    public void setScene(Scene scene){
-
-    }
-
-
-
 
 }

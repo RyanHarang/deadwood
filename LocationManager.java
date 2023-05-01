@@ -1,27 +1,36 @@
 import java.util.Map;
+
 public class LocationManager {
     private Map<Player, Room> locations;
 
-    //constructer
-    public LocationManager(){
-
+    // constructor
+    public LocationManager() {
+        // intialize locations
+        // all players in the trailers
     }
 
-    //methods
-    public Room getPlayerLocation(Player player){
-        return null;
-    }
-
-    public Player[] getOccupants(Room room){
-        return null;
-    }
-    private boolean validateMove(Player player, Room location){
+    // method to check if moves are legal, called by move
+    private boolean validateMove(Player player, Room location) {
+        // updates locations, or will move update locations?
         return false;
     }
-    public boolean move(Player player, Room location){
+
+    // method to attempt to move players
+    public boolean move(Player player, Room location) {
         return validateMove(player, location);
     }
-    public void returnTrailers(){
-        
+
+    // method to send all players to the trailers
+    public void returnTrailers() {
+
+    }
+
+    // getters
+    public Room getPlayerLocation(Player player) {
+        return null;
+    }
+
+    public Player[] getOccupants(Room room) {
+        return null;
     }
 }

@@ -1,40 +1,49 @@
-public class Role{
-    private boolean isMain;
-    private int rank;
-    private String name;
+public class Role {
+    private static boolean isMain;
+    private static String name;
+    private static String line;
+    private static int rank;
     private boolean occupied;
     private Player occupant;
-    private String line;
 
-    //constructor
-    public Role(int rank, String name, boolean isMain){
+    // constructor
+    public Role(int rank, boolean isMain, String name, String line) {
 
     }
 
-    //methods
-    public String getName(){
+    // getters
+    public String getName() {
         return name;
     }
-    public int getRank(){
+
+    public int getRank() {
         return rank;
     }
-    public Player getOccupant(){
+
+    public Player getOccupant() {
         return occupant;
     }
-    public boolean isOccupied(){
-        return occupied;
-    }
-    public String getLine(){
+
+    public String getLine() {
         return line;
     }
 
-    public void setOccupant(Player player){
-        occupant = player;
+    public boolean isOccupied() {
+        return occupied;
     }
-    public boolean isMain(){
+
+    public boolean isMain() {
         return isMain;
     }
-    public void removePlayer(){
+
+    // setters
+    public void setOccupant(Player player) {
+        occupant = player;
+        occupied = true;
+    }
+
+    public void removePlayer() {
         occupant = null;
+        occupied = false;
     }
 }
