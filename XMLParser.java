@@ -8,6 +8,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class XMLParser {
 
@@ -55,7 +56,6 @@ public class XMLParser {
         NodeList cards = root.getElementsByTagName("card");
 
         for (int i = 0; i < cards.getLength(); i++) {
-            // System.out.println("Info for card " + (i + 1));
             Node card = cards.item(i);
             NodeList children = card.getChildNodes();
             String cardName = "", img = "", sceneText = "", partName = "", partLine = "";
@@ -72,7 +72,6 @@ public class XMLParser {
 
                 } else if ("part".equals(sub.getNodeName())) {
                     partName = sub.getAttributes().getNamedItem("name").getNodeValue();
-                    // System.out.println("partName = " + partName);
                     partLvl = Integer.parseInt(sub.getAttributes().getNamedItem("level").getNodeValue());
 
                     NodeList partChildren = sub.getChildNodes();
@@ -93,30 +92,25 @@ public class XMLParser {
                         }
 
                     }
-                    roleHolder = new Role(partName, partLine, partLvl, areas, true);
-                    // System.out.println(roleHolder.toString());
+                    int[] aCopy = new int[4];
+                    System.arraycopy(areas, 0, aCopy, 0, 4);
+                    roleHolder = new Role(partName, partLine, partLvl, aCopy, true);
                     roles.add(roleHolder);
-                    // System.out.println("roleHolder added to roles.");
-
                 }
 
             }
 
-            ArrayList<Role> copy = new ArrayList<Role>(roles);
-            rolesLists.add(i, copy);
-            // System.out.println("roles added to rolesLists.");
-            // System.out.println(rolesLists.get(i).toString());
-
+            ArrayList<Role> alCopy = new ArrayList<Role>(roles);
+            rolesLists.add(i, alCopy);
             Scene sceneHolder = new Scene(cardName, sceneText, budget, sceneNum, rolesLists.get(i));
             scenes.add(sceneHolder);
             roles.clear();
-            // System.out.println("rolesLists at index " + i + " is: " +
-            // rolesLists.get(i).toString());
         }
         // To witness content in String form
         System.out.println("Scenes.size() = " + scenes.size());
         for (int a = 0; a < scenes.size(); a++) {
-            System.out.println("Scene at index " + a + " is: " + scenes.get(a).toString());
+            System.out.println("Scene at index " + a + " is: " +
+                    scenes.get(a).toString());
         }
 
         return scenes;
