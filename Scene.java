@@ -1,12 +1,14 @@
+import java.util.ArrayList;
+
 public class Scene {
     private int budget;
     private int num;
-    private Role[] roles;
+    private ArrayList<Role> roles;
     private String name;
     private String description;
 
     // constructor
-    public Scene(String name, String description, int budget, int num, Role[] roles) {
+    public Scene(String name, String description, int budget, int num, ArrayList<Role> roles) {
         this.name = name;
         this.description = description;
         this.budget = budget;
@@ -28,7 +30,7 @@ public class Scene {
         return num;
     }
 
-    public Role[] getRoles() {
+    public ArrayList<Role> getRoles() {
         return roles;
     }
 
