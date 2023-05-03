@@ -7,10 +7,16 @@ public class Room {
     private Role[] roles;
     private ArrayList<Player> actors;
     private Scene scene;
+    private int[] area;
+    // area formatted as x, y, h, w
 
     // constructor
-    public Room(int shots, String name, Role[] roles, Room[] adj) {
-
+    public Room(int shots, int[] area, String name, Role[] roles, Room[] adjacents) {
+        this.shots = shots;
+        this.area = area;
+        this.name = name;
+        this.roles = roles;
+        this.adjacents = adjacents;
     }
 
     // getters
@@ -32,6 +38,10 @@ public class Room {
 
     public int getShots() {
         return shots;
+    }
+
+    public int[] getArea() {
+        return area;
     }
 
     public Scene getScene() {

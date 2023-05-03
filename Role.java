@@ -3,12 +3,18 @@ public class Role {
     private String name;
     private String line;
     private int rank;
-    private boolean occupied;
-    private Player occupant;
+    private boolean occupied = false;
+    private Player occupant = null;
+    private int[] area;
+    // area formatted as x, y, h, w
 
     // constructor
-    public Role(int rank, boolean isMain, String name, String line) {
-
+    public Role(String name, String line, int rank, int[] area, boolean isMain) {
+        this.name = name;
+        this.line = line;
+        this.rank = rank;
+        this.area = area;
+        this.isMain = isMain;
     }
 
     // getters
@@ -18,6 +24,10 @@ public class Role {
 
     public int getRank() {
         return rank;
+    }
+
+    public int[] getArea() {
+        return area;
     }
 
     public Player getOccupant() {
