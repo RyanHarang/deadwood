@@ -1,12 +1,17 @@
-public class SceneDeck {
-    private Scene[] scenes;
+import java.util.ArrayList;
 
-    public SceneDeck() {
-        // initialize scenes
+public class SceneDeck {
+    private ArrayList<Scene> scenes;
+
+    public SceneDeck(ArrayList<Scene> scenes) {
+        this.scenes = scenes;
     }
 
+    // return random scene, remove scene from deck
     public Scene getScene() {
-        // return random scene, remove scene from deck
-        return null;
+        int rand = (int) (Math.random() * scenes.size()) + 1;
+        Scene sc = scenes.get(rand);
+        scenes.remove(rand);
+        return sc;
     }
 }
