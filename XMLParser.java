@@ -71,7 +71,7 @@ public class XMLParser {
 
                 } else if ("part".equals(sub.getNodeName())) {
                     partName = sub.getAttributes().getNamedItem("name").getNodeValue();
-                    // System.out.println("partName = " + partName);
+                    System.out.println("partName = " + partName);
                     partLvl = Integer.parseInt(sub.getAttributes().getNamedItem("level").getNodeValue());
 
                     NodeList partChildren = sub.getChildNodes();
@@ -97,11 +97,15 @@ public class XMLParser {
                     // the right ways and the right times
                     // System.out.println(roleHolder.toString());
                     roles.add(roleHolder);
-                    rolesLists.add(roles);
+                    System.out.println("roleHolder added to roles.");
+
                 }
+
             }
             // rolesLists seems to be working as well, holding the correct ArrayLists of
             // Roles at the correct index
+            rolesLists.add(roles);
+            System.out.println("roles added to rolesLists.");
             System.out.println(rolesLists.get(i).toString());
             // String name, String description, int budget, int num, ArrayList<Role> roles
             Scene sceneHolder = new Scene(cardName, sceneText, budget, sceneNum, rolesLists.get(i));
@@ -110,7 +114,7 @@ public class XMLParser {
 
             // so this line shows that the issue is with roles.clear also clearing the item
             // inside of the arraylist
-            System.out.println(rolesLists.get(i).toString());
+            // System.out.println(rolesLists.get(i).toString());
         }
         // To witness content in String form
         // for (int a = 0; a < scenes.size(); a++) {
