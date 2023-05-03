@@ -46,6 +46,7 @@ public class XMLParser {
 
     public static ArrayList<Scene> readCardData(Document d) {
         ArrayList<Scene> scenes = new ArrayList<Scene>();
+        Role roleHolder = null;
         ArrayList<Role> roles = new ArrayList<Role>();
         ArrayList<ArrayList<Role>> rolesLists = new ArrayList<ArrayList<Role>>(40);
 
@@ -54,7 +55,7 @@ public class XMLParser {
         NodeList cards = root.getElementsByTagName("card");
 
         for (int i = 0; i < cards.getLength(); i++) {
-            System.out.println("Info for card " + (i + 1));
+            // System.out.println("Info for card " + (i + 1));
             Node card = cards.item(i);
             NodeList children = card.getChildNodes();
             String cardName = "", img = "", sceneText = "", partName = "", partLine = "";
@@ -71,7 +72,7 @@ public class XMLParser {
 
                 } else if ("part".equals(sub.getNodeName())) {
                     partName = sub.getAttributes().getNamedItem("name").getNodeValue();
-                    System.out.println("partName = " + partName);
+                    // System.out.println("partName = " + partName);
                     partLvl = Integer.parseInt(sub.getAttributes().getNamedItem("level").getNodeValue());
 
                     NodeList partChildren = sub.getChildNodes();
@@ -92,34 +93,32 @@ public class XMLParser {
                         }
 
                     }
-                    Role roleHolder = new Role(partName, partLine, partLvl, areas, true);
-                    // roleHolder seems to be functioning as intended, the right roles are stored in
-                    // the right ways and the right times
+                    roleHolder = new Role(partName, partLine, partLvl, areas, true);
                     // System.out.println(roleHolder.toString());
                     roles.add(roleHolder);
-                    System.out.println("roleHolder added to roles.");
+                    // System.out.println("roleHolder added to roles.");
 
                 }
 
             }
-            // rolesLists seems to be working as well, holding the correct ArrayLists of
-            // Roles at the correct index
-            rolesLists.add(roles);
-            System.out.println("roles added to rolesLists.");
-            System.out.println(rolesLists.get(i).toString());
-            // String name, String description, int budget, int num, ArrayList<Role> roles
+
+            ArrayList<Role> copy = new ArrayList<Role>(roles);
+            rolesLists.add(i, copy);
+            // System.out.println("roles added to rolesLists.");
+            // System.out.println(rolesLists.get(i).toString());
+
             Scene sceneHolder = new Scene(cardName, sceneText, budget, sceneNum, rolesLists.get(i));
             scenes.add(sceneHolder);
             roles.clear();
-
-            // so this line shows that the issue is with roles.clear also clearing the item
-            // inside of the arraylist
-            // System.out.println(rolesLists.get(i).toString());
+            // System.out.println("rolesLists at index " + i + " is: " +
+            // rolesLists.get(i).toString());
         }
         // To witness content in String form
-        // for (int a = 0; a < scenes.size(); a++) {
-        // System.out.println(scenes.get(a).toString());
-        // }
+        System.out.println("Scenes.size() = " + scenes.size());
+        for (int a = 0; a < scenes.size(); a++) {
+            System.out.println("Scene at index " + a + " is: " + scenes.get(a).toString());
+        }
+
         return scenes;
     }
     /*

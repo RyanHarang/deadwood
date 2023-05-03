@@ -23,7 +23,7 @@ public class Role {
             areas += " " + area[i];
         }
         return "RoleName: " + name + " | RoleLine: " + line + " | RoleRank: " + rank + " | isMain: " + isMain
-                + " | Areas: " + areas;
+                + " | RoleAreas: " + areas;
     }
 
     // getters

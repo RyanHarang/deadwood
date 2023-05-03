@@ -3,12 +3,12 @@ import java.util.ArrayList;
 
 public class LocationManager {
     private Map<Player, Room> locations;
-    private Room trailers; 
+    private Room trailers;
 
     // constructor
     public LocationManager(ArrayList<Player> playerList, Room trailers) {
         this.trailers = trailers;
-        for(Player p: playerList){
+        for (Player p : playerList) {
             locations.put(p, this.trailers);
         }
         // all players in the trailers
@@ -16,10 +16,10 @@ public class LocationManager {
 
     // method to check if moves are legal, called by move
     private boolean validateMove(Player player, Room new_location) {
-        //array of rooms adjacent to the player
+        // array of rooms adjacent to the player
         Room[] adjRooms = locations.get(player).getAdjacents();
-        for(Room r : adjRooms){
-            if(r.equals(new_location)){
+        for (Room r : adjRooms) {
+            if (r.equals(new_location)) {
                 return true;
             }
         }
@@ -29,7 +29,7 @@ public class LocationManager {
     // method to attempt to move players
     public boolean move(Player player, Room new_location) {
         boolean isValidMove = validateMove(player, new_location);
-        if(isValidMove){
+        if (isValidMove) {
             locations.put(player, new_location);
         }
         return isValidMove;
