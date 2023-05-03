@@ -17,8 +17,13 @@ public class Scene {
     }
 
     public String toString() {
+        String rolesString = "";
+        for (int a = 0; a < roles.size(); a++) {
+            rolesString += " " + roles.get(a).toString();
+        }
+
         return "Name: " + name + " | Description: " + description + " | Number: " + num + " | Budget: " + budget
-                + " | Roles: " + roles.toString();
+                + " | Roles: " + rolesString;
     }
 
     // method for when a scene is finished, might not belong in scene class
