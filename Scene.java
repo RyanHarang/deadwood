@@ -16,6 +16,11 @@ public class Scene {
         this.roles = roles;
     }
 
+    public String toString() {
+        return "Name: " + name + " | Description: " + description + " | Number: " + num + " | Budget: " + budget
+                + " | Roles: " + roles.toString();
+    }
+
     // method for when a scene is finished, might not belong in scene class
     public void discard() {
 

@@ -17,6 +17,15 @@ public class Role {
         this.isMain = isMain;
     }
 
+    public String toString() {
+        String areas = "";
+        for (int i = 0; i < 4; i++) {
+            areas += " " + area[i];
+        }
+        return "RoleName: " + name + " | RoleLine: " + line + " | RoleRank: " + rank + " | isMain: " + isMain
+                + " | Areas: " + areas;
+    }
+
     // getters
     public String getName() {
         return name;
