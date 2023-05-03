@@ -44,7 +44,8 @@ public class XMLParser {
         } // exception handling
     }
 
-    public static void readCardData(Document d) {
+    public static ArrayList<Scene> readCardData(Document d) {
+        ArrayList<Scene> scenes = new ArrayList<Scene>();
         Element root = d.getDocumentElement();
         NodeList cards = root.getElementsByTagName("card");
 
@@ -97,6 +98,7 @@ public class XMLParser {
             }
             System.out.println();
         }
+        return scenes;
     }
 
     public static void readBoardData(Document d) {
