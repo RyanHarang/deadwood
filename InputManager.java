@@ -9,10 +9,4 @@ public class InputManager {
     public void newInput(String input) {
 
     }
-
-    // method for passing input in a useable form
-    // to the correct class
-    public void passInput(String input) {
-
-    }
 }
