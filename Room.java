@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Room {
-    private Room[] adjacents;
+    private ArrayList<Room> adjacents;
     private String name;
     private int shots;
     private Role[] roles;
@@ -27,7 +27,7 @@ public class Room {
         return actors;
     }
 
-    public Room[] getAdjacents() {
+    public ArrayList<Room> getAdjacents() {
         return adjacents;
     }
 
@@ -48,7 +48,7 @@ public class Room {
     }
 
     // setters
-    public void setAdjacents(Room[] rooms) {
+    public void setAdjacents(ArrayList<Room> rooms) {
         adjacents = rooms;
     }
 

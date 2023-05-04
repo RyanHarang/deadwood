@@ -120,7 +120,9 @@ public class XMLParser {
         NodeList sets = root.getElementsByTagName("set");
         NodeList trailer = root.getElementsByTagName("trailer");
         NodeList office = root.getElementsByTagName("office");
-        ArrayList<Room> adj = new ArrayList<Room>(12);
+        ArrayList<ArrayList<String>> allAdjs = new ArrayList<ArrayList<String>>(12);
+        ArrayList<String> adjs = new ArrayList<String>();
+        int[] areas = new int[4];
 
         Room[] rooms = new Room[12];
         String setName = "", line = "";
@@ -130,7 +132,7 @@ public class XMLParser {
         System.out.println("Printing information for trailer.");
         Node tr = trailer.item(0);
         NodeList trChildren = tr.getChildNodes();
-        
+
         for (int t = 0; t < trChildren.getLength(); t++) {
             Node sub = trChildren.item(t);
 
@@ -150,20 +152,27 @@ public class XMLParser {
                 }
             } else if ("area".equals(sub.getNodeName())) {
                 sceneX = Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue());
+                areas[0] = sceneX;
                 System.out.print("Scene Dimensions: x=" + sceneX);
                 sceneY = Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue());
+                areas[1] = sceneY;
                 System.out.print(" | y=" + sceneY);
                 sceneH = Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue());
+                areas[2] = sceneH;
                 System.out.print(" | h=" + sceneH);
                 sceneW = Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue());
+                areas[3] = sceneW;
                 System.out.println(" | w=" + sceneW);
+                int[] aCopy = new int[4];
+                System.arraycopy(areas, 0, aCopy, 0, 4);
+                rooms[10] = new Room(0, aCopy, "Trailers", null);
             }
         }
 
         Node of = office.item(0);
         NodeList ofChildren = of.getChildNodes();
-        
-        for (int o = 0; o <ofChildren.getLength(); o++) {
+
+        for (int o = 0; o < ofChildren.getLength(); o++) {
             Node sub = ofChildren.item(o);
 
             if ("neighbors".equals(sub.getNodeName())) {
@@ -181,13 +190,20 @@ public class XMLParser {
                 }
             } else if ("area".equals(sub.getNodeName())) {
                 sceneX = Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue());
+                areas[0] = sceneX;
                 System.out.print("Scene Dimensions: x=" + sceneX);
                 sceneY = Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue());
                 System.out.print(" | y=" + sceneY);
+                areas[1] = sceneY;
                 sceneH = Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue());
                 System.out.print(" | h=" + sceneH);
+                areas[2] = sceneH;
                 sceneW = Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue());
                 System.out.println(" | w=" + sceneW);
+                areas[3] = sceneW;
+                int[] aCopy = new int[4];
+                System.arraycopy(areas, 0, aCopy, 0, 4);
+                rooms[11] = new Room(0, aCopy, "Casting Office", null);
             }
         }
 
