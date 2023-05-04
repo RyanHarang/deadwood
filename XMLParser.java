@@ -120,6 +120,7 @@ public class XMLParser {
         NodeList sets = root.getElementsByTagName("set");
         NodeList trailer = root.getElementsByTagName("trailer");
         NodeList office = root.getElementsByTagName("office");
+        ArrayList<Room> adj = new ArrayList<Room>(12);
 
         Room[] rooms = new Room[12];
         String setName = "", line = "";
@@ -144,6 +145,7 @@ public class XMLParser {
                         // need to find out why I need to divide by two here, I have no idea why k
                         // 'misses' on values 0, 2, 4, 6... (even values)
                         System.out.println("Trailer neighbor " + ((k + 1) / 2) + " = " + neighbor);
+
                     }
                 }
             } else if ("area".equals(sub.getNodeName())) {

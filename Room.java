@@ -11,12 +11,11 @@ public class Room {
     // area formatted as x, y, h, w
 
     // constructor
-    public Room(int shots, int[] area, String name, Role[] roles, Room[] adjacents) {
+    public Room(int shots, int[] area, String name, Role[] roles) {
         this.shots = shots;
         this.area = area;
         this.name = name;
         this.roles = roles;
-        this.adjacents = adjacents;
     }
 
     // getters
