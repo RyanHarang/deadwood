@@ -20,17 +20,18 @@ public class CastingOffice {
     public static int[][] getInfo() {
         return info;
     }
-
+    /* 
     // method that will check the validity of upgrade choices
-    public boolean validate(Player player, int rank) {
+    public boolean upgrade(Player player, int rank, LocationManager locationManager, CurrencyManager currencyManager) {
         if(player.getRank() >= rank){
             return false;
         }
         // asks location manager to ensure player is in Casting Office
-        if(player.getRoom().getName() == "Casting Office"){
+        if(locationManager.getPlayerLocation(player).getName() == "Casting Office"){
             // ensures player has valid credit or money amounts to declare
         // the upgrade option they choose
             if(player.getMoney() >= info[rank-2][1] || player.getCredits() >= info[rank-2][2]){
+                upgradePlayer(player, rank, currencyManager);
                 return true;
             }
         }
@@ -40,11 +41,57 @@ public class CastingOffice {
 
     // method that will be called by validate for
     // legal upgrades to perform the upgrade
-    private void upgrade(Player player, int rank) {
-        if(validate(player, rank)){
-            player.setRank(rank);
-            //how will player change money, will we call deadwoods currencyManager? 
+    private void upgradePlayer(Player player, int rank, CurrencyManager currencyManager) {
+        
+    }*/
+
+    public boolean upgrade(Player player, int rank, boolean upgradingWithMoney, LocationManager locationManager, CurrencyManager currencyManager){
+        //cant upgrade to a lower or equal rank
+        if(player.getRank() >= rank){
+            return false;
         }
+        //verify player is in casting office, might be unnecesary. if it is, we dont need location manager
+        if(locationManager.getPlayerLocation(player).getName() != "Casting Office"){
+            return false;
+        }
+
+        //verify has enough money or credits
+        if(upgradingWithMoney){
+            // if enough money
+            if(player.getMoney() >= info[rank-2][1]){
+                upgradeMoney(player, rank, currencyManager);
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            //if enough credits
+            if(player.getCredits() >= info[rank-2][2]){
+                upgradeCredits(player, rank, currencyManager);
+            }
+            else{
+                return false;
+            }
+        }
+        return true;
+        
     }
+    public void upgradeMoney(Player player, int rank, CurrencyManager currencyManager){
+        player.setRank(rank);
+        // remove money from info
+        currencyManager.adjustMoney(-(info[rank-2][1]), player);
+    }
+    public void upgradeCredits(Player player, int rank, CurrencyManager currencyManager){
+        player.setRank(rank);
+        // remove credits from info
+        currencyManager.adjustCredits(-(info[rank-2][2]), player);
+    }
+
+
+
+
+
+
 
 }

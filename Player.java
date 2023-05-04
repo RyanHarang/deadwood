@@ -1,4 +1,4 @@
-public class Player {
+public class Player implements Comparable<Player>{
     private Role role;
     private Room room;
     private String name;
@@ -36,6 +36,10 @@ public class Player {
     public int getRank() {
         return rank;
     }
+    
+    public int getPracticeChips(){
+        return practiceChips;
+    }
 
     // setters
     public void setRole(Role role) {
@@ -57,5 +61,17 @@ public class Player {
     }
     public void setCredits(int credits){
         this.credits = credits;
+    }
+
+    public int compareTo(Player p){
+        if(role.getRank() == p.role.getRank()){
+            return 0;
+        }
+        else if (role.getRank() > p.role.getRank()){
+            return 1;
+        }
+        else{
+            return -1;
+        }
     }
 }
