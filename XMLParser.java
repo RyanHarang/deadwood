@@ -233,12 +233,16 @@ public class XMLParser {
                     }
                 } else if ("area".equals(sub.getNodeName())) {
                     sceneX = Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue());
+                    areas[0] = sceneX;
                     System.out.print("Scene Dimensions: x=" + sceneX);
                     sceneY = Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue());
+                    areas[1] = sceneY;
                     System.out.print(" | y=" + sceneY);
                     sceneH = Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue());
+                    areas[2] = sceneH;
                     System.out.print(" | h=" + sceneH);
                     sceneW = Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue());
+                    areas[3] = sceneW;
                     System.out.println(" | w=" + sceneW);
                 } else if ("takes".equals(sub.getNodeName())) {
                     NodeList takeChildren = sub.getChildNodes();
@@ -255,18 +259,22 @@ public class XMLParser {
                             for (int h = 0; h < takeGrandchildren.getLength(); h++) {
                                 Node takeSubSub = takeGrandchildren.item(h);
                                 if ("area".equals(takeSubSub.getNodeName())) {
-                                    takeX = Integer
-                                            .parseInt(takeSubSub.getAttributes().getNamedItem("x").getNodeValue());
-                                    System.out.print("Take Dimensions: x=" + takeX);
-                                    takeY = Integer
-                                            .parseInt(takeSubSub.getAttributes().getNamedItem("y").getNodeValue());
-                                    System.out.print(" | y=" + takeY);
-                                    takeH = Integer
-                                            .parseInt(takeSubSub.getAttributes().getNamedItem("h").getNodeValue());
-                                    System.out.print(" | h=" + takeH);
-                                    takeW = Integer
-                                            .parseInt(takeSubSub.getAttributes().getNamedItem("w").getNodeValue());
-                                    System.out.println(" | w=" + takeW);
+                                    // takeX = Integer
+                                    // .parseInt(takeSubSub.getAttributes().getNamedItem("x").getNodeValue());
+                                    // areas[0] = takeX;
+                                    // System.out.print("Take Dimensions: x=" + takeX);
+                                    // takeY = Integer
+                                    // .parseInt(takeSubSub.getAttributes().getNamedItem("y").getNodeValue());
+                                    // areas[1] = takeY;
+                                    // System.out.print(" | y=" + takeY);
+                                    // takeH = Integer
+                                    // .parseInt(takeSubSub.getAttributes().getNamedItem("h").getNodeValue());
+                                    // areas[2] = takeH;
+                                    // System.out.print(" | h=" + takeH);
+                                    // takeW = Integer
+                                    // .parseInt(takeSubSub.getAttributes().getNamedItem("w").getNodeValue());
+                                    // areas[3] = takeW;
+                                    // System.out.println(" | w=" + takeW);
                                 }
                             }
                         }
