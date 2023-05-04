@@ -17,7 +17,7 @@ public class LocationManager {
     // method to check if moves are legal, called by move
     private boolean validateMove(Player player, Room new_location) {
         // array of rooms adjacent to the player
-        Room[] adjRooms = locations.get(player).getAdjacents();
+        ArrayList<Room> adjRooms = locations.get(player).getAdjacents();
         for (Room r : adjRooms) {
             if (r.equals(new_location)) {
                 return true;

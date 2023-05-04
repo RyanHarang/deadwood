@@ -115,13 +115,97 @@ public class XMLParser {
         return scenes;
     }
 
-    public static void readBoardData(Document d) {
+    public static Room[] readBoardData(Document d) {
         Element root = d.getDocumentElement();
         NodeList sets = root.getElementsByTagName("set");
+        NodeList trailer = root.getElementsByTagName("trailer");
+        NodeList office = root.getElementsByTagName("office");
+        ArrayList<ArrayList<String>> allAdjs = new ArrayList<ArrayList<String>>(12);
+        ArrayList<String> adjs = new ArrayList<String>();
+        int[] areas = new int[4];
 
+        Room[] rooms = new Room[12];
         String setName = "", line = "";
         int partLvl = 0, partX = 0, partY = 0, partW = 0, partH = 0, sceneX = 0, sceneY = 0, sceneH = 0, sceneW = 0,
                 takeX = 0, takeY = 0, takeH = 0, takeW = 0;
+
+        System.out.println("Printing information for trailer.");
+        Node tr = trailer.item(0);
+        NodeList trChildren = tr.getChildNodes();
+
+        for (int t = 0; t < trChildren.getLength(); t++) {
+            Node sub = trChildren.item(t);
+
+            if ("neighbors".equals(sub.getNodeName())) {
+
+                NodeList neighborChildren = sub.getChildNodes();
+                for (int k = 0; k < neighborChildren.getLength(); k++) {
+                    Node neighborSub = neighborChildren.item(k);
+
+                    if ("neighbor".equals(neighborSub.getNodeName())) {
+                        String neighbor = neighborSub.getAttributes().getNamedItem("name").getNodeValue();
+                        // need to find out why I need to divide by two here, I have no idea why k
+                        // 'misses' on values 0, 2, 4, 6... (even values)
+                        System.out.println("Trailer neighbor " + ((k + 1) / 2) + " = " + neighbor);
+
+                    }
+                }
+            } else if ("area".equals(sub.getNodeName())) {
+                sceneX = Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue());
+                areas[0] = sceneX;
+                System.out.print("Scene Dimensions: x=" + sceneX);
+                sceneY = Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue());
+                areas[1] = sceneY;
+                System.out.print(" | y=" + sceneY);
+                sceneH = Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue());
+                areas[2] = sceneH;
+                System.out.print(" | h=" + sceneH);
+                sceneW = Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue());
+                areas[3] = sceneW;
+                System.out.println(" | w=" + sceneW);
+                int[] aCopy = new int[4];
+                System.arraycopy(areas, 0, aCopy, 0, 4);
+                rooms[10] = new Room(0, aCopy, "Trailers", null);
+            }
+        }
+
+        Node of = office.item(0);
+        NodeList ofChildren = of.getChildNodes();
+
+        for (int o = 0; o < ofChildren.getLength(); o++) {
+            Node sub = ofChildren.item(o);
+
+            if ("neighbors".equals(sub.getNodeName())) {
+
+                NodeList neighborChildren = sub.getChildNodes();
+                for (int k = 0; k < neighborChildren.getLength(); k++) {
+                    Node neighborSub = neighborChildren.item(k);
+
+                    if ("neighbor".equals(neighborSub.getNodeName())) {
+                        String neighbor = neighborSub.getAttributes().getNamedItem("name").getNodeValue();
+                        // need to find out why I need to divide by two here, I have no idea why k
+                        // 'misses' on values 0, 2, 4, 6... (even values)
+                        System.out.println("Office neighbor " + ((k + 1) / 2) + " = " + neighbor);
+                    }
+                }
+            } else if ("area".equals(sub.getNodeName())) {
+                sceneX = Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue());
+                areas[0] = sceneX;
+                System.out.print("Scene Dimensions: x=" + sceneX);
+                sceneY = Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue());
+                System.out.print(" | y=" + sceneY);
+                areas[1] = sceneY;
+                sceneH = Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue());
+                System.out.print(" | h=" + sceneH);
+                areas[2] = sceneH;
+                sceneW = Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue());
+                System.out.println(" | w=" + sceneW);
+                areas[3] = sceneW;
+                int[] aCopy = new int[4];
+                System.arraycopy(areas, 0, aCopy, 0, 4);
+                rooms[11] = new Room(0, aCopy, "Casting Office", null);
+            }
+        }
 
         for (int i = 0; i < sets.getLength(); i++) {
             System.out.println("Printing information for set " + (i + 1));
@@ -149,12 +233,16 @@ public class XMLParser {
                     }
                 } else if ("area".equals(sub.getNodeName())) {
                     sceneX = Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue());
+                    areas[0] = sceneX;
                     System.out.print("Scene Dimensions: x=" + sceneX);
                     sceneY = Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue());
+                    areas[1] = sceneY;
                     System.out.print(" | y=" + sceneY);
                     sceneH = Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue());
+                    areas[2] = sceneH;
                     System.out.print(" | h=" + sceneH);
                     sceneW = Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue());
+                    areas[3] = sceneW;
                     System.out.println(" | w=" + sceneW);
                 } else if ("takes".equals(sub.getNodeName())) {
                     NodeList takeChildren = sub.getChildNodes();
@@ -171,18 +259,22 @@ public class XMLParser {
                             for (int h = 0; h < takeGrandchildren.getLength(); h++) {
                                 Node takeSubSub = takeGrandchildren.item(h);
                                 if ("area".equals(takeSubSub.getNodeName())) {
-                                    takeX = Integer
-                                            .parseInt(takeSubSub.getAttributes().getNamedItem("x").getNodeValue());
-                                    System.out.print("Take Dimensions: x=" + takeX);
-                                    takeY = Integer
-                                            .parseInt(takeSubSub.getAttributes().getNamedItem("y").getNodeValue());
-                                    System.out.print(" | y=" + takeY);
-                                    takeH = Integer
-                                            .parseInt(takeSubSub.getAttributes().getNamedItem("h").getNodeValue());
-                                    System.out.print(" | h=" + takeH);
-                                    takeW = Integer
-                                            .parseInt(takeSubSub.getAttributes().getNamedItem("w").getNodeValue());
-                                    System.out.println(" | w=" + takeW);
+                                    // takeX = Integer
+                                    // .parseInt(takeSubSub.getAttributes().getNamedItem("x").getNodeValue());
+                                    // areas[0] = takeX;
+                                    // System.out.print("Take Dimensions: x=" + takeX);
+                                    // takeY = Integer
+                                    // .parseInt(takeSubSub.getAttributes().getNamedItem("y").getNodeValue());
+                                    // areas[1] = takeY;
+                                    // System.out.print(" | y=" + takeY);
+                                    // takeH = Integer
+                                    // .parseInt(takeSubSub.getAttributes().getNamedItem("h").getNodeValue());
+                                    // areas[2] = takeH;
+                                    // System.out.print(" | h=" + takeH);
+                                    // takeW = Integer
+                                    // .parseInt(takeSubSub.getAttributes().getNamedItem("w").getNodeValue());
+                                    // areas[3] = takeW;
+                                    // System.out.println(" | w=" + takeW);
                                 }
                             }
                         }
@@ -227,5 +319,6 @@ public class XMLParser {
                 }
             }
         }
+        return rooms;
     }
 }
