@@ -6,10 +6,11 @@ public class Deadwood {
     public static void main(String[] args) {
         // set days
         // set players
+        start();
     }
 
     // method to start a game
-    public void start(int numPlayers) {
+    public static void start() {
         InpManager inpM = new InpManager();
         InpParser inpP = new InpParser();
         XMLParser xml = new XMLParser();

@@ -115,13 +115,79 @@ public class XMLParser {
         return scenes;
     }
 
-    public static void readBoardData(Document d) {
+    public static Room[] readBoardData(Document d) {
         Element root = d.getDocumentElement();
         NodeList sets = root.getElementsByTagName("set");
+        NodeList trailer = root.getElementsByTagName("trailer");
+        NodeList office = root.getElementsByTagName("office");
 
+        Room[] rooms = new Room[12];
         String setName = "", line = "";
         int partLvl = 0, partX = 0, partY = 0, partW = 0, partH = 0, sceneX = 0, sceneY = 0, sceneH = 0, sceneW = 0,
                 takeX = 0, takeY = 0, takeH = 0, takeW = 0;
+
+        System.out.println("Printing information for trailer.");
+        Node tr = trailer.item(0);
+        NodeList trChildren = tr.getChildNodes();
+        
+        for (int t = 0; t < trChildren.getLength(); t++) {
+            Node sub = trChildren.item(t);
+
+            if ("neighbors".equals(sub.getNodeName())) {
+
+                NodeList neighborChildren = sub.getChildNodes();
+                for (int k = 0; k < neighborChildren.getLength(); k++) {
+                    Node neighborSub = neighborChildren.item(k);
+
+                    if ("neighbor".equals(neighborSub.getNodeName())) {
+                        String neighbor = neighborSub.getAttributes().getNamedItem("name").getNodeValue();
+                        // need to find out why I need to divide by two here, I have no idea why k
+                        // 'misses' on values 0, 2, 4, 6... (even values)
+                        System.out.println("Trailer neighbor " + ((k + 1) / 2) + " = " + neighbor);
+                    }
+                }
+            } else if ("area".equals(sub.getNodeName())) {
+                sceneX = Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue());
+                System.out.print("Scene Dimensions: x=" + sceneX);
+                sceneY = Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue());
+                System.out.print(" | y=" + sceneY);
+                sceneH = Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue());
+                System.out.print(" | h=" + sceneH);
+                sceneW = Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue());
+                System.out.println(" | w=" + sceneW);
+            }
+        }
+
+        Node of = office.item(0);
+        NodeList ofChildren = of.getChildNodes();
+        
+        for (int o = 0; o <ofChildren.getLength(); o++) {
+            Node sub = ofChildren.item(o);
+
+            if ("neighbors".equals(sub.getNodeName())) {
+
+                NodeList neighborChildren = sub.getChildNodes();
+                for (int k = 0; k < neighborChildren.getLength(); k++) {
+                    Node neighborSub = neighborChildren.item(k);
+
+                    if ("neighbor".equals(neighborSub.getNodeName())) {
+                        String neighbor = neighborSub.getAttributes().getNamedItem("name").getNodeValue();
+                        // need to find out why I need to divide by two here, I have no idea why k
+                        // 'misses' on values 0, 2, 4, 6... (even values)
+                        System.out.println("Office neighbor " + ((k + 1) / 2) + " = " + neighbor);
+                    }
+                }
+            } else if ("area".equals(sub.getNodeName())) {
+                sceneX = Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue());
+                System.out.print("Scene Dimensions: x=" + sceneX);
+                sceneY = Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue());
+                System.out.print(" | y=" + sceneY);
+                sceneH = Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue());
+                System.out.print(" | h=" + sceneH);
+                sceneW = Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue());
+                System.out.println(" | w=" + sceneW);
+            }
+        }
 
         for (int i = 0; i < sets.getLength(); i++) {
             System.out.println("Printing information for set " + (i + 1));
@@ -227,5 +293,6 @@ public class XMLParser {
                 }
             }
         }
+        return rooms;
     }
 }
