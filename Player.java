@@ -45,8 +45,17 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
+    public void setRank(int rank){
+        this.rank = rank;
+    }
 
     public void addPracticeChip() {
         practiceChips++;
+    }
+    public void setMoney(int money){
+        this.money = money;
+    }
+    public void setCredits(int credits){
+        this.credits = credits;
     }
 }

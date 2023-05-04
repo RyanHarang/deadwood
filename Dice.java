@@ -18,6 +18,6 @@ public class Dice {
     // integer, returning the result
     public int roll(int practiceChips) {
         result = 1 + (int) (6 * Math.random());
-        return result + practiceChips;
+        return Math.min(result + practiceChips, 6);
     }
 }

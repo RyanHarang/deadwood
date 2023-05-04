@@ -28,15 +28,17 @@ public class CurrencyManager {
     }
 
     // setters
-    public void adjustMoney(int num) {
-
+    public void adjustMoney(int num, Player player) {
+        int currentMoney = player.getMoney();
+        player.setMoney(currentMoney += num);
     }
 
-    public void adjustCredits(int num) {
-
+    public void adjustCredits(int num, Player player) {
+        int currentCredits = player.getCredits();
+        player.setCredits(currentCredits += num);
     }
 
-    public void adjustRank(int num) {
+    public void adjustRank(int num, Player player) {
 
     }
 
