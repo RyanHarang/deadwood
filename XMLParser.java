@@ -18,8 +18,8 @@ public class XMLParser {
         try {
             cardDoc = getDocFromFile("xml/cards.xml");
             boardDoc = getDocFromFile("xml/board.xml");
-            readCardData(cardDoc);
-            // readBoardData(boardDoc);
+            // readCardData(cardDoc);
+            readBoardData(boardDoc);
 
         } catch (Exception e) {
             System.out.println("Error = " + e);
@@ -114,111 +114,118 @@ public class XMLParser {
 
         return scenes;
     }
-    /*
-     * public static void readBoardData(Document d) {
-     * Element root = d.getDocumentElement();
-     * NodeList sets = root.getElementsByTagName("set");
-     * 
-     * for (int i = 0; i < sets.getLength(); i++) {
-     * System.out.println("Printing information for set " + (i + 1));
-     * 
-     * Node set = sets.item(i);
-     * NodeList children = set.getChildNodes();
-     * String setName = set.getAttributes().getNamedItem("name").getNodeValue();
-     * System.out.println("Set Name = " + setName);
-     * 
-     * for (int j = 0; j < children.getLength(); j++) {
-     * Node sub = children.item(j);
-     * 
-     * if ("neighbors".equals(sub.getNodeName())) {
-     * 
-     * NodeList neighborChildren = sub.getChildNodes();
-     * for (int k = 0; k < neighborChildren.getLength(); k++) {
-     * Node neighborSub = neighborChildren.item(k);
-     * 
-     * if ("neighbor".equals(neighborSub.getNodeName())) {
-     * String neighbor =
-     * neighborSub.getAttributes().getNamedItem("name").getNodeValue();
-     * // need to find out why I need to divide by two here, I have no idea why k
-     * // 'misses' on values 0, 2, 4, 6... (even values)
-     * System.out.println("neighbor " + ((k + 1) / 2) + " = " + neighbor);
-     * }
-     * }
-     * } else if ("area".equals(sub.getNodeName())) {
-     * String sceneX = sub.getAttributes().getNamedItem("x").getNodeValue();
-     * System.out.print("Scene Dimensions: x=" + sceneX);
-     * String sceneY = sub.getAttributes().getNamedItem("y").getNodeValue();
-     * System.out.print(" | y=" + sceneY);
-     * String sceneH = sub.getAttributes().getNamedItem("h").getNodeValue();
-     * System.out.print(" | h=" + sceneH);
-     * String sceneW = sub.getAttributes().getNamedItem("w").getNodeValue();
-     * System.out.println(" | w=" + sceneW);
-     * } else if ("takes".equals(sub.getNodeName())) {
-     * NodeList takeChildren = sub.getChildNodes();
-     * for (int k = 0; k < takeChildren.getLength(); k++) {
-     * Node takeSub = takeChildren.item(k);
-     * 
-     * if ("take".equals(takeSub.getNodeName())) {
-     * String takeNum =
-     * takeSub.getAttributes().getNamedItem("number").getNodeValue();
-     * // need to find out why I need to divide by two here, I have no idea why k
-     * // 'misses' on values 0, 2, 4, 6... (even values)
-     * System.out.println("take " + ((k + 1) / 2) + " = " + takeNum);
-     * 
-     * NodeList takeGrandchildren = takeSub.getChildNodes();
-     * for (int h = 0; h < takeGrandchildren.getLength(); h++) {
-     * Node takeSubSub = takeGrandchildren.item(h);
-     * if ("area".equals(takeSubSub.getNodeName())) {
-     * String takeX = takeSubSub.getAttributes().getNamedItem("x").getNodeValue();
-     * System.out.print("Take Dimensions: x=" + takeX);
-     * String takeY = takeSubSub.getAttributes().getNamedItem("y").getNodeValue();
-     * System.out.print(" | y=" + takeY);
-     * String takeH = takeSubSub.getAttributes().getNamedItem("h").getNodeValue();
-     * System.out.print(" | h=" + takeH);
-     * String takeW = takeSubSub.getAttributes().getNamedItem("w").getNodeValue();
-     * System.out.println(" | w=" + takeW);
-     * }
-     * }
-     * }
-     * }
-     * } else if ("parts".equals(sub.getNodeName())) {
-     * NodeList partChildren = sub.getChildNodes();
-     * for (int k = 0; k < partChildren.getLength(); k++) {
-     * Node partSub = partChildren.item(k);
-     * 
-     * if ("part".equals(partSub.getNodeName())) {
-     * String partName =
-     * partSub.getAttributes().getNamedItem("name").getNodeValue();
-     * // need to find out why I need to divide by two here, I have no idea why k
-     * // 'misses' on values 0, 2, 4, 6... (even values)
-     * System.out.println("partName " + ((k + 1) / 2) + " = " + partName);
-     * String partLvl =
-     * partSub.getAttributes().getNamedItem("level").getNodeValue();
-     * System.out.println("partLvl " + ((k + 1) / 2) + " = " + partLvl);
-     * 
-     * NodeList partGrandchildren = partSub.getChildNodes();
-     * for (int h = 0; h < partGrandchildren.getLength(); h++) {
-     * Node partSubSub = partGrandchildren.item(h);
-     * if ("area".equals(partSubSub.getNodeName())) {
-     * String partX = partSubSub.getAttributes().getNamedItem("x").getNodeValue();
-     * System.out.print("Part Dimensions: x=" + partX);
-     * String partY = partSubSub.getAttributes().getNamedItem("y").getNodeValue();
-     * System.out.print(" | y=" + partY);
-     * String partH = partSubSub.getAttributes().getNamedItem("h").getNodeValue();
-     * System.out.print(" | h=" + partH);
-     * String partW = partSubSub.getAttributes().getNamedItem("w").getNodeValue();
-     * System.out.println(" | w=" + partW);
-     * 
-     * } else if ("line".equals(partSubSub.getNodeName())) {
-     * String line = partSubSub.getTextContent();
-     * System.out.println("Part " + ((h + 1) / 2) + " Line = " + line);
-     * }
-     * }
-     * }
-     * }
-     * }
-     * }
-     * }
-     * }
-     */
+
+    public static void readBoardData(Document d) {
+        Element root = d.getDocumentElement();
+        NodeList sets = root.getElementsByTagName("set");
+
+        String setName = "", line = "";
+        int partLvl = 0, partX = 0, partY = 0, partW = 0, partH = 0, sceneX = 0, sceneY = 0, sceneH = 0, sceneW = 0,
+                takeX = 0, takeY = 0, takeH = 0, takeW = 0;
+
+        for (int i = 0; i < sets.getLength(); i++) {
+            System.out.println("Printing information for set " + (i + 1));
+
+            Node set = sets.item(i);
+            NodeList children = set.getChildNodes();
+            setName = set.getAttributes().getNamedItem("name").getNodeValue();
+            System.out.println("Set Name = " + setName);
+
+            for (int j = 0; j < children.getLength(); j++) {
+                Node sub = children.item(j);
+
+                if ("neighbors".equals(sub.getNodeName())) {
+
+                    NodeList neighborChildren = sub.getChildNodes();
+                    for (int k = 0; k < neighborChildren.getLength(); k++) {
+                        Node neighborSub = neighborChildren.item(k);
+
+                        if ("neighbor".equals(neighborSub.getNodeName())) {
+                            String neighbor = neighborSub.getAttributes().getNamedItem("name").getNodeValue();
+                            // need to find out why I need to divide by two here, I have no idea why k
+                            // 'misses' on values 0, 2, 4, 6... (even values)
+                            System.out.println("neighbor " + ((k + 1) / 2) + " = " + neighbor);
+                        }
+                    }
+                } else if ("area".equals(sub.getNodeName())) {
+                    sceneX = Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue());
+                    System.out.print("Scene Dimensions: x=" + sceneX);
+                    sceneY = Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue());
+                    System.out.print(" | y=" + sceneY);
+                    sceneH = Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue());
+                    System.out.print(" | h=" + sceneH);
+                    sceneW = Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue());
+                    System.out.println(" | w=" + sceneW);
+                } else if ("takes".equals(sub.getNodeName())) {
+                    NodeList takeChildren = sub.getChildNodes();
+                    for (int k = 0; k < takeChildren.getLength(); k++) {
+                        Node takeSub = takeChildren.item(k);
+
+                        if ("take".equals(takeSub.getNodeName())) {
+                            String takeNum = takeSub.getAttributes().getNamedItem("number").getNodeValue();
+                            // need to find out why I need to divide by two here, I have no idea why k
+                            // 'misses' on values 0, 2, 4, 6... (even values)
+                            System.out.println("take " + ((k + 1) / 2) + " = " + takeNum);
+
+                            NodeList takeGrandchildren = takeSub.getChildNodes();
+                            for (int h = 0; h < takeGrandchildren.getLength(); h++) {
+                                Node takeSubSub = takeGrandchildren.item(h);
+                                if ("area".equals(takeSubSub.getNodeName())) {
+                                    takeX = Integer
+                                            .parseInt(takeSubSub.getAttributes().getNamedItem("x").getNodeValue());
+                                    System.out.print("Take Dimensions: x=" + takeX);
+                                    takeY = Integer
+                                            .parseInt(takeSubSub.getAttributes().getNamedItem("y").getNodeValue());
+                                    System.out.print(" | y=" + takeY);
+                                    takeH = Integer
+                                            .parseInt(takeSubSub.getAttributes().getNamedItem("h").getNodeValue());
+                                    System.out.print(" | h=" + takeH);
+                                    takeW = Integer
+                                            .parseInt(takeSubSub.getAttributes().getNamedItem("w").getNodeValue());
+                                    System.out.println(" | w=" + takeW);
+                                }
+                            }
+                        }
+                    }
+                } else if ("parts".equals(sub.getNodeName())) {
+                    NodeList partChildren = sub.getChildNodes();
+                    for (int k = 0; k < partChildren.getLength(); k++) {
+                        Node partSub = partChildren.item(k);
+
+                        if ("part".equals(partSub.getNodeName())) {
+                            String partName = partSub.getAttributes().getNamedItem("name").getNodeValue();
+                            // need to find out why I need to divide by two here, I have no idea why k
+                            // 'misses' on values 0, 2, 4, 6... (even values)
+                            System.out.println("partName " + ((k + 1) / 2) + " = " + partName);
+                            partLvl = Integer.parseInt(partSub.getAttributes().getNamedItem("level").getNodeValue());
+                            System.out.println("partLvl " + ((k + 1) / 2) + " = " + partLvl);
+
+                            NodeList partGrandchildren = partSub.getChildNodes();
+                            for (int h = 0; h < partGrandchildren.getLength(); h++) {
+                                Node partSubSub = partGrandchildren.item(h);
+                                if ("area".equals(partSubSub.getNodeName())) {
+                                    partX = Integer
+                                            .parseInt(partSubSub.getAttributes().getNamedItem("x").getNodeValue());
+                                    System.out.print("Part Dimensions: x=" + partX);
+                                    partY = Integer
+                                            .parseInt(partSubSub.getAttributes().getNamedItem("y").getNodeValue());
+                                    System.out.print(" | y=" + partY);
+                                    partH = Integer
+                                            .parseInt(partSubSub.getAttributes().getNamedItem("h").getNodeValue());
+                                    System.out.print(" | h=" + partH);
+                                    partW = Integer
+                                            .parseInt(partSubSub.getAttributes().getNamedItem("w").getNodeValue());
+                                    System.out.println(" | w=" + partW);
+
+                                } else if ("line".equals(partSubSub.getNodeName())) {
+                                    line = partSubSub.getTextContent();
+                                    System.out.println("partLine = " + line);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
