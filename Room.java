@@ -18,6 +18,14 @@ public class Room {
         this.roles = roles;
     }
 
+    public String toString() {
+        String areas = "";
+        for (int i = 0; i < 4; i++) {
+            areas += " " + area[i];
+        }
+        return "RoomName: " + name + " | Shots: " + shots + " | RoleAreas: " + areas;
+    }
+
     // getters
     public ArrayList<Role> getRoles() {
         return roles;
