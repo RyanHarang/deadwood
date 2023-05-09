@@ -116,12 +116,14 @@ public class XMLParser {
             scenes.add(sceneHolder);
             roles.clear();
         }
-        // To witness content in String form
-        System.out.println("Scenes.size() = " + scenes.size());
-        for (int a = 0; a < scenes.size(); a++) {
-            System.out.println("Scene at index " + a + " is: " +
-                    scenes.get(a).toString());
-        }
+        /*
+         * Print loop for testing/debugging
+         * System.out.println("Scenes.size() = " + scenes.size());
+         * for (int a = 0; a < scenes.size(); a++) {
+         * System.out.println("Scene at index " + a + " is: " +
+         * scenes.get(a).toString());
+         * }
+         */
 
         return scenes;
     }
@@ -343,9 +345,12 @@ public class XMLParser {
             rooms[h].setAdjacents(neighborCopy);
             neighbors.clear();
         }
-        for (Room room : rooms) {
-            System.out.println(room.toString());
-        }
+        /*
+         * Print loop for testing/debugging
+         * for (Room room : rooms) {
+         * System.out.println(room.toString());
+         * }
+         */
         return rooms;
     }
 }

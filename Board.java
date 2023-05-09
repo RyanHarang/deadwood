@@ -1,10 +1,8 @@
 public class Board {
     private Room[] rooms;
 
-    public Board() {
-        // set rooms
-        // set adjacencies?
-        // will need parser to parse board file
+    public Board(Room[] rooms) {
+        this.rooms = rooms;
     }
 
     public Room[] getRooms() {
