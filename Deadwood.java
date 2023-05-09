@@ -16,9 +16,9 @@ public class Deadwood {
         InpManager inpM = new InpManager();
         InpParser inpP = new InpParser();
         XMLParser xml = new XMLParser();
+        Board board = new Board(xml.readBoardData());
+        SceneDeck deck = new SceneDeck(xml.readCardData());
         inpM.startGame();
-        // xml.createDeck();
-        // xml.createBoard();
     }
 
     // method to end a game

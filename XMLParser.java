@@ -11,22 +11,33 @@ import java.util.ArrayList;
 
 public class XMLParser {
 
-    public static void main(String args[]) {
+    private Document cardDoc = null;
+    private Document boardDoc = null;
 
-        Document cardDoc = null;
-        Document boardDoc = null;
+    public XMLParser() {
+        setCardDoc("xml/cards.xml");
+        setBoardDoc("xml/board.xml");
+    }
+
+    private void setCardDoc(String fileName) {
         try {
-            cardDoc = getDocFromFile("xml/cards.xml");
-            boardDoc = getDocFromFile("xml/board.xml");
-            // readCardData(cardDoc);
-            readBoardData(boardDoc);
+            cardDoc = getDocFromFile(fileName);
 
         } catch (Exception e) {
             System.out.println("Error = " + e);
         }
     }
 
-    public static Document getDocFromFile(String filename)
+    private void setBoardDoc(String fileName) {
+        try {
+            boardDoc = getDocFromFile(fileName);
+
+        } catch (Exception e) {
+            System.out.println("Error = " + e);
+        }
+    }
+
+    private Document getDocFromFile(String filename)
             throws ParserConfigurationException {
         {
 
@@ -44,23 +55,23 @@ public class XMLParser {
         } // exception handling
     }
 
-    public static ArrayList<Scene> readCardData(Document d) {
+    public ArrayList<Scene> readCardData() {
+        Element root = cardDoc.getDocumentElement();
+        NodeList cards = root.getElementsByTagName("card");
         ArrayList<Scene> scenes = new ArrayList<Scene>();
         Role roleHolder = null;
         ArrayList<Role> roles = new ArrayList<Role>();
         ArrayList<ArrayList<Role>> rolesLists = new ArrayList<ArrayList<Role>>(40);
 
         int[] areas = new int[4];
-        Element root = d.getDocumentElement();
-        NodeList cards = root.getElementsByTagName("card");
 
         for (int i = 0; i < cards.getLength(); i++) {
             Node card = cards.item(i);
             NodeList children = card.getChildNodes();
-            String cardName = "", img = "", sceneText = "", partName = "", partLine = "";
+            String cardName = ""/* , img = "" */, sceneText = "", partName = "", partLine = "";
             int budget = 0, sceneNum = 0, partLvl = 0, partX = 0, partY = 0, partH = 0, partW = 0;
             cardName = card.getAttributes().getNamedItem("name").getNodeValue();
-            img = card.getAttributes().getNamedItem("img").getNodeValue();
+            // img = card.getAttributes().getNamedItem("img").getNodeValue();
             budget = Integer.parseInt(card.getAttributes().getNamedItem("budget").getNodeValue());
             for (int j = 0; j < children.getLength(); j++) {
                 Node sub = children.item(j);
@@ -105,31 +116,34 @@ public class XMLParser {
             scenes.add(sceneHolder);
             roles.clear();
         }
-        // To witness content in String form
-        System.out.println("Scenes.size() = " + scenes.size());
-        for (int a = 0; a < scenes.size(); a++) {
-            System.out.println("Scene at index " + a + " is: " +
-                    scenes.get(a).toString());
-        }
+        /*
+         * Print loop for testing/debugging
+         * System.out.println("Scenes.size() = " + scenes.size());
+         * for (int a = 0; a < scenes.size(); a++) {
+         * System.out.println("Scene at index " + a + " is: " +
+         * scenes.get(a).toString());
+         * }
+         */
 
         return scenes;
     }
 
-    public static Room[] readBoardData(Document d) {
-        Element root = d.getDocumentElement();
+    public Room[] readBoardData() {
+        Element root = boardDoc.getDocumentElement();
         NodeList sets = root.getElementsByTagName("set");
         NodeList trailer = root.getElementsByTagName("trailer");
         NodeList office = root.getElementsByTagName("office");
-        ArrayList<ArrayList<String>> allAdjs = new ArrayList<ArrayList<String>>(12);
+        ArrayList<ArrayList<String>> allAdjs = new ArrayList<ArrayList<String>>();
         ArrayList<String> adjs = new ArrayList<String>();
-        int[] areas = new int[4];
+        ArrayList<Role> roles = new ArrayList<Role>();
+        int[] areas = new int[4], sceneAreas = new int[4];
 
         Room[] rooms = new Room[12];
-        String setName = "", line = "";
+        String partName = "", setName = "", line = "";
         int partLvl = 0, partX = 0, partY = 0, partW = 0, partH = 0, sceneX = 0, sceneY = 0, sceneH = 0, sceneW = 0,
-                takeX = 0, takeY = 0, takeH = 0, takeW = 0;
+                takes = 0/* , takeX = 0, takeY = 0, takeH = 0, takeW = 0 */;
 
-        System.out.println("Printing information for trailer.");
+        // creating a trailer room specially at index 0 of the rooms array
         Node tr = trailer.item(0);
         NodeList trChildren = tr.getChildNodes();
 
@@ -144,31 +158,28 @@ public class XMLParser {
 
                     if ("neighbor".equals(neighborSub.getNodeName())) {
                         String neighbor = neighborSub.getAttributes().getNamedItem("name").getNodeValue();
-                        // need to find out why I need to divide by two here, I have no idea why k
-                        // 'misses' on values 0, 2, 4, 6... (even values)
-                        System.out.println("Trailer neighbor " + ((k + 1) / 2) + " = " + neighbor);
-
+                        adjs.add(neighbor);
                     }
                 }
+                ArrayList<String> alCopy = new ArrayList<String>(adjs);
+                allAdjs.add(alCopy);
+                adjs.clear();
+
             } else if ("area".equals(sub.getNodeName())) {
                 sceneX = Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue());
-                areas[0] = sceneX;
-                System.out.print("Scene Dimensions: x=" + sceneX);
+                sceneAreas[0] = sceneX;
                 sceneY = Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue());
-                areas[1] = sceneY;
-                System.out.print(" | y=" + sceneY);
+                sceneAreas[1] = sceneY;
                 sceneH = Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue());
-                areas[2] = sceneH;
-                System.out.print(" | h=" + sceneH);
+                sceneAreas[2] = sceneH;
                 sceneW = Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue());
-                areas[3] = sceneW;
-                System.out.println(" | w=" + sceneW);
+                sceneAreas[3] = sceneW;
                 int[] aCopy = new int[4];
-                System.arraycopy(areas, 0, aCopy, 0, 4);
-                rooms[10] = new Room(0, aCopy, "Trailers", null);
+                System.arraycopy(sceneAreas, 0, aCopy, 0, 4);
+                rooms[0] = new Room(0, aCopy, "trailer", null);
             }
         }
-
+        // creating an office room speciall at index 1 in the room array
         Node of = office.item(0);
         NodeList ofChildren = of.getChildNodes();
 
@@ -183,38 +194,33 @@ public class XMLParser {
 
                     if ("neighbor".equals(neighborSub.getNodeName())) {
                         String neighbor = neighborSub.getAttributes().getNamedItem("name").getNodeValue();
-                        // need to find out why I need to divide by two here, I have no idea why k
-                        // 'misses' on values 0, 2, 4, 6... (even values)
-                        System.out.println("Office neighbor " + ((k + 1) / 2) + " = " + neighbor);
+                        adjs.add(neighbor);
                     }
                 }
+                ArrayList<String> alCopy = new ArrayList<String>(adjs);
+                allAdjs.add(alCopy);
+                adjs.clear();
+
             } else if ("area".equals(sub.getNodeName())) {
                 sceneX = Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue());
-                areas[0] = sceneX;
-                System.out.print("Scene Dimensions: x=" + sceneX);
+                sceneAreas[0] = sceneX;
                 sceneY = Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue());
-                System.out.print(" | y=" + sceneY);
-                areas[1] = sceneY;
+                sceneAreas[1] = sceneY;
                 sceneH = Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue());
-                System.out.print(" | h=" + sceneH);
-                areas[2] = sceneH;
+                sceneAreas[2] = sceneH;
                 sceneW = Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue());
-                System.out.println(" | w=" + sceneW);
-                areas[3] = sceneW;
+                sceneAreas[3] = sceneW;
                 int[] aCopy = new int[4];
-                System.arraycopy(areas, 0, aCopy, 0, 4);
-                rooms[11] = new Room(0, aCopy, "Casting Office", null);
+                System.arraycopy(sceneAreas, 0, aCopy, 0, 4);
+                rooms[1] = new Room(0, aCopy, "office", null);
             }
         }
 
         for (int i = 0; i < sets.getLength(); i++) {
-            System.out.println("Printing information for set " + (i + 1));
 
             Node set = sets.item(i);
             NodeList children = set.getChildNodes();
             setName = set.getAttributes().getNamedItem("name").getNodeValue();
-            System.out.println("Set Name = " + setName);
-
             for (int j = 0; j < children.getLength(); j++) {
                 Node sub = children.item(j);
 
@@ -226,34 +232,28 @@ public class XMLParser {
 
                         if ("neighbor".equals(neighborSub.getNodeName())) {
                             String neighbor = neighborSub.getAttributes().getNamedItem("name").getNodeValue();
-                            // need to find out why I need to divide by two here, I have no idea why k
-                            // 'misses' on values 0, 2, 4, 6... (even values)
-                            System.out.println("neighbor " + ((k + 1) / 2) + " = " + neighbor);
+                            adjs.add(neighbor);
                         }
                     }
+                    ArrayList<String> alCopy = new ArrayList<String>(adjs);
+                    allAdjs.add(alCopy);
+                    adjs.clear();
                 } else if ("area".equals(sub.getNodeName())) {
                     sceneX = Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue());
-                    areas[0] = sceneX;
-                    System.out.print("Scene Dimensions: x=" + sceneX);
+                    sceneAreas[0] = sceneX;
                     sceneY = Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue());
-                    areas[1] = sceneY;
-                    System.out.print(" | y=" + sceneY);
+                    sceneAreas[1] = sceneY;
                     sceneH = Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue());
-                    areas[2] = sceneH;
-                    System.out.print(" | h=" + sceneH);
+                    sceneAreas[2] = sceneH;
                     sceneW = Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue());
-                    areas[3] = sceneW;
-                    System.out.println(" | w=" + sceneW);
+                    sceneAreas[3] = sceneW;
                 } else if ("takes".equals(sub.getNodeName())) {
                     NodeList takeChildren = sub.getChildNodes();
                     for (int k = 0; k < takeChildren.getLength(); k++) {
                         Node takeSub = takeChildren.item(k);
 
                         if ("take".equals(takeSub.getNodeName())) {
-                            String takeNum = takeSub.getAttributes().getNamedItem("number").getNodeValue();
-                            // need to find out why I need to divide by two here, I have no idea why k
-                            // 'misses' on values 0, 2, 4, 6... (even values)
-                            System.out.println("take " + ((k + 1) / 2) + " = " + takeNum);
+                            takes++;
 
                             NodeList takeGrandchildren = takeSub.getChildNodes();
                             for (int h = 0; h < takeGrandchildren.getLength(); h++) {
@@ -285,12 +285,9 @@ public class XMLParser {
                         Node partSub = partChildren.item(k);
 
                         if ("part".equals(partSub.getNodeName())) {
-                            String partName = partSub.getAttributes().getNamedItem("name").getNodeValue();
-                            // need to find out why I need to divide by two here, I have no idea why k
-                            // 'misses' on values 0, 2, 4, 6... (even values)
-                            System.out.println("partName " + ((k + 1) / 2) + " = " + partName);
+                            partName = partSub.getAttributes().getNamedItem("name").getNodeValue();
+
                             partLvl = Integer.parseInt(partSub.getAttributes().getNamedItem("level").getNodeValue());
-                            System.out.println("partLvl " + ((k + 1) / 2) + " = " + partLvl);
 
                             NodeList partGrandchildren = partSub.getChildNodes();
                             for (int h = 0; h < partGrandchildren.getLength(); h++) {
@@ -298,27 +295,62 @@ public class XMLParser {
                                 if ("area".equals(partSubSub.getNodeName())) {
                                     partX = Integer
                                             .parseInt(partSubSub.getAttributes().getNamedItem("x").getNodeValue());
-                                    System.out.print("Part Dimensions: x=" + partX);
+                                    areas[0] = partX;
                                     partY = Integer
                                             .parseInt(partSubSub.getAttributes().getNamedItem("y").getNodeValue());
-                                    System.out.print(" | y=" + partY);
+                                    areas[1] = partY;
                                     partH = Integer
                                             .parseInt(partSubSub.getAttributes().getNamedItem("h").getNodeValue());
-                                    System.out.print(" | h=" + partH);
+                                    areas[2] = partH;
                                     partW = Integer
                                             .parseInt(partSubSub.getAttributes().getNamedItem("w").getNodeValue());
-                                    System.out.println(" | w=" + partW);
+                                    areas[3] = partW;
 
                                 } else if ("line".equals(partSubSub.getNodeName())) {
                                     line = partSubSub.getTextContent();
-                                    System.out.println("partLine = " + line);
                                 }
                             }
+                            int[] areaCopy = new int[4];
+                            System.arraycopy(areas, 0, areaCopy, 0, 4);
+                            Role roleHolder = new Role(partName, line, partLvl, areaCopy, false);
+                            roles.add(roleHolder);
                         }
                     }
                 }
             }
+            ArrayList<Role> roleCopy = new ArrayList<Role>(roles);
+            int[] sceneAreaCopy = new int[4];
+            System.arraycopy(sceneAreas, 0, sceneAreaCopy, 0, 4);
+            rooms[i + 2] = new Room(takes, sceneAreaCopy, setName, roleCopy);
+            takes = 0;
+            roles.clear();
         }
+        ArrayList<Room> neighbors = new ArrayList<Room>();
+        // now assigning neighbors to rooms using previously created allAdjs
+        for (int h = 0; h < rooms.length; h++) {
+            // loop through rooms, and for each room, get neighbors from allAdjs
+            ArrayList<String> temp = allAdjs.get(h);
+            for (int j = 0; j < temp.size(); j++) {
+                // for each room adjacent to room at index h of array
+                // loop through room array to find room with same name and
+                // add it to neighbors array
+                // create copy of neighbors array and pass to setAdjacents for each room
+                for (int w = 0; w < rooms.length; w++) {
+                    if (rooms[w].getName().equals(temp.get(j))) {
+                        neighbors.add(rooms[w]);
+                    }
+                }
+            }
+            ArrayList<Room> neighborCopy = new ArrayList<Room>(neighbors);
+            rooms[h].setAdjacents(neighborCopy);
+            neighbors.clear();
+        }
+        /*
+         * Print loop for testing/debugging
+         * for (Room room : rooms) {
+         * System.out.println(room.toString());
+         * }
+         */
         return rooms;
     }
 }

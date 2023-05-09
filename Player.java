@@ -1,15 +1,19 @@
-public class Player implements Comparable<Player>{
-    private Role role;
+public class Player implements Comparable<Player> {
+    private Role role = null;
     private Room room;
     private String name;
-    private int credits = 0;
-    private int money = 0;
-    private int practiceChips = 0;
+    private int credits;
+    private int money;
+    private int practiceChips;
     private int rank;
 
     // constructor
     public Player(String name) {
-
+        this.name = name;
+        money = 0;
+        credits = 0;
+        practiceChips = 0;
+        rank = 1;
     }
 
     // getters
@@ -36,8 +40,8 @@ public class Player implements Comparable<Player>{
     public int getRank() {
         return rank;
     }
-    
-    public int getPracticeChips(){
+
+    public int getPracticeChips() {
         return practiceChips;
     }
 
@@ -49,28 +53,29 @@ public class Player implements Comparable<Player>{
     public void setName(String name) {
         this.name = name;
     }
-    public void setRank(int rank){
+
+    public void setRank(int rank) {
         this.rank = rank;
     }
 
     public void addPracticeChip() {
         practiceChips++;
     }
-    public void setMoney(int money){
+
+    public void setMoney(int money) {
         this.money = money;
     }
-    public void setCredits(int credits){
+
+    public void setCredits(int credits) {
         this.credits = credits;
     }
 
-    public int compareTo(Player p){
-        if(role.getRank() == p.role.getRank()){
+    public int compareTo(Player p) {
+        if (role.getRank() == p.role.getRank()) {
             return 0;
-        }
-        else if (role.getRank() > p.role.getRank()){
+        } else if (role.getRank() > p.role.getRank()) {
             return 1;
-        }
-        else{
+        } else {
             return -1;
         }
     }

@@ -26,11 +26,6 @@ public class Scene {
                 + " | Roles: " + rolesString;
     }
 
-    // method for when a scene is finished, might not belong in scene class
-    public void discard() {
-
-    }
-
     // getters
     public int getBudget() {
         return budget;
