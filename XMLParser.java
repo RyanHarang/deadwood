@@ -11,26 +11,33 @@ import java.util.ArrayList;
 
 public class XMLParser {
 
-    public XMLParser() {
+    private Document cardDoc = null;
+    private Document boardDoc = null;
 
+    public XMLParser() {
+        setCardDoc("xml/cards.xml");
+        setBoardDoc("xml/board.xml");
     }
 
-    public static void main(String args[]) {
-
-        Document cardDoc = null;
-        Document boardDoc = null;
+    private void setCardDoc(String fileName) {
         try {
-            cardDoc = getDocFromFile("xml/cards.xml");
-            boardDoc = getDocFromFile("xml/board.xml");
-            // readCardData(cardDoc);
-            readBoardData(boardDoc);
+            cardDoc = getDocFromFile(fileName);
 
         } catch (Exception e) {
             System.out.println("Error = " + e);
         }
     }
 
-    public static Document getDocFromFile(String filename)
+    private void setBoardDoc(String fileName) {
+        try {
+            boardDoc = getDocFromFile(fileName);
+
+        } catch (Exception e) {
+            System.out.println("Error = " + e);
+        }
+    }
+
+    private Document getDocFromFile(String filename)
             throws ParserConfigurationException {
         {
 
@@ -48,23 +55,23 @@ public class XMLParser {
         } // exception handling
     }
 
-    public static ArrayList<Scene> readCardData(Document d) {
+    public ArrayList<Scene> readCardData() {
+        Element root = cardDoc.getDocumentElement();
+        NodeList cards = root.getElementsByTagName("card");
         ArrayList<Scene> scenes = new ArrayList<Scene>();
         Role roleHolder = null;
         ArrayList<Role> roles = new ArrayList<Role>();
         ArrayList<ArrayList<Role>> rolesLists = new ArrayList<ArrayList<Role>>(40);
 
         int[] areas = new int[4];
-        Element root = d.getDocumentElement();
-        NodeList cards = root.getElementsByTagName("card");
 
         for (int i = 0; i < cards.getLength(); i++) {
             Node card = cards.item(i);
             NodeList children = card.getChildNodes();
-            String cardName = "", img = "", sceneText = "", partName = "", partLine = "";
+            String cardName = ""/* , img = "" */, sceneText = "", partName = "", partLine = "";
             int budget = 0, sceneNum = 0, partLvl = 0, partX = 0, partY = 0, partH = 0, partW = 0;
             cardName = card.getAttributes().getNamedItem("name").getNodeValue();
-            img = card.getAttributes().getNamedItem("img").getNodeValue();
+            // img = card.getAttributes().getNamedItem("img").getNodeValue();
             budget = Integer.parseInt(card.getAttributes().getNamedItem("budget").getNodeValue());
             for (int j = 0; j < children.getLength(); j++) {
                 Node sub = children.item(j);
@@ -119,8 +126,8 @@ public class XMLParser {
         return scenes;
     }
 
-    public static Room[] readBoardData(Document d) {
-        Element root = d.getDocumentElement();
+    public Room[] readBoardData() {
+        Element root = boardDoc.getDocumentElement();
         NodeList sets = root.getElementsByTagName("set");
         NodeList trailer = root.getElementsByTagName("trailer");
         NodeList office = root.getElementsByTagName("office");

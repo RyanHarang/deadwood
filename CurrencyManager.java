@@ -1,12 +1,14 @@
 import java.util.ArrayList;
-import java.util.Collection;
+/* import java.util.Collection; */
 import java.util.Collections;
+
 public class CurrencyManager {
-    //temporary?
+    // temporary?
     public Dice dice;
+
     // constructor
     public CurrencyManager() {
-        
+
     }
 
     // getters
@@ -55,17 +57,16 @@ public class CurrencyManager {
         // in which case nobody gets payed
         ArrayList<Player> onCard = new ArrayList<Player>();
         ArrayList<Player> offCard = new ArrayList<Player>();
-        for(Player p: room.getPlayers()){
-            if(p.getRole().isMain()){
+        for (Player p : room.getPlayers()) {
+            if (p.getRole().isMain()) {
                 onCard.add(p);
-            }
-            else{
+            } else {
                 offCard.add(p);
             }
         }
         Collections.sort(onCard, Collections.reverseOrder());
         mainPay(room.getScene(), onCard);
-        if(onCard.size() != 0){
+        if (onCard.size() != 0) {
             extraPay(offCard);
         }
 
@@ -74,20 +75,20 @@ public class CurrencyManager {
     // method to be called by wrapPay based on players role type
     private void mainPay(Scene scene, ArrayList<Player> onCard) {
         ArrayList<Integer> diceList = new ArrayList<Integer>();
-        for(int i = 0; i < scene.getBudget(); i++){
+        for (int i = 0; i < scene.getBudget(); i++) {
             diceList.add(dice.roll());
         }
         Collections.sort(diceList);
         int numPlayers = onCard.size();
         int count = 0;
-        for(int i: diceList){
-            adjustMoney(i, onCard.get(count%numPlayers));
+        for (int i : diceList) {
+            adjustMoney(i, onCard.get(count % numPlayers));
             count++;
         }
     }
 
     private void extraPay(ArrayList<Player> offCard) {
-        for(Player p: offCard){
+        for (Player p : offCard) {
             adjustMoney(p.getRole().getRank(), p);
         }
     }
