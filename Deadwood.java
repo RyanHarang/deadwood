@@ -6,6 +6,10 @@ public class Deadwood {
     private LocationManager locationManager;
     private CurrencyManager currencyManager;
     private CastingOffice castingOffice;
+    private InpManager inpM;
+    private InpParser inpP;
+
+
 
     // constructor
     public static void main(String[] args) {
@@ -58,24 +62,28 @@ public class Deadwood {
 
         while(numActiveScenes > 1){
         // for every player?
-        String move;
+        inpM.newInput("Would you like to (m)ove, (r)ehearse, (a)ct, (u)pgrade, or (t)ake a roll?");
+        char action = inpP.handleInputFirstLetter();
             for(Player p: players){
                 switch(action){
-                    case("move"): // can you move with a roll?
+                    case('m'): // can you move with a roll?
                     //prompt for new location
-                        Room location;
+
+                        Room playerLocation = locationManager.getPlayerLocation(p);
+                        inpM.newInput("Where would you like to move: "+ playerLocation.neighborsString());
+                        
                         locationManager.move(p, location);
                         // if invalid, repeat. if valid, prompt upgrade.
-                    case("act"):
+                    case('a'):
                         //where do we handle act
-                    case("rehearse"):
+                    case('r'):
                         p.addPracticeChip();
-                    case("upgrade"):
+                    case('u'):
                         int rank;
                         Boolean upgradingWithMoney;
                         castingOffice.upgrade(p, rank, upgradingWithMoney, locationManager, currencyManager);
                         // if invalid, repeat, if valid, prompt move.
-                    case("take roll"):
+                    case('t'):
                         //can do this after moving
                         //gotta implement this.
                         // list roles, prompt which one you want to take, p.setRole, 

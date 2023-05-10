@@ -3,13 +3,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class CurrencyManager {
+    private static CurrencyManager currencyManager;
     // temporary?
     public Dice dice;
 
     // constructor
-    public CurrencyManager() {
-
+    private CurrencyManager() {
+        dice = new Dice();
     }
+
+    public static CurrencyManager getCurrencyManager(){
+        if(currencyManager == null){
+            currencyManager = new CurrencyManager();
+        }
+        return currencyManager;
+    }
+
 
     // getters
     public int getMoney(Player player) {

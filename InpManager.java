@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 public class InpManager {
-
     // constructor
     public InpManager() {
 
@@ -14,6 +13,6 @@ public class InpManager {
 
     // method for prompting the user for input
     public void newInput(String input) {
-
+        System.out.print(input + " ");
     }
 }

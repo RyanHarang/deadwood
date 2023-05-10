@@ -1,4 +1,5 @@
 public class CastingOffice {
+    private static CastingOffice castingOffice;
 
     // three column array with column one being the target rank,
     // column two being the cost to upgrade to the corresponding
@@ -12,42 +13,21 @@ public class CastingOffice {
     };
 
     // constructor
-    public CastingOffice() {
+    private CastingOffice() {
 
+    }
+
+    public static CastingOffice getCastingOffice(){
+        if(castingOffice == null){
+            castingOffice = new CastingOffice();
+        }
+        return castingOffice;
     }
 
     // getter for info
     public static int[][] getInfo() {
         return info;
     }
-    /*
-     * // method that will check the validity of upgrade choices
-     * public boolean upgrade(Player player, int rank, LocationManager
-     * locationManager, CurrencyManager currencyManager) {
-     * if(player.getRank() >= rank){
-     * return false;
-     * }
-     * // asks location manager to ensure player is in Casting Office
-     * if(locationManager.getPlayerLocation(player).getName() == "Casting Office"){
-     * // ensures player has valid credit or money amounts to declare
-     * // the upgrade option they choose
-     * if(player.getMoney() >= info[rank-2][1] || player.getCredits() >=
-     * info[rank-2][2]){
-     * upgradePlayer(player, rank, currencyManager);
-     * return true;
-     * }
-     * }
-     * 
-     * return false;
-     * }
-     * 
-     * // method that will be called by validate for
-     * // legal upgrades to perform the upgrade
-     * private void upgradePlayer(Player player, int rank, CurrencyManager
-     * currencyManager) {
-     * 
-     * }
-     */
 
     public boolean upgrade(Player player, int rank, boolean upgradingWithMoney, LocationManager locationManager,
             CurrencyManager currencyManager) {
