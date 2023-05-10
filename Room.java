@@ -71,7 +71,7 @@ public class Room {
         adjacents = rooms;
     }
 
-    public void removeShots() {
+    public void removeShot() {
         shots--;
     }
 

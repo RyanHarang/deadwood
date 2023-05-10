@@ -99,6 +99,28 @@ public class InpParser {
         return ret;
     }
 
+    public String getDestination(String neighbors) {
+        String input = "";
+        boolean validDestination = false;
+
+        while (!validDestination) {
+            manager.newOutput("Where would you like to move: " + neighbors);
+            input = manager.newInput();
+            String[] options = neighbors.split(" ");
+
+            for (String room : options) {
+                if (input.equals(room)) {
+                    validDestination = true;
+                }
+            }
+        }
+        return input;
+    }
+
+    public void pass(String pass) {
+        manager.newOutput(pass);
+    }
+
     public Player[] getPlayers() {
         return players;
     }

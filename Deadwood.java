@@ -97,7 +97,10 @@ public class Deadwood {
                         // prompt for new location
 
                         Room playerLocation = locationManager.getPlayerLocation(p);
-                        inpM.newInput("Where would you like to move: " + playerLocation.neighborsString());
+                        // pass is a placeHolder method while move capabilities are added to parser
+                        // inpP.pass("Where would you like to move: " +
+                        // playerLocation.neighborsString());
+                        Room location = board.roomByName(inpP.getDestination(playerLocation.neighborsString()));
 
                         locationManager.move(p, location);
                         // if invalid, repeat. if valid, prompt upgrade.
