@@ -11,12 +11,12 @@ public class Deadwood {
 
     // method to start a game
     public static void start() {
-        InpManager inpM = new InpManager();
+        // create an input parser, which will create an input manager
         InpParser inpP = new InpParser();
         XMLParser xml = new XMLParser();
         Board board = new Board(xml.readBoardData());
         SceneDeck deck = new SceneDeck(xml.readCardData());
-        inpM.startGame();
+        inpP.startGame();
     }
 
     // method to end a game
