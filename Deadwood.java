@@ -19,10 +19,13 @@ public class Deadwood {
 
     // create an input parser, which will create an input manager
     public void start(int numPlayers) {
+        // creating an input parser, which creates an input manager
+        // parser acts as the control, manager acts as the view
         InpParser inpP = new InpParser();
         XMLParser xml = new XMLParser();
         Board board = new Board(xml.readBoardData());
         SceneDeck deck = new SceneDeck(xml.readCardData());
+        // leads to initialization of days, player count
         inpP.startGame();
     }
 
