@@ -93,14 +93,13 @@ public class Deadwood {
             char action = inpP.handleAction();
             for (Player p : players) {
                 switch (action) {
-                    case ('m'): // can you move with a roll?
+                    case ('m'): // can you move with a roll? no, you must act
                         // prompt for new location
 
                         Room playerLocation = locationManager.getPlayerLocation(p);
-                        // pass is a placeHolder method while move capabilities are added to parser
-                        // inpP.pass("Where would you like to move: " +
-                        // playerLocation.neighborsString());
                         Room location = board.roomByName(inpP.getDestination(playerLocation.neighborsString()));
+                        // in theory, the way getDestination is implemented in InpManager should force a
+                        // valid room name to be returned
 
                         locationManager.move(p, location);
                         // if invalid, repeat. if valid, prompt upgrade.
@@ -109,8 +108,12 @@ public class Deadwood {
                     case ('r'):
                         p.addPracticeChip();
                     case ('u'):
-                        int rank;
-                        Boolean upgradingWithMoney;
+                        int[] upgrade = inpP.upgradeInfo();
+                        int rank = upgrade[1];
+                        Boolean upgradingWithMoney = false;
+                        if (upgrade[0] == 1) {
+                            upgradingWithMoney = true;
+                        }
                         castingOffice.upgrade(p, rank, upgradingWithMoney, locationManager, currencyManager);
                         // if invalid, repeat, if valid, prompt move.
                     case ('t'):

@@ -76,12 +76,13 @@ public class InpParser {
         }
     }
 
+    // forces user to input a valid single character action selector
     public char handleAction() {
         char ret;
         String input = "";
         boolean validInput = false;
         while (!validInput) {
-            manager.newOutput("Would you like to (m)ove, (r)ehearse, (a)ct, (u)pgrade, or (t)ake a roll?");
+            manager.newOutput("Would you like to (m)ove, (r)ehearse, (a)ct, (u)pgrade, or (t)ake a roll? m/r/a/u/t");
             input = manager.newInput();
             if (input.length() != 1) {
                 manager.newOutput("Please enter a single character: m, r, a, u, or t");
@@ -99,6 +100,7 @@ public class InpParser {
         return ret;
     }
 
+    // returns the name of the room the user is going to
     public String getDestination(String neighbors) {
         String input = "";
         boolean validDestination = false;
@@ -115,6 +117,48 @@ public class InpParser {
             }
         }
         return input;
+    }
+
+    public int[] upgradeInfo() {
+        String input = "";
+        int[] ret = new int[2];
+        boolean validInfo = false;
+        int rank = 0;
+        int money = 0;
+        while (!validInfo) {
+            manager.newOutput("Would you like to upgrade using (m)oney or (c)redits? m/c");
+            input = manager.newInput();
+            if (input.length() != 1) {
+                manager.newOutput("Please enter a single character: m or c");
+            } else {
+                if (!(input.equals("m") || input.equals("c"))) {
+                    manager.newOutput("Please enter a valid character: m or c");
+                } else {
+                    manager.newOutput("You have chosen " + input);
+                    if (input.equals("m")) {
+                        money = 1;
+                    }
+                    manager.newOutput("What rank would you like to upgrade to?");
+                    input = manager.newInput();
+                    try {
+                        rank = Integer.parseInt(input);
+                        if (2 <= rank && rank <= 6) {
+                            manager.newOutput("You have selected to upgrade to rank " + rank);
+                            validInfo = true;
+                        } else {
+                            manager.newOutput("Select a valid rank to upgrade to [2-6]. Please try again.");
+                        }
+
+                    } catch (Exception e) {
+                        manager.newOutput("That's not a number! Please try again.");
+                        input = manager.newInput();
+                    }
+                }
+            }
+        }
+        ret[0] = money;
+        ret[1] = rank;
+        return ret;
     }
 
     public void pass(String pass) {
