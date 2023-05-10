@@ -36,7 +36,7 @@ public class InpParser {
                 }
 
             } catch (Exception e) {
-                System.out.println("That's not a number! Please try again. Valid player counts are [2-8]");
+                manager.newOutput("That's not a number! Please try again. Valid player counts are [2-8]");
                 input = manager.newInput();
             }
         }
@@ -44,7 +44,7 @@ public class InpParser {
         // once a valid player count is chosen, a name, must be given to each player
         // currently nothing stopping players from having matching names...
         for (int i = 1; i <= playerCount; i++) {
-            System.out.println("Enter a name for Player " + i);
+            manager.newOutput("Enter a name for Player " + i);
             input = manager.newInput();
             names.add(input);
         }
@@ -76,14 +76,27 @@ public class InpParser {
         }
     }
 
-    public String handleAction() {
+    public char handleAction() {
+        char ret;
         String input = "";
         boolean validInput = false;
-        // manager.newInput();
         while (!validInput) {
             manager.newOutput("Would you like to (m)ove, (r)ehearse, (a)ct, (u)pgrade, or (t)ake a roll?");
+            input = manager.newInput();
+            if (input.length() != 1) {
+                manager.newOutput("Please enter a single character: m, r, a, u, or t");
+            } else {
+                if (!(input.equals("m") || input.equals("r") || input.equals("a") || input.equals("u")
+                        || input.equals("t"))) {
+                    manager.newOutput("Please enter a valid character: m, r, a, u, or t");
+                } else {
+                    manager.newOutput("You have chosen " + input);
+                    validInput = true;
+                }
+            }
         }
-        return input;
+        ret = input.charAt(0);
+        return ret;
     }
 
     public Player[] getPlayers() {

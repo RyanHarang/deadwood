@@ -11,6 +11,7 @@ public class Deadwood {
 
     private Board board;
     private SceneDeck deck;
+    private InpParser inpP;
 
     // constructor
     public static void main(String[] args) {
@@ -22,7 +23,7 @@ public class Deadwood {
     public void start(int numPlayers) {
         // creating an input parser, which creates an input manager
         // parser acts as the control, manager acts as the view
-        InpParser inpP = new InpParser();
+        inpP = new InpParser();
         // calling startgame in InpParser
         // initializes days and players
         inpP.startGame();
@@ -89,8 +90,7 @@ public class Deadwood {
 
         while (numActiveScenes > 1) {
             // for every player?
-            inpM.newInput("Would you like to (m)ove, (r)ehearse, (a)ct, (u)pgrade, or (t)ake a roll?");
-            char action = inpP.handleInputFirstLetter();
+            char action = inpP.handleAction();
             for (Player p : players) {
                 switch (action) {
                     case ('m'): // can you move with a roll?
