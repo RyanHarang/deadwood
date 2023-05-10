@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Deadwood {
     private int days;
     private Player[] players;
@@ -48,6 +50,22 @@ public class Deadwood {
     // method to end a game
     public void end() {
         // calculates score, determines winner
+        int score = 0;
+        ArrayList<Player> winners = new ArrayList<Player>();
+        // first loop finds highest score
+        for (Player player : players) {
+            if (player.getScore() >= score) {
+                score = player.getScore();
+            }
+        }
+        // second loop adds all players who achieved this score to winners
+        for (Player player : players) {
+            System.out.println(player.getName() + " scored " + player.getScore() + " points.");
+            if (player.getScore() == score) {
+                winners.add(player);
+                System.out.println("This was a winning score.");
+            }
+        }
     }
 
     // getters
