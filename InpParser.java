@@ -19,7 +19,7 @@ public class InpParser {
         String input = "";
 
         // prompt for player count user inputManager
-        System.out.println("Welcome to Deadwood! Please enter the number of players to play with [2-8]: ");
+        manager.newOutput("Welcome to Deadwood! Please enter the number of players to play with [2-8]: ");
         input = manager.newInput();
         // while loop to prevent forward progress until a valid player count is entered
         while (!validPC) {
@@ -30,9 +30,9 @@ public class InpParser {
                 playerCount = Integer.parseInt(input);
                 if (2 <= playerCount && playerCount <= 8) {
                     validPC = true;
-                    System.out.println("You have seleved to play with " + playerCount + " players.");
+                    manager.newOutput("You have seleved to play with " + playerCount + " players.");
                 } else {
-                    System.out.println("Deadwood requires a [2-8] players to play! Please try again");
+                    manager.newOutput("Deadwood requires a [2-8] players to play! Please try again");
                 }
 
             } catch (Exception e) {
@@ -77,7 +77,12 @@ public class InpParser {
     }
 
     public String handleAction() {
-        String input = manager.newInput();
+        String input = "";
+        boolean validInput = false;
+        // manager.newInput();
+        while (!validInput) {
+            manager.newOutput("Would you like to (m)ove, (r)ehearse, (a)ct, (u)pgrade, or (t)ake a roll?");
+        }
         return input;
     }
 

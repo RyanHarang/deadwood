@@ -19,4 +19,8 @@ public class InpManager {
         scan.close();
         return userInput;
     }
+
+    public void newOutput(String output) {
+        System.out.println(output);
+    }
 }
