@@ -45,6 +45,10 @@ public class Player implements Comparable<Player> {
         return practiceChips;
     }
 
+    public int getScore() {
+        return money + credits + (5 * rank);
+    }
+
     // setters
     public void setRole(Role role) {
         this.role = role;
