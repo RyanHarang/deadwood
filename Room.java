@@ -18,9 +18,9 @@ public class Room {
         this.roles = roles;
     }
 
-    public String neighborsString(){
+    public String neighborsString() {
         String neighbors = "";
-        for(Room r: adjacents){
+        for (Room r : adjacents) {
             neighbors += r.getName() + " ";
         }
         return neighbors;
@@ -71,12 +71,9 @@ public class Room {
         adjacents = rooms;
     }
 
-    // might not be needed
-    /*
-     * public void setShots(int shots) {
-     * this.shots = shots;
-     * }
-     */
+    public void removeShots() {
+        shots--;
+    }
 
     public void setScene(Scene scene) {
         this.scene = scene;

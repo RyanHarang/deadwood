@@ -1,17 +1,9 @@
-<<<<<<< HEAD
-import java.util.Scanner;
-public class InpParser {
-
-    Scanner s = new Scanner(System.in);
-    public InpParser() {
-=======
 import java.util.ArrayList;
 
 public class InpParser {
 
     private int days;
     private Player[] players;
->>>>>>> d6ffd90590bd0696bf3f657a1da68678d24cf1a7
 
     private InpManager manager;
 
@@ -82,6 +74,11 @@ public class InpParser {
                 players[i].setRank(2);
             }
         }
+    }
+
+    public String handleAction() {
+        String input = manager.newInput();
+        return input;
     }
 
     public Player[] getPlayers() {

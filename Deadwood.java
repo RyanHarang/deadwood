@@ -8,15 +8,9 @@ public class Deadwood {
     private LocationManager locationManager;
     private CurrencyManager currencyManager;
     private CastingOffice castingOffice;
-<<<<<<< HEAD
-    private InpManager inpM;
-    private InpParser inpP;
 
-
-=======
     private Board board;
     private SceneDeck deck;
->>>>>>> d6ffd90590bd0696bf3f657a1da68678d24cf1a7
 
     // constructor
     public static void main(String[] args) {
@@ -25,9 +19,6 @@ public class Deadwood {
     }
 
     // method to start a game
-    public static void start() {
-    }
-
     public void start(int numPlayers) {
         // creating an input parser, which creates an input manager
         // parser acts as the control, manager acts as the view
@@ -47,11 +38,6 @@ public class Deadwood {
         for (int i = 0; i < board.getRooms().length; i++) {
             board.getRooms()[i].setScene(deck.getScene());
         }
-
-        // create players using the arrayList of names?
-        // which class should create player objects for the game?
-        //
-        // currently handled by input parser which converts a list of names into players
     }
 
     // method to end a game
@@ -101,58 +87,33 @@ public class Deadwood {
     // day
     public void gameLoop() {
 
-<<<<<<< HEAD
-        while(numActiveScenes > 1){
-        // for every player?
-        inpM.newInput("Would you like to (m)ove, (r)ehearse, (a)ct, (u)pgrade, or (t)ake a roll?");
-        char action = inpP.handleInputFirstLetter();
-            for(Player p: players){
-                switch(action){
-                    case('m'): // can you move with a roll?
-                    //prompt for new location
-
-                        Room playerLocation = locationManager.getPlayerLocation(p);
-                        inpM.newInput("Where would you like to move: "+ playerLocation.neighborsString());
-                        
-                        locationManager.move(p, location);
-                        // if invalid, repeat. if valid, prompt upgrade.
-                    case('a'):
-                        //where do we handle act
-                    case('r'):
-                        p.addPracticeChip();
-                    case('u'):
-=======
         while (numActiveScenes > 1) {
             // for every player?
-            String move;
+            inpM.newInput("Would you like to (m)ove, (r)ehearse, (a)ct, (u)pgrade, or (t)ake a roll?");
+            char action = inpP.handleInputFirstLetter();
             for (Player p : players) {
                 switch (action) {
-                    case ("move"): // can you move with a roll?
+                    case ('m'): // can you move with a roll?
                         // prompt for new location
-                        Room location;
+
+                        Room playerLocation = locationManager.getPlayerLocation(p);
+                        inpM.newInput("Where would you like to move: " + playerLocation.neighborsString());
+
                         locationManager.move(p, location);
                         // if invalid, repeat. if valid, prompt upgrade.
-                    case ("act"):
+                    case ('a'):
                         // where do we handle act
-                    case ("rehearse"):
+                    case ('r'):
                         p.addPracticeChip();
-                    case ("upgrade"):
->>>>>>> d6ffd90590bd0696bf3f657a1da68678d24cf1a7
+                    case ('u'):
                         int rank;
                         Boolean upgradingWithMoney;
                         castingOffice.upgrade(p, rank, upgradingWithMoney, locationManager, currencyManager);
                         // if invalid, repeat, if valid, prompt move.
-<<<<<<< HEAD
-                    case('t'):
-                        //can do this after moving
-                        //gotta implement this.
-                        // list roles, prompt which one you want to take, p.setRole, 
-=======
-                    case ("take roll"):
+                    case ('t'):
                         // can do this after moving
                         // gotta implement this.
                         // list roles, prompt which one you want to take, p.setRole,
->>>>>>> d6ffd90590bd0696bf3f657a1da68678d24cf1a7
                 }
                 if (numActiveScenes == 1) {
                     endDay();
