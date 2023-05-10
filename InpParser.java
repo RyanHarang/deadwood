@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class InpParser {
 
     private int days;
-    private ArrayList<String> names;
+    private Player[] players;
 
     private InpManager manager;
 
@@ -19,15 +19,19 @@ public class InpParser {
     // Instead for now I've decided to make private variables that will all be set
     // and then deadwood can retrieve them via getters
     public void startGame() {
-        names = new ArrayList<String>();
+        ArrayList<String> names = new ArrayList<String>();
         int playerCount = 0;
         boolean validPC = false;
         String input = "";
 
-        System.out
-                .println("Welcome to deadwood! Please enter the number of players you would like to play with [2-8]: ");
+        // prompt for player count user inputManager
+        System.out.println("Welcome to Deadwood! Please enter the number of players to play with [2-8]: ");
         input = manager.newInput();
+        // while loop to prevent forward progress until a valid player count is entered
         while (!validPC) {
+            // check if input is an integer
+            // if it is check if it falls between [2-8]
+            // if not an integer throw an error message and prompt for input again
             try {
                 playerCount = Integer.parseInt(input);
                 if (2 <= playerCount && playerCount <= 8) {
@@ -43,12 +47,17 @@ public class InpParser {
             }
         }
 
+        // once a valid player count is chosen, a name, must be given to each player
+        // currently nothing stopping players from having matching names...
         for (int i = 1; i <= playerCount; i++) {
             System.out.println("Enter a name for Player " + i);
             input = manager.newInput();
             names.add(input);
         }
 
+        initializePlayers(names);
+
+        // set days based on player count
         if (playerCount <= 3) {
             days = 3;
         } else {
@@ -56,8 +65,16 @@ public class InpParser {
         }
     }
 
-    public ArrayList<String> getNames() {
-        return names;
+    // takes an arraylist of names and creates player onjects
+    private void initializePlayers(ArrayList<String> names) {
+        players = new Player[names.size()];
+        for (int i = 0; i < names.size(); i++) {
+            players[i] = (new Player(names.get(i)));
+        }
+    }
+
+    public Player[] getPlayers() {
+        return players;
     }
 
     public int getDays() {

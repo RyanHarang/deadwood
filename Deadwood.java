@@ -19,14 +19,18 @@ public class Deadwood {
     public static void start() {
     }
 
-    // create an input parser, which will create an input manager
     public void start(int numPlayers) {
         // creating an input parser, which creates an input manager
         // parser acts as the control, manager acts as the view
         InpParser inpP = new InpParser();
-        XMLParser xml = new XMLParser();
+        // calling startgame in InpParser
+        // initializes days and players
         inpP.startGame();
         days = inpP.getDays();
+        players = inpP.getPlayers();
+
+        // creating an XMLParser which creates the board and scene deck
+        XMLParser xml = new XMLParser();
         deck = new SceneDeck(xml.readCardData());
         // board gets created by parser, each room has no scene to start
         board = new Board(xml.readBoardData());
@@ -37,11 +41,13 @@ public class Deadwood {
 
         // create players using the arrayList of names?
         // which class should create player objects for the game?
+        //
+        // currently handled by input parser which converts a list of names into players
     }
 
     // method to end a game
     public void end() {
-
+        // calculates score, determines winner
     }
 
     // getters
@@ -59,10 +65,6 @@ public class Deadwood {
 
     // setters
     public void adjustDays(int num) {
-
-    }
-
-    public void addPlayer(Player player) {
 
     }
 
