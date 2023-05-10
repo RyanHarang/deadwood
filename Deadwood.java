@@ -1,5 +1,5 @@
 public class Deadwood {
-    private int Days;
+    private int days;
     private Player[] players;
     private Dice dice;
     private int numActiveScenes;
@@ -26,7 +26,10 @@ public class Deadwood {
         Board board = new Board(xml.readBoardData());
         SceneDeck deck = new SceneDeck(xml.readCardData());
         // leads to initialization of days, player count
+
         inpP.startGame();
+        days = inpP.getDays();
+        // create players using the arrayList of names?
     }
 
     // method to end a game
@@ -36,7 +39,7 @@ public class Deadwood {
 
     // getters
     public int getDays() {
-        return this.Days;
+        return this.days;
     }
 
     public int getNumPlayers() {
