@@ -2,8 +2,10 @@ import java.util.Map;
 import java.util.ArrayList;
 
 public class LocationManager {
-    private Map<Player, Room> locations;
-    private Room trailers;
+    //private static LocationManager locationManager;
+    private static Map<Player, Room> locations;
+    private static Room trailers;
+    
 
     // constructor
     public LocationManager(ArrayList<Player> playerList, Room trailers) {

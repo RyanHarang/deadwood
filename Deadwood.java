@@ -8,8 +8,15 @@ public class Deadwood {
     private LocationManager locationManager;
     private CurrencyManager currencyManager;
     private CastingOffice castingOffice;
+<<<<<<< HEAD
+    private InpManager inpM;
+    private InpParser inpP;
+
+
+=======
     private Board board;
     private SceneDeck deck;
+>>>>>>> d6ffd90590bd0696bf3f657a1da68678d24cf1a7
 
     // constructor
     public static void main(String[] args) {
@@ -94,6 +101,27 @@ public class Deadwood {
     // day
     public void gameLoop() {
 
+<<<<<<< HEAD
+        while(numActiveScenes > 1){
+        // for every player?
+        inpM.newInput("Would you like to (m)ove, (r)ehearse, (a)ct, (u)pgrade, or (t)ake a roll?");
+        char action = inpP.handleInputFirstLetter();
+            for(Player p: players){
+                switch(action){
+                    case('m'): // can you move with a roll?
+                    //prompt for new location
+
+                        Room playerLocation = locationManager.getPlayerLocation(p);
+                        inpM.newInput("Where would you like to move: "+ playerLocation.neighborsString());
+                        
+                        locationManager.move(p, location);
+                        // if invalid, repeat. if valid, prompt upgrade.
+                    case('a'):
+                        //where do we handle act
+                    case('r'):
+                        p.addPracticeChip();
+                    case('u'):
+=======
         while (numActiveScenes > 1) {
             // for every player?
             String move;
@@ -109,14 +137,22 @@ public class Deadwood {
                     case ("rehearse"):
                         p.addPracticeChip();
                     case ("upgrade"):
+>>>>>>> d6ffd90590bd0696bf3f657a1da68678d24cf1a7
                         int rank;
                         Boolean upgradingWithMoney;
                         castingOffice.upgrade(p, rank, upgradingWithMoney, locationManager, currencyManager);
                         // if invalid, repeat, if valid, prompt move.
+<<<<<<< HEAD
+                    case('t'):
+                        //can do this after moving
+                        //gotta implement this.
+                        // list roles, prompt which one you want to take, p.setRole, 
+=======
                     case ("take roll"):
                         // can do this after moving
                         // gotta implement this.
                         // list roles, prompt which one you want to take, p.setRole,
+>>>>>>> d6ffd90590bd0696bf3f657a1da68678d24cf1a7
                 }
                 if (numActiveScenes == 1) {
                     endDay();

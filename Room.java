@@ -18,6 +18,14 @@ public class Room {
         this.roles = roles;
     }
 
+    public String neighborsString(){
+        String neighbors = "";
+        for(Room r: adjacents){
+            neighbors += r.getName() + " ";
+        }
+        return neighbors;
+    }
+
     public String toString() {
         String adjs = "", areas = "";
         for (int i = 0; i < 4; i++) {
