@@ -11,13 +11,7 @@ public class InpParser {
         manager = InpManager.getInstance();
     }
 
-    // this method will set the player count and day count in deadwood
-    // potentially easiest to return an array formatted something like
-    // [playerCount, days] and have deadwood use the return to initialize it's own
-    // variables
-    //
-    // Instead for now I've decided to make private variables that will all be set
-    // and then deadwood can retrieve them via getters
+    // method for getting player count and names from players
     public void startGame() {
         ArrayList<String> names = new ArrayList<String>();
         int playerCount = 0;
@@ -88,9 +82,5 @@ public class InpParser {
 
     public int getDays() {
         return days;
-    }
-
-    public void handleInput(String inp) {
-
     }
 }
