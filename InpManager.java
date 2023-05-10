@@ -12,12 +12,6 @@ public class InpManager {
         return manager;
     }
 
-    public void startGame() {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Welcome to deadwood!");
-        scan.close();
-    }
-
     // method for prompting the user for input
     public String newInput() {
         Scanner scan = new Scanner(System.in);

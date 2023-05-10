@@ -6,6 +6,8 @@ public class Deadwood {
     private LocationManager locationManager;
     private CurrencyManager currencyManager;
     private CastingOffice castingOffice;
+    private Board board;
+    private SceneDeck deck;
 
     // constructor
     public static void main(String[] args) {
@@ -23,13 +25,18 @@ public class Deadwood {
         // parser acts as the control, manager acts as the view
         InpParser inpP = new InpParser();
         XMLParser xml = new XMLParser();
-        Board board = new Board(xml.readBoardData());
-        SceneDeck deck = new SceneDeck(xml.readCardData());
-        // leads to initialization of days, player count
-
         inpP.startGame();
         days = inpP.getDays();
+        deck = new SceneDeck(xml.readCardData());
+        // board gets created by parser, each room has no scene to start
+        board = new Board(xml.readBoardData());
+        // loop for setting an initial scene at each room
+        for (int i = 0; i < board.getRooms().length; i++) {
+            board.getRooms()[i].setScene(deck.getScene());
+        }
+
         // create players using the arrayList of names?
+        // which class should create player objects for the game?
     }
 
     // method to end a game
