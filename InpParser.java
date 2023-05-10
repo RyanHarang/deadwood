@@ -67,9 +67,18 @@ public class InpParser {
 
     // takes an arraylist of names and creates player onjects
     private void initializePlayers(ArrayList<String> names) {
-        players = new Player[names.size()];
-        for (int i = 0; i < names.size(); i++) {
+        int count = names.size();
+        players = new Player[count];
+        // creates a number of player objects with starting values based on player count
+        for (int i = 0; i < count; i++) {
             players[i] = (new Player(names.get(i)));
+            if (count == 5) {
+                players[i].setCredits(2);
+            } else if (count == 6) {
+                players[i].setCredits(4);
+            } else if (count > 6) {
+                players[i].setRank(2);
+            }
         }
     }
 
