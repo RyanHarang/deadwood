@@ -58,10 +58,6 @@ public class Player implements Comparable<Player> {
         this.role = role;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setRank(int rank) {
         this.rank = rank;
     }
