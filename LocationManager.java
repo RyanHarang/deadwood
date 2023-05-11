@@ -11,6 +11,7 @@ public class LocationManager {
         System.out.println(this.trailers.toString());
         for (Player p : playerList) {
             locations.put(p, this.trailers);
+
         }
         // all players in the trailers
     }
@@ -31,9 +32,10 @@ public class LocationManager {
     public boolean move(Player player, Room new_location) {
         boolean isValidMove = validateMove(player, new_location);
         if (isValidMove) {
-            locations.get(player).removePlayer(player);
+            System.out.println(locations.get(player).toString());
+            // locations.get(player).removePlayer(player);
             locations.put(player, new_location);
-            new_location.addPlayer(player);
+            // new_location.addPlayer(player);
         }
         return isValidMove;
     }
@@ -50,7 +52,9 @@ public class LocationManager {
         return locations.get(player);
     }
 
-    public ArrayList<Player> getOccupants(Room room) {
-        return room.getPlayers();
-    }
+    /*
+     * public ArrayList<Player> getOccupants(Room room) {
+     * return room.getPlayers();
+     * }
+     */
 }
