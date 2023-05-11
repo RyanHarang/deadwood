@@ -105,14 +105,20 @@ public class InpParser {
         boolean validDestination = false;
 
         while (!validDestination) {
-            manager.newOutput("Where would you like to move: " + neighbors);
+            manager.newOutput("Where would you like to move? " + neighbors);
             input = manager.newInput();
             String[] options = neighbors.split(" ");
 
             for (String room : options) {
-                if (input.equals(room)) {
+                if (room.equalsIgnoreCase(input)) {
                     validDestination = true;
+                    break;
                 }
+            }
+            // if user doesn't give a valid destination room
+            if (!validDestination) {
+                manager.newOutput(
+                        "That is not a valid destination. Please choose one of the shown options. " + neighbors);
             }
         }
         return input;
