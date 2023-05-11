@@ -20,23 +20,6 @@ public class CurrencyManager {
         return currencyManager;
     }
 
-    // getters
-    public int getMoney(Player player) {
-        return 0;
-    }
-
-    public int getCredits(Player player) {
-        return 0;
-    }
-
-    public int getRank(Player player) {
-        return 0;
-    }
-
-    public int getScore(Player player) {
-        return 0;
-    }
-
     // method to take players, compare all their scores, and determine the winner
     public Player determineWinner(Player[] players) {
         return null;
