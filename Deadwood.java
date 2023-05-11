@@ -4,7 +4,7 @@ public class Deadwood {
     private static int days;
     private static Player[] players;
     private Dice dice;
-    private int numActiveScenes;
+    private static int numActiveScenes;
     private static LocationManager locationManager;
     private static CurrencyManager currencyManager;
     private static CastingOffice castingOffice;
@@ -37,12 +37,13 @@ public class Deadwood {
         for (int i = 0; i < board.getRooms().length; i++) {
             board.getRooms()[i].setScene(deck.getScene());
         }
+        gameLoop();
     }
 
     // method to end a game
-    public void end() {
+    public static void end() {
 
-        // need to add part that closes scanner in InpManager
+        // need to add part that closes scanner in InpManager after everything else
 
         // calculates score, determines winner
         int score = 0;
@@ -64,30 +65,29 @@ public class Deadwood {
     }
 
     // getters
-    public int getDays() {
-        return this.days;
+    public static int getDays() {
+        return days;
     }
 
-    public int getNumPlayers() {
-        return this.players.length;
+    public static int getNumPlayers() {
+        return players.length;
     }
 
-    public Player[] getPlayers() {
-        return this.players;
+    public static Player[] getPlayers() {
+        return players;
     }
 
     // setters
-    public void adjustDays(int num) {
-
+    public static void adjustDays() {
+        days--;
     }
 
-    public void decrementScenes() {
+    public static void decrementScenes() {
         numActiveScenes--;
     }
 
-    // for smaller methods, we can break this up, currently will represent one game
-    // day
-    public void gameLoop() {
+    // for smaller methods we can break this up, currently represents one game day
+    public static void gameLoop() {
 
         while (numActiveScenes > 1) {
             // for every player?
@@ -139,7 +139,7 @@ public class Deadwood {
 
     }
 
-    public void endDay() {
+    public static void endDay() {
         locationManager.returnTrailers();
         // inpP.startDay();
 
