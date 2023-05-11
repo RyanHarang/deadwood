@@ -103,6 +103,9 @@ public class Deadwood {
                         // valid room name to be returned
 
                         locationManager.move(p, location);
+                        // must then check: scene card face up or down?
+                        // open roles on scene or room?
+                        // does player want to take a role?
                         // if invalid, repeat. if valid, prompt upgrade.
                     case ('a'):
                         // where do we handle act
