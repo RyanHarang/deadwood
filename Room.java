@@ -42,12 +42,6 @@ public class Room {
         return roles;
     }
 
-    /*
-     * public ArrayList<Player> getPlayers() {
-     * return actors;
-     * }
-     */
-
     public ArrayList<Room> getAdjacents() {
         return adjacents;
     }
@@ -80,18 +74,4 @@ public class Room {
     public void setScene(Scene scene) {
         this.scene = scene;
     }
-
-    /*
-     * public void addPlayer(Player player) {
-     * actors.add(player);
-     * }
-     */
-
-    /*
-     * public void removePlayer(Player player) {
-     * System.out.println(player.toString());
-     * actors.remove(player);
-     * }
-     */
-
 }
