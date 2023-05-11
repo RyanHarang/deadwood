@@ -5,7 +5,6 @@ public class Room {
     private String name;
     private int shots;
     private ArrayList<Role> roles;
-    // private ArrayList<Player> actors;
     private Scene scene;
     private int[] area;
     // area formatted as x, y, h, w
