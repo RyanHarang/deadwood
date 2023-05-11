@@ -109,7 +109,9 @@ public class Deadwood {
                         playerActions.playerRehearse(p);
                     case ('u'):
                         playerActions.playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
-                        inpP.moveAfterUpgrade();
+                        if(inpP.moveAfterUpgrade()){
+                            playerActions.playerMove(p, locationManager, board, inpP, castingOffice, currencyManager);
+                        }
                     case ('t'):
                         playerActions.playerTakeRole(inpP, p, locationManager.getPlayerLocation(p));
                 }

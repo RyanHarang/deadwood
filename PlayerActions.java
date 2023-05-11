@@ -15,12 +15,12 @@ public class PlayerActions {
         // must then check: scene card face up or down?
         // would you like to take a roll?
         if(inpP.takingRole()){
-            playerTakeRole();
+            playerTakeRole(inpP, p, location);
         }
         // open roles on scene or room?
         // does player want to take a role?
         if(location.getName().equals("office"));
-        if(inpP.upgrade()){
+        if(inpP.upgrading()){
             playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
         }
         // if invalid, repeat. if valid, prompt upgrade.
