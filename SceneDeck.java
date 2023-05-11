@@ -9,7 +9,7 @@ public class SceneDeck {
 
     // return random scene, remove scene from deck
     public Scene getScene() {
-        int rand = (int) (Math.random() * scenes.size()) + 1;
+        int rand = (int) (Math.random() * scenes.size());
         Scene sc = scenes.get(rand);
         scenes.remove(rand);
         return sc;
