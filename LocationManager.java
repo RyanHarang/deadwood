@@ -3,6 +3,7 @@ import java.util.*;
 public class LocationManager {
     // private static LocationManager locationManager;
     private static Map<Player, Room> locations = new HashMap<Player, Room>();
+    private Player[] players;
     private Room trailers;
 
     // constructor
@@ -13,7 +14,9 @@ public class LocationManager {
             locations.put(p, this.trailers);
 
         }
+        players = playerList;
         // all players in the trailers
+        // make list for later use of all players
     }
 
     // method to check if moves are legal, called by move
@@ -52,9 +55,15 @@ public class LocationManager {
         return locations.get(player);
     }
 
-    /*
-     * public ArrayList<Player> getOccupants(Room room) {
-     * return room.getPlayers();
-     * }
-     */
+    public ArrayList<Player> getOccupants(Room room) {
+        // can have a list of all players
+        // loop through the list of players and get their rooms from the hashmap
+        ArrayList<Player> occupants = new ArrayList<Player>();
+        for (Player player : players) {
+            if ((locations.get(player)).equals(room)) {
+                occupants.add(player);
+            }
+        }
+        return occupants;
+    }
 }

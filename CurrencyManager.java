@@ -4,6 +4,7 @@ import java.util.Collections;
 
 public class CurrencyManager {
     private static CurrencyManager currencyManager;
+    private static LocationManager locationManager;
     // temporary?
     public Dice dice;
 
@@ -12,13 +13,12 @@ public class CurrencyManager {
         dice = new Dice();
     }
 
-    public static CurrencyManager getCurrencyManager(){
-        if(currencyManager == null){
+    public static CurrencyManager getCurrencyManager() {
+        if (currencyManager == null) {
             currencyManager = new CurrencyManager();
         }
         return currencyManager;
     }
-
 
     // getters
     public int getMoney(Player player) {
@@ -40,6 +40,10 @@ public class CurrencyManager {
     // method to take players, compare all their scores, and determine the winner
     public Player determineWinner(Player[] players) {
         return null;
+    }
+
+    public static void setLocMan(LocationManager locMan) {
+        locationManager = locMan;
     }
 
     // setters
@@ -66,7 +70,7 @@ public class CurrencyManager {
         // in which case nobody gets payed
         ArrayList<Player> onCard = new ArrayList<Player>();
         ArrayList<Player> offCard = new ArrayList<Player>();
-        for (Player p : room.getPlayers()) {
+        for (Player p : locationManager.getOccupants(room)) {
             if (p.getRole().isMain()) {
                 onCard.add(p);
             } else {
