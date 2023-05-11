@@ -166,6 +166,59 @@ public class InpParser {
         return ret;
     }
 
+    public boolean takingRole(){
+        String input = "";
+        boolean validInfo = false;
+        char yes_no = ' ';
+        while(!validInfo){
+            manager.newOutput("Would you like to take a role? y/n");
+            yes_no = manager.newInput().charAt(0);
+            if(yes_no == 'y' || yes_no =='n'){
+                validInfo = true;
+            }
+            else{
+                manager.newOutput("That's not a y or an n! Please try again.");
+            }   
+        }
+        if(yes_no == 'n'){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
+
+    public Role takeRole(ArrayList<Role> availableRoles){
+        boolean validName = false;
+        String name = "";
+        String output = "What role would you like to take:\n";
+        ArrayList<String> names = new ArrayList<String>();
+        for(Role r: availableRoles){
+            output += r.toString() + "\n";
+            names.add(r.getName());
+        }
+
+
+        while(!validName){
+            manager.newOutput(output);
+            name = manager.newInput();
+            if(names.contains(output)){
+                validName = true;
+            }
+            else{
+                manager.newOutput("That's not a name! Please try again.");
+            }
+        }
+
+        for(Role r: availableRoles){
+            if(name.equals(r.getName())){
+                return r;
+            }
+        }
+        return null;
+    }
+
     public void pass(String pass) {
         manager.newOutput(pass);
     }

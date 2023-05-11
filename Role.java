@@ -55,6 +55,8 @@ public class Role {
         return isMain;
     }
 
+    
+
     // setters
     public void setOccupant(Player player) {
         occupant = player;
