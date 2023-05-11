@@ -30,7 +30,7 @@ public class InpParser {
                 playerCount = Integer.parseInt(input);
                 if (2 <= playerCount && playerCount <= 8) {
                     validPC = true;
-                    manager.newOutput("You have seleved to play with " + playerCount + " players.");
+                    manager.newOutput("You have selected to play with " + playerCount + " players.");
                 } else {
                     manager.newOutput("Deadwood requires a [2-8] players to play! Please try again");
                 }
@@ -187,6 +187,51 @@ public class InpParser {
             return true;
         }
 
+    }
+
+    public boolean moveAfterUpgrade(){
+        String input = "";
+        boolean validInfo = false;
+        char yes_no = ' ';
+        while(!validInfo){
+            manager.newOutput("Would you like to move? y/n");
+            yes_no = manager.newInput().charAt(0);
+            if(yes_no == 'y' || yes_no =='n'){
+                validInfo = true;
+            }
+            else{
+                manager.newOutput("That's not a y or an n! Please try again.");
+            }   
+        }
+        if(yes_no == 'n'){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+
+    public boolean upgrading(){
+        String input = "";
+        boolean validInfo = false;
+        char yes_no = ' ';
+        while(!validInfo){
+            manager.newOutput("Would you like to upgrade? y/n");
+            yes_no = manager.newInput().charAt(0);
+            if(yes_no == 'y' || yes_no =='n'){
+                validInfo = true;
+            }
+            else{
+                manager.newOutput("That's not a y or an n! Please try again.");
+            }   
+        }
+        if(yes_no == 'n'){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
     public Role takeRole(ArrayList<Role> availableRoles){
