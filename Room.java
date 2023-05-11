@@ -84,6 +84,7 @@ public class Room {
     }
 
     public void removePlayer(Player player) {
+        player.toString();
         actors.remove(player);
     }
 
