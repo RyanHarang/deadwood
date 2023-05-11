@@ -21,9 +21,9 @@ public class Room {
     public String neighborsString() {
         String neighbors = "";
         for (Room r : adjacents) {
-            neighbors += r.getName() + " ";
+            neighbors += r.getName() + ", ";
         }
-        return neighbors;
+        return neighbors.substring(0, neighbors.length() - 2);
     }
 
     public String toString() {

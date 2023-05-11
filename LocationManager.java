@@ -1,15 +1,14 @@
-import java.util.Map;
-import java.util.ArrayList;
+import java.util.*;
 
 public class LocationManager {
-    //private static LocationManager locationManager;
-    private static Map<Player, Room> locations;
-    private static Room trailers;
-    
+    // private static LocationManager locationManager;
+    private static Map<Player, Room> locations = new HashMap<Player, Room>();
+    private Room trailers;
 
     // constructor
-    public LocationManager(ArrayList<Player> playerList, Room trailers) {
+    public LocationManager(Player[] playerList, Room trailers) {
         this.trailers = trailers;
+        System.out.println(this.trailers.toString());
         for (Player p : playerList) {
             locations.put(p, this.trailers);
         }
