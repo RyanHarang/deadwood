@@ -5,7 +5,7 @@ public class Room {
     private String name;
     private int shots;
     private ArrayList<Role> roles;
-    private ArrayList<Player> actors;
+    // private ArrayList<Player> actors;
     private Scene scene;
     private int[] area;
     // area formatted as x, y, h, w
@@ -42,9 +42,11 @@ public class Room {
         return roles;
     }
 
-    public ArrayList<Player> getPlayers() {
-        return actors;
-    }
+    /*
+     * public ArrayList<Player> getPlayers() {
+     * return actors;
+     * }
+     */
 
     public ArrayList<Room> getAdjacents() {
         return adjacents;
@@ -79,13 +81,17 @@ public class Room {
         this.scene = scene;
     }
 
-    public void addPlayer(Player player) {
-        actors.add(player);
-    }
+    /*
+     * public void addPlayer(Player player) {
+     * actors.add(player);
+     * }
+     */
 
-    public void removePlayer(Player player) {
-        player.toString();
-        actors.remove(player);
-    }
+    /*
+     * public void removePlayer(Player player) {
+     * System.out.println(player.toString());
+     * actors.remove(player);
+     * }
+     */
 
 }
