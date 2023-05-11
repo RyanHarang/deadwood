@@ -1,26 +1,24 @@
 import java.util.ArrayList;
 
 public class Deadwood {
-    private int days;
-    private Player[] players;
+    private static int days;
+    private static Player[] players;
     private Dice dice;
     private int numActiveScenes;
-    private LocationManager locationManager;
-    private CurrencyManager currencyManager;
-    private CastingOffice castingOffice;
+    private static LocationManager locationManager;
+    private static CurrencyManager currencyManager;
+    private static CastingOffice castingOffice;
 
-    private Board board;
-    private SceneDeck deck;
-    private InpParser inpP;
+    private static Board board;
+    private static SceneDeck deck;
+    private static InpParser inpP;
 
-    // constructor
     public static void main(String[] args) {
-        // set days
-        // set players
+        start();
     }
 
     // method to start a game
-    public void start(int numPlayers) {
+    public static void start() {
         // creating an input parser, which creates an input manager
         // parser acts as the control, manager acts as the view
         inpP = new InpParser();
@@ -43,6 +41,9 @@ public class Deadwood {
 
     // method to end a game
     public void end() {
+
+        // need to add part that closes scanner in InpManager
+
         // calculates score, determines winner
         int score = 0;
         ArrayList<Player> winners = new ArrayList<Player>();
@@ -140,6 +141,7 @@ public class Deadwood {
 
     public void endDay() {
         locationManager.returnTrailers();
+        // inpP.startDay();
 
     }
 
