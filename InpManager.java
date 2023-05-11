@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class InpManager {
 
+    private static Scanner scan;
     private static InpManager manager = new InpManager();
 
     // constructor
@@ -14,13 +15,17 @@ public class InpManager {
 
     // method for prompting the user for input
     public String newInput() {
-        Scanner scan = new Scanner(System.in);
+        scan = new Scanner(System.in);
         String userInput = scan.nextLine();
-        scan.close();
+        // scan.close();
         return userInput;
     }
 
     public void newOutput(String output) {
         System.out.println(output);
+    }
+
+    public void end() {
+        scan.close();
     }
 }

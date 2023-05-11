@@ -18,11 +18,11 @@ public class InpParser {
         boolean validPC = false;
         String input = "";
 
-        // prompt for player count user inputManager
-        manager.newOutput("Welcome to Deadwood! Please enter the number of players to play with [2-8]: ");
-        input = manager.newInput();
         // while loop to prevent forward progress until a valid player count is entered
         while (!validPC) {
+            // prompt for player count user inputManager
+            manager.newOutput("Welcome to Deadwood! Please enter the number of players to play with [2-8]: ");
+            input = manager.newInput();
             // check if input is an integer
             // if it is check if it falls between [2-8]
             // if not an integer throw an error message and prompt for input again
@@ -37,7 +37,6 @@ public class InpParser {
 
             } catch (Exception e) {
                 manager.newOutput("That's not a number! Please try again. Valid player counts are [2-8]");
-                input = manager.newInput();
             }
         }
 
