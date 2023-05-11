@@ -34,10 +34,13 @@ public class Deadwood {
         deck = new SceneDeck(xml.readCardData());
         // board gets created by parser, each room has no scene to start
         board = new Board(xml.readBoardData());
+        castingOffice = CastingOffice.getCastingOffice();
+        currencyManager = CurrencyManager.getCurrencyManager();
+        playerActions = new PlayerActions();
         // loop for setting an initial scene at each room
 
         locationManager = new LocationManager(players, board.roomByName("trailer"));
-        CurrencyManager.setLocMan(locationManager);
+        currencyManager.setLocMan(locationManager);
         numActiveScenes = 10;
         gameLoop();
     }
@@ -101,23 +104,29 @@ public class Deadwood {
     public static void dayLoop() {
 
         while (numActiveScenes > 1) {
-            // for every player?
             for (Player p : players) {
+                //print player name
+                inpP.pass("It is " + p.getName() + "'s turn.");
                 char action = inpP.handleAction();
                 switch (action) {
                     case ('m'): // can you move with a roll? no, you must act
                         playerActions.playerMove(p, locationManager, board, inpP, castingOffice, currencyManager);
+                        break;
                     case ('a'):
                         playerActions.playerAct(p, locationManager, currencyManager);
+                        break;
                     case ('r'):
                         playerActions.playerRehearse(p);
+                        break;
                     case ('u'):
                         playerActions.playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
                         if(inpP.moveAfterUpgrade()){
                             playerActions.playerMove(p, locationManager, board, inpP, castingOffice, currencyManager);
                         }
+                        break;
                     case ('t'):
                         playerActions.playerTakeRole(inpP, p, locationManager.getPlayerLocation(p));
+                        break;
                 }
                 if (numActiveScenes == 1) {
                     endDay();

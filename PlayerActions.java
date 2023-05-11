@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 public class PlayerActions {
     private Dice dice = new Dice();
+
+    public PlayerActions(){
+
+    }
+
     public void playerMove(Player p, LocationManager locationManager, Board board, InpParser inpP, CastingOffice castingOffice, CurrencyManager currencyManager){
         // prompt for new location
         Room playerLocation = locationManager.getPlayerLocation(p);
@@ -19,10 +24,12 @@ public class PlayerActions {
         }
         // open roles on scene or room?
         // does player want to take a role?
-        if(location.getName().equals("office"));
-        if(inpP.upgrading()){
-            playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
+        if(location.getName().equals("office")){
+            if(inpP.upgrading()){
+                playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
+            }
         }
+
         // if invalid, repeat. if valid, prompt upgrade.
     }
 
@@ -36,17 +43,18 @@ public class PlayerActions {
         //get roles available to take
         ArrayList<Role> availableRoles = new ArrayList<Role>();
         for(Role r: offCardList){
-            if(r.isOccupied()){
+            if(!r.isOccupied()){
                 availableRoles.add(r);
             }
         }
         for(Role r: onCardList){
-            if(r.isOccupied()){
+            if(!r.isOccupied()){
                 availableRoles.add(r);
             }
         }
         Role role = inpP.takeRole(availableRoles);
         role.setOccupant(p);
+        p.setRole(role);
 
     }
 

@@ -246,9 +246,12 @@ public class InpParser {
         while (!validName) {
             manager.newOutput(output);
             name = manager.newInput();
-            if (names.contains(output)) {
-                validName = true;
-            } else {
+            for(String n: names){
+                if(n.equals(name)){
+                    validName = true;
+                }
+            }
+            if(!validName){
                 manager.newOutput("That's not a name! Please try again.");
             }
         }
