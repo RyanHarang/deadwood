@@ -35,6 +35,10 @@ public class Deadwood {
         // board gets created by parser, each room has no scene to start
         board = new Board(xml.readBoardData());
         // loop for setting an initial scene at each room
+
+        locationManager = new LocationManager(players, board.roomByName("trailer"));
+        CurrencyManager.setLocMan(locationManager);
+        numActiveScenes = 10;
         gameLoop();
     }
 
@@ -84,8 +88,8 @@ public class Deadwood {
         numActiveScenes--;
     }
 
-    public static void gameLoop(){
-        while(days > 0){
+    public static void gameLoop() {
+        while (days > 0) {
             for (int i = 0; i < board.getRooms().length; i++) {
                 board.getRooms()[i].setScene(deck.getScene());
             }
