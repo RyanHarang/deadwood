@@ -16,6 +16,10 @@ public class Player implements Comparable<Player> {
         rank = 1;
     }
 
+    public String toString() {
+        return "Name: " + name + " credits: " + credits + " rank: " + rank + " money: " + money;
+    }
+
     // getters
     public Role getRole() {
         return role;
