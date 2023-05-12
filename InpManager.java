@@ -17,7 +17,6 @@ public class InpManager {
     public String newInput() {
         scan = new Scanner(System.in);
         String userInput = scan.nextLine();
-        // scan.close();
         return userInput;
     }
 

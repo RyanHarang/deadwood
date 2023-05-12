@@ -75,6 +75,11 @@ public class InpParser {
         }
     }
 
+    public void end() {
+        manager.newOutput("Game over.");
+        manager.end();
+    }
+
     // forces user to input a valid single character action selector
     public char handleAction() {
         char ret;

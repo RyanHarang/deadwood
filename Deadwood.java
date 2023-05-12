@@ -47,9 +47,6 @@ public class Deadwood {
 
     // method to end a game
     public static void end() {
-
-        // need to add part that closes scanner in InpManager after everything else
-
         // calculates score, determines winner
         int score = 0;
         ArrayList<Player> winners = new ArrayList<Player>();
@@ -61,34 +58,13 @@ public class Deadwood {
         }
         // second loop adds all players who achieved this score to winners
         for (Player player : players) {
-            System.out.println(player.getName() + " scored " + player.getScore() + " points.");
+            inpP.pass(player.getName() + " scored " + player.getScore() + " points.");
             if (player.getScore() == score) {
                 winners.add(player);
-                System.out.println("This was a winning score.");
+                inpP.pass("This was a winning score.");
             }
         }
-    }
-
-    // getters
-    public static int getDays() {
-        return days;
-    }
-
-    public static int getNumPlayers() {
-        return players.length;
-    }
-
-    public static Player[] getPlayers() {
-        return players;
-    }
-
-    // setters
-    public static void adjustDays() {
-        days--;
-    }
-
-    public static void decrementScenes() {
-        numActiveScenes--;
+        inpP.end();
     }
 
     public static void gameLoop() {
@@ -178,5 +154,27 @@ public class Deadwood {
         else {
             currencyManager.adjustMoney(1, player);
         }
+    }
+
+    // getters
+    public static int getDays() {
+        return days;
+    }
+
+    public static int getNumPlayers() {
+        return players.length;
+    }
+
+    public static Player[] getPlayers() {
+        return players;
+    }
+
+    // setters
+    public static void adjustDays() {
+        days--;
+    }
+
+    public static void decrementScenes() {
+        numActiveScenes--;
     }
 }
