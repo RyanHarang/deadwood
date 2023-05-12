@@ -40,7 +40,7 @@ public class Deadwood {
         // loop for setting an initial scene at each room
 
         locationManager = new LocationManager(players, board.roomByName("trailer"));
-        currencyManager.setLocMan(locationManager);
+        CurrencyManager.setLocMan(locationManager);
         numActiveScenes = 10;
         gameLoop();
     }
@@ -105,7 +105,7 @@ public class Deadwood {
 
         while (numActiveScenes > 1) {
             for (Player p : players) {
-                //print player name
+                // print player name
                 inpP.pass("It is " + p.getName() + "'s turn.");
                 char action = inpP.handleAction();
                 switch (action) {
@@ -120,7 +120,7 @@ public class Deadwood {
                         break;
                     case ('u'):
                         playerActions.playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
-                        if(inpP.moveAfterUpgrade()){
+                        if (inpP.moveAfterUpgrade()) {
                             playerActions.playerMove(p, locationManager, board, inpP, castingOffice, currencyManager);
                         }
                         break;

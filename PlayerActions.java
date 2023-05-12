@@ -1,12 +1,14 @@
 import java.util.ArrayList;
+
 public class PlayerActions {
     private Dice dice = new Dice();
 
-    public PlayerActions(){
+    public PlayerActions() {
 
     }
 
-    public void playerMove(Player p, LocationManager locationManager, Board board, InpParser inpP, CastingOffice castingOffice, CurrencyManager currencyManager){
+    public void playerMove(Player p, LocationManager locationManager, Board board, InpParser inpP,
+            CastingOffice castingOffice, CurrencyManager currencyManager) {
         // prompt for new location
         Room playerLocation = locationManager.getPlayerLocation(p);
         Room location = board.roomByName(inpP.getDestination(playerLocation.neighborsString()));
@@ -14,18 +16,18 @@ public class PlayerActions {
         // valid room name to be returned
 
         locationManager.move(p, location);
-        if(!location.getScene().isFaceUp()){
+        if (!location.getScene().isFaceUp()) {
             location.getScene().flip();
         }
         // must then check: scene card face up or down?
         // would you like to take a roll?
-        if(inpP.takingRole()){
+        if (inpP.takingRole()) {
             playerTakeRole(inpP, p, location);
         }
         // open roles on scene or room?
         // does player want to take a role?
-        if(location.getName().equals("office")){
-            if(inpP.upgrading()){
+        if (location.getName().equals("office")) {
+            if (inpP.upgrading()) {
                 playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
             }
         }
@@ -33,22 +35,22 @@ public class PlayerActions {
         // if invalid, repeat. if valid, prompt upgrade.
     }
 
-    public void playerTakeRole(InpParser inpP, Player p, Room location){
-        //list possible roles
-        //get role the user wants
-        //give player that role
+    public void playerTakeRole(InpParser inpP, Player p, Room location) {
+        // list possible roles
+        // get role the user wants
+        // give player that role
         String roles = "";
         ArrayList<Role> offCardList = location.getRoles();
         ArrayList<Role> onCardList = location.getScene().getRoles();
-        //get roles available to take
+        // get roles available to take
         ArrayList<Role> availableRoles = new ArrayList<Role>();
-        for(Role r: offCardList){
-            if(!r.isOccupied()){
+        for (Role r : offCardList) {
+            if (!r.isOccupied()) {
                 availableRoles.add(r);
             }
         }
-        for(Role r: onCardList){
-            if(!r.isOccupied()){
+        for (Role r : onCardList) {
+            if (!r.isOccupied()) {
                 availableRoles.add(r);
             }
         }
@@ -58,7 +60,7 @@ public class PlayerActions {
 
     }
 
-    public void playerAct(Player p, LocationManager locationManager, CurrencyManager currencyManager){
+    public void playerAct(Player p, LocationManager locationManager, CurrencyManager currencyManager) {
         Room room = locationManager.getPlayerLocation(p);
         if (p.getRole().isMain()) {
             if (actOnCard(p, room.getScene().getBudget(), currencyManager)) {
@@ -96,7 +98,8 @@ public class PlayerActions {
         }
     }
 
-    public void playerUpgrade(Player p, InpParser inpP, CastingOffice castingOffice, LocationManager locationManager, CurrencyManager currencyManager){
+    public void playerUpgrade(Player p, InpParser inpP, CastingOffice castingOffice, LocationManager locationManager,
+            CurrencyManager currencyManager) {
         int[] upgrade = inpP.upgradeInfo();
         int rank = upgrade[1];
         Boolean upgradingWithMoney = false;
@@ -106,7 +109,7 @@ public class PlayerActions {
         castingOffice.upgrade(p, rank, upgradingWithMoney, locationManager, currencyManager);
     }
 
-    public void playerRehearse(Player p){
+    public void playerRehearse(Player p) {
         p.addPracticeChip();
     }
 }

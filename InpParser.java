@@ -167,7 +167,6 @@ public class InpParser {
     }
 
     public boolean takingRole() {
-        String input = "";
         boolean validInfo = false;
         char yes_no = ' ';
         while (!validInfo) {
@@ -184,54 +183,45 @@ public class InpParser {
         } else {
             return true;
         }
-
     }
 
-    public boolean moveAfterUpgrade(){
-        String input = "";
+    public boolean moveAfterUpgrade() {
         boolean validInfo = false;
         char yes_no = ' ';
-        while(!validInfo){
+        while (!validInfo) {
             manager.newOutput("Would you like to move? y/n");
             yes_no = manager.newInput().charAt(0);
-            if(yes_no == 'y' || yes_no =='n'){
+            if (yes_no == 'y' || yes_no == 'n') {
                 validInfo = true;
-            }
-            else{
+            } else {
                 manager.newOutput("That's not a y or an n! Please try again.");
-            }   
+            }
         }
-        if(yes_no == 'n'){
+        if (yes_no == 'n') {
             return false;
-        }
-        else{
+        } else {
             return true;
         }
     }
 
-
-    public boolean upgrading(){
-        String input = "";
+    public boolean upgrading() {
         boolean validInfo = false;
         char yes_no = ' ';
-        while(!validInfo){
+        while (!validInfo) {
             manager.newOutput("Would you like to upgrade? y/n");
             yes_no = manager.newInput().charAt(0);
-            if(yes_no == 'y' || yes_no =='n'){
+            if (yes_no == 'y' || yes_no == 'n') {
                 validInfo = true;
-            }
-            else{
+            } else {
                 manager.newOutput("That's not a y or an n! Please try again.");
-            }   
+            }
         }
-        if(yes_no == 'n'){
+        if (yes_no == 'n') {
             return false;
-        }
-        else{
+        } else {
             return true;
         }
     }
-
 
     public Role takeRole(ArrayList<Role> availableRoles) {
         boolean validName = false;
@@ -246,12 +236,12 @@ public class InpParser {
         while (!validName) {
             manager.newOutput(output);
             name = manager.newInput();
-            for(String n: names){
-                if(n.equals(name)){
+            for (String n : names) {
+                if (n.equals(name)) {
                     validName = true;
                 }
             }
-            if(!validName){
+            if (!validName) {
                 manager.newOutput("That's not a name! Please try again.");
             }
         }
