@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-import javax.swing.plaf.synth.SynthStyle;
-
 public class Deadwood {
     private static int days;
     private static int numActiveScenes;
@@ -115,7 +113,7 @@ public class Deadwood {
                             }
                             break;
                         case ('u'):
-                            if (locationManager.getPlayerLocation(p).equals("office")) {
+                            if (locationManager.getPlayerLocation(p).equals(board.roomByName("office"))) {
                                 playerActions.playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
                                 if (inpP.moveAfterUpgrade()) {
                                     playerActions.playerMove(p, locationManager, board, inpP, castingOffice,

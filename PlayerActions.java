@@ -41,7 +41,6 @@ public class PlayerActions {
         // list possible roles
         // get role the user wants
         // give player that role
-        String roles = "";
         System.out.println(location.toString());
         offCardList = location.getRoles();
         /*
