@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
 public class Scene {
-    private int budget;
     private int num;
-    private ArrayList<Role> roles;
+    private int budget;
     private String name;
     private String description;
     private boolean faceUp;
+    private ArrayList<Role> roles;
 
     // constructor
     public Scene(String name, String description, int budget, int num, ArrayList<Role> roles) {
@@ -33,7 +33,7 @@ public class Scene {
         return budget;
     }
 
-    public boolean isFaceUp(){
+    public boolean isFaceUp() {
         return faceUp;
     }
 
@@ -53,7 +53,8 @@ public class Scene {
         return description;
     }
 
-    public void flip(){
+    // setters
+    public void flip() {
         faceUp = true;
     }
 }

@@ -1,11 +1,11 @@
 public class Player implements Comparable<Player> {
-    private Role role = null;
-    private Room room;
-    private String name;
-    private int credits;
-    private int money;
-    private int practiceChips;
     private int rank;
+    private int money;
+    private int credits;
+    private int practiceChips;
+    private String name;
+    private Room room;
+    private Role role = null;
 
     // constructor
     public Player(String name) {

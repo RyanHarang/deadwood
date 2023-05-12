@@ -5,7 +5,7 @@ public class Room {
     private int[] area; // area formatted as x, y, h, w
     private String name;
     private boolean sceneDone = false;
-    private Scene scene;
+    private Scene scene = null;
     private ArrayList<Role> roles;
     private ArrayList<Room> adjacents;
 
