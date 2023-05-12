@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
 public class Room {
-    private ArrayList<Room> adjacents;
-    private String name;
     private int shots;
-    private ArrayList<Role> roles;
+    private int[] area; // area formatted as x, y, h, w
+    private String name;
+    private boolean sceneDone = false;
     private Scene scene;
-    private int[] area;
-    // area formatted as x, y, h, w
+    private ArrayList<Role> roles;
+    private ArrayList<Room> adjacents;
 
     // constructor
     public Room(int shots, int[] area, String name, ArrayList<Role> roles) {
@@ -61,6 +61,10 @@ public class Room {
         return scene;
     }
 
+    public boolean isSceneDone() {
+        return sceneDone;
+    }
+
     // setters
     public void setAdjacents(ArrayList<Room> rooms) {
         adjacents = rooms;
@@ -72,5 +76,9 @@ public class Room {
 
     public void setScene(Scene scene) {
         this.scene = scene;
+    }
+
+    public void setSceneDone(boolean sceneDone) {
+        this.sceneDone = sceneDone;
     }
 }
