@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javax.swing.plaf.synth.SynthStyle;
+
 public class Deadwood {
     private static int days;
     private static int numActiveScenes;
@@ -68,7 +70,8 @@ public class Deadwood {
 
     public static void gameLoop() {
         while (days > 0) {
-            for (int i = 0; i < board.getRooms().length; i++) {
+            // start at 2 because 0 and 1 are office and trailer
+            for (int i = 2; i < board.getRooms().length; i++) {
                 board.getRooms()[i].setScene(deck.getScene());
             }
             dayLoop();
@@ -77,10 +80,11 @@ public class Deadwood {
 
     // for smaller methods we can break this up, currently represents one game day
     public static void dayLoop() {
-        boolean validAction = false;
+
         while (numActiveScenes > 1) {
             for (Player p : players) {
                 // print player name
+                boolean validAction = false;
                 inpP.pass("It is " + p.getName() + "'s turn.");
                 while (!validAction) {
                     char action = inpP.handleAction();
@@ -111,13 +115,17 @@ public class Deadwood {
                             }
                             break;
                         case ('u'):
-                            playerActions.playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
-                            if (inpP.moveAfterUpgrade()) {
-                                playerActions.playerMove(p, locationManager, board, inpP, castingOffice,
-                                        currencyManager);
+                            if (locationManager.getPlayerLocation(p).equals("office")) {
+                                playerActions.playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
+                                if (inpP.moveAfterUpgrade()) {
+                                    playerActions.playerMove(p, locationManager, board, inpP, castingOffice,
+                                            currencyManager);
+                                }
+                                // currently ends players turn after failed upgrade
+                                validAction = true;
+                            } else {
+                                inpP.pass("You must be in the Casting Office to upgrade.");
                             }
-                            // currently ends players turn after failed upgrade
-                            validAction = true;
                             break;
                         case ('t'):
                             // current issue: players start in trailer, where there should be no roles, but

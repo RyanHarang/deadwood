@@ -12,7 +12,6 @@ public class LocationManager {
         System.out.println(this.trailers.toString());
         for (Player p : playerList) {
             locations.put(p, this.trailers);
-
         }
         players = playerList;
         // all players in the trailers

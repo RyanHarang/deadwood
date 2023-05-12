@@ -36,17 +36,22 @@ public class PlayerActions {
     }
 
     public void playerTakeRole(InpParser inpP, Player p, Room location) {
+        ArrayList<Role> offCardList = null;
+        ArrayList<Role> onCardList = null;
         // list possible roles
         // get role the user wants
         // give player that role
         String roles = "";
-        ArrayList<Role> offCardList = location.getRoles();
+        System.out.println(location.toString());
+        offCardList = location.getRoles();
         /*
          * for (Role role : offCardList) {
          * System.out.println(role.toString());
          * }
          */
-        ArrayList<Role> onCardList = location.getScene().getRoles();
+        if (location.getScene() != null) {
+            onCardList = location.getScene().getRoles();
+        }
         /*
          * for (Role role : onCardList) {
          * System.out.println(role.toString());
@@ -70,8 +75,12 @@ public class PlayerActions {
                 }
             }
             Role role = inpP.takeRole(availableRoles);
+            // role is null???????
+            System.out.print(role.toString());
             role.setOccupant(p);
             p.setRole(role);
+        } else {
+            System.out.println("ELSE HERE WEEWEWEEWE");
         }
     }
 
