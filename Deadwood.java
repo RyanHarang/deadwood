@@ -2,14 +2,13 @@ import java.util.ArrayList;
 
 public class Deadwood {
     private static int days;
+    private static int numActiveScenes;
     private static Player[] players;
     private static Dice dice;
-    private static int numActiveScenes;
     private static LocationManager locationManager;
     private static CurrencyManager currencyManager;
     private static CastingOffice castingOffice;
     private static PlayerActions playerActions;
-
     private static Board board;
     private static SceneDeck deck;
     private static InpParser inpP;
@@ -78,31 +77,58 @@ public class Deadwood {
 
     // for smaller methods we can break this up, currently represents one game day
     public static void dayLoop() {
-
+        boolean validAction = false;
         while (numActiveScenes > 1) {
             for (Player p : players) {
                 // print player name
                 inpP.pass("It is " + p.getName() + "'s turn.");
-                char action = inpP.handleAction();
-                switch (action) {
-                    case ('m'): // can you move with a roll? no, you must act
-                        playerActions.playerMove(p, locationManager, board, inpP, castingOffice, currencyManager);
-                        break;
-                    case ('a'):
-                        playerActions.playerAct(p, locationManager, currencyManager);
-                        break;
-                    case ('r'):
-                        playerActions.playerRehearse(p);
-                        break;
-                    case ('u'):
-                        playerActions.playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
-                        if (inpP.moveAfterUpgrade()) {
-                            playerActions.playerMove(p, locationManager, board, inpP, castingOffice, currencyManager);
-                        }
-                        break;
-                    case ('t'):
-                        playerActions.playerTakeRole(inpP, p, locationManager.getPlayerLocation(p));
-                        break;
+                while (!validAction) {
+                    char action = inpP.handleAction();
+                    switch (action) {
+                        case ('m'): // can you move with a roll? no, you must act
+                            if (p.getRole() == null) {
+                                playerActions.playerMove(p, locationManager, board, inpP, castingOffice,
+                                        currencyManager);
+                                validAction = true;
+                            } else {
+                                inpP.pass("You can't move while you have a role.");
+                            }
+                            break;
+                        case ('a'):
+                            if (p.getRole() != null) {
+                                playerActions.playerAct(p, locationManager, currencyManager);
+                                validAction = true;
+                            } else {
+                                inpP.pass("You need to take a role before you can act.");
+                            }
+                            break;
+                        case ('r'):
+                            if (p.getRole() != null) {
+                                playerActions.playerRehearse(p);
+                                validAction = true;
+                            } else {
+                                inpP.pass("You need to take a role before you can rehearse.");
+                            }
+                            break;
+                        case ('u'):
+                            playerActions.playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
+                            if (inpP.moveAfterUpgrade()) {
+                                playerActions.playerMove(p, locationManager, board, inpP, castingOffice,
+                                        currencyManager);
+                            }
+                            // currently ends players turn after failed upgrade
+                            validAction = true;
+                            break;
+                        case ('t'):
+                            // current issue: players start in trailer, where there should be no roles, but
+                            // it offers roles?
+                            // tried checking if onCard and offCard roles are null in playerTakeRole, didn't
+                            // work
+                            playerActions.playerTakeRole(inpP, p, locationManager.getPlayerLocation(p));
+                            // currently ends players turn after failed attempt to take role
+                            validAction = true;
+                            break;
+                    }
                 }
                 if (numActiveScenes == 1) {
                     endDay();

@@ -41,23 +41,38 @@ public class PlayerActions {
         // give player that role
         String roles = "";
         ArrayList<Role> offCardList = location.getRoles();
+        /*
+         * for (Role role : offCardList) {
+         * System.out.println(role.toString());
+         * }
+         */
         ArrayList<Role> onCardList = location.getScene().getRoles();
+        /*
+         * for (Role role : onCardList) {
+         * System.out.println(role.toString());
+         * }
+         */
         // get roles available to take
         ArrayList<Role> availableRoles = new ArrayList<Role>();
-        for (Role r : offCardList) {
-            if (!r.isOccupied()) {
-                availableRoles.add(r);
+        if (offCardList != null || onCardList != null) {
+            if (offCardList != null) {
+                for (Role r : offCardList) {
+                    if (!r.isOccupied()) {
+                        availableRoles.add(r);
+                    }
+                }
             }
-        }
-        for (Role r : onCardList) {
-            if (!r.isOccupied()) {
-                availableRoles.add(r);
+            if (onCardList != null) {
+                for (Role r : onCardList) {
+                    if (!r.isOccupied()) {
+                        availableRoles.add(r);
+                    }
+                }
             }
+            Role role = inpP.takeRole(availableRoles);
+            role.setOccupant(p);
+            p.setRole(role);
         }
-        Role role = inpP.takeRole(availableRoles);
-        role.setOccupant(p);
-        p.setRole(role);
-
     }
 
     public void playerAct(Player p, LocationManager locationManager, CurrencyManager currencyManager) {

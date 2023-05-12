@@ -242,7 +242,7 @@ public class InpParser {
             manager.newOutput(output);
             name = manager.newInput();
             for (String n : names) {
-                if (n.equals(name)) {
+                if (n.equalsIgnoreCase(name)) {
                     validName = true;
                 }
             }
