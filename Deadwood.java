@@ -84,6 +84,7 @@ public class Deadwood {
                 // print player name
                 boolean validAction = false;
                 inpP.pass("It is " + p.getName() + "'s turn.");
+                inpP.pass(locationManager.getPlayerLocation(p).toString());
                 while (!validAction) {
                     char action = inpP.handleAction();
                     switch (action) {
@@ -98,7 +99,9 @@ public class Deadwood {
                             break;
                         case ('a'):
                             if (p.getRole() != null) {
-                                playerActions.playerAct(p, locationManager, currencyManager);
+                                if(playerActions.playerAct(p, locationManager, currencyManager, inpP)){
+                                    numActiveScenes--;
+                                }
                                 validAction = true;
                             } else {
                                 inpP.pass("You need to take a role before you can act.");
@@ -114,13 +117,20 @@ public class Deadwood {
                             break;
                         case ('u'):
                             if (locationManager.getPlayerLocation(p).equals(board.roomByName("office"))) {
-                                playerActions.playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
-                                if (inpP.moveAfterUpgrade()) {
+                                boolean validUpgrade = playerActions.playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
+                                if(!validUpgrade){
+                                    inpP.pass("You can't upgrade to that rank just yet!");
+                                }
+                                else{
+                                    if (inpP.moveAfterUpgrade()) {
                                     playerActions.playerMove(p, locationManager, board, inpP, castingOffice,
                                             currencyManager);
+                                    }
+                                    validAction = true;
                                 }
+                                
                                 // currently ends players turn after failed upgrade
-                                validAction = true;
+                                
                             } else {
                                 inpP.pass("You must be in the Casting Office to upgrade.");
                             }
@@ -130,9 +140,14 @@ public class Deadwood {
                             // it offers roles?
                             // tried checking if onCard and offCard roles are null in playerTakeRole, didn't
                             // work
-                            playerActions.playerTakeRole(inpP, p, locationManager.getPlayerLocation(p));
+                            if(playerActions.playerTakeRole(inpP, p, locationManager.getPlayerLocation(p))){
+                                validAction = true;
+                            }
+                            else{
+                                
+                            }
                             // currently ends players turn after failed attempt to take role
-                            validAction = true;
+                            
                             break;
                     }
                 }

@@ -16,11 +16,14 @@ public class PlayerActions {
         // valid room name to be returned
 
         locationManager.move(p, location);
-        if (!location.getScene().isFaceUp()) {
-            location.getScene().flip();
-        }
+
         // must then check: scene card face up or down?
         // would you like to take a roll?
+        if(!(location.getName().equals("office") || location.getName().equals("trailer"))){
+            if (!location.getScene().isFaceUp()) {
+                location.getScene().flip();
+            }
+        }
         if (inpP.takingRole()) {
             playerTakeRole(inpP, p, location);
         }
@@ -35,7 +38,15 @@ public class PlayerActions {
         // if invalid, repeat. if valid, prompt upgrade.
     }
 
-    public void playerTakeRole(InpParser inpP, Player p, Room location) {
+    public boolean playerTakeRole(InpParser inpP, Player p, Room location) {
+        if(location.getShots() == 0){
+            inpP.pass("There is no scene for you to take a role in!");
+            return false;
+        }
+        if(p.getRole() != null){
+            inpP.pass("You already have a role!");
+            return false;
+        }
         ArrayList<Role> offCardList = null;
         ArrayList<Role> onCardList = null;
         // list possible roles
@@ -62,66 +73,94 @@ public class PlayerActions {
             if (offCardList != null) {
                 for (Role r : offCardList) {
                     if (!r.isOccupied()) {
-                        availableRoles.add(r);
+                        if(r.getRank() <= p.getRank()){
+                            availableRoles.add(r);
+                        }
+                        
                     }
                 }
             }
             if (onCardList != null) {
                 for (Role r : onCardList) {
-                    if (!r.isOccupied()) {
-                        availableRoles.add(r);
+                    if (!r.isOccupied()){
+                        if(r.getRank() <= p.getRank()){
+                            availableRoles.add(r);
+                        }    
                     }
+
                 }
+            }
+            if(availableRoles.size() == 0){
+                inpP.pass("There are no available roles for you to take...");
+                return false;
             }
             Role role = inpP.takeRole(availableRoles);
             // role is null???????
             System.out.print(role.toString());
             role.setOccupant(p);
             p.setRole(role);
+            return true;
         } else {
-            System.out.println("ELSE HERE WEEWEWEEWE");
+            System.out.println("You can't take a role here!");
         }
+        return false;
     }
 
-    public void playerAct(Player p, LocationManager locationManager, CurrencyManager currencyManager) {
+    public boolean playerAct(Player p, LocationManager locationManager, CurrencyManager currencyManager, InpParser inpP) {
         Room room = locationManager.getPlayerLocation(p);
+        // might be useless/////////////
+        ////////////////////////////////
         if (p.getRole().isMain()) {
-            if (actOnCard(p, room.getScene().getBudget(), currencyManager)) {
+            if (actOnCard(p, room.getScene().getBudget(), currencyManager, inpP)) {
                 room.removeShot();
             }
         } else {
-            actOffCard(p, room.getScene().getBudget(), currencyManager);
+            if (actOffCard(p, room.getScene().getBudget(), currencyManager, inpP)){
+                room.removeShot();
+            }
         }
         if (room.getShots() == 0) {
+            inpP.pass("Scene has wrapped!");
             currencyManager.wrapPay(room);
+            for(Player pl: locationManager.getOccupants(room)){
+                pl.setRole(null);
+            }
+            return true;// scene has wrapped
         }
+        return false;// scene not wrapped
     }
 
-    private boolean actOnCard(Player player, int roomBudget, CurrencyManager currencyManager) {
+    private boolean actOnCard(Player player, int roomBudget, CurrencyManager currencyManager, InpParser inpP) {
         int roll = dice.roll(player.getPracticeChips());
         // success
         if (roll >= roomBudget) {
             currencyManager.adjustCredits(2, player);
+            inpP.pass("Success!");
             return true;
         }
         // falure - prompt failure with model
+        inpP.pass("Fail!");
         return false;
     }
 
-    private void actOffCard(Player player, int roomBudget, CurrencyManager currencyManager) {
+    private boolean actOffCard(Player player, int roomBudget, CurrencyManager currencyManager, InpParser inpP) {
         int roll = dice.roll(player.getPracticeChips());
         // success
         if (roll >= roomBudget) {
             currencyManager.adjustCredits(1, player);
             currencyManager.adjustMoney(1, player);
+            inpP.pass("Success!");
+            return true;
         }
         // falure - prompt failure with model
         else {
             currencyManager.adjustMoney(1, player);
+            inpP.pass("Fail!");
+            return false;
         }
     }
 
-    public void playerUpgrade(Player p, InpParser inpP, CastingOffice castingOffice, LocationManager locationManager,
+    public boolean playerUpgrade(Player p, InpParser inpP, CastingOffice castingOffice, LocationManager locationManager,
             CurrencyManager currencyManager) {
         int[] upgrade = inpP.upgradeInfo();
         int rank = upgrade[1];
@@ -129,7 +168,7 @@ public class PlayerActions {
         if (upgrade[0] == 1) {
             upgradingWithMoney = true;
         }
-        castingOffice.upgrade(p, rank, upgradingWithMoney, locationManager, currencyManager);
+        return castingOffice.upgrade(p, rank, upgradingWithMoney, locationManager, currencyManager);
     }
 
     public void playerRehearse(Player p) {

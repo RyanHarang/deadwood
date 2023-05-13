@@ -5,6 +5,7 @@ import java.util.Collections;
 public class CurrencyManager {
     private static CurrencyManager currencyManager;
     private static LocationManager locationManager;
+
     // temporary?
     public Dice dice;
 
@@ -61,8 +62,8 @@ public class CurrencyManager {
             }
         }
         Collections.sort(onCard, Collections.reverseOrder());
-        mainPay(room.getScene(), onCard);
         if (onCard.size() != 0) {
+            mainPay(room.getScene(), onCard);
             extraPay(offCard);
         }
 
