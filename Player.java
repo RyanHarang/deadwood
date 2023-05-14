@@ -4,7 +4,6 @@ public class Player implements Comparable<Player> {
     private int credits;
     private int practiceChips;
     private String name;
-    private Room room;
     private Role role = null;
 
     // constructor
@@ -23,10 +22,6 @@ public class Player implements Comparable<Player> {
     // getters
     public Role getRole() {
         return role;
-    }
-
-    public Room getRoom() {
-        return room;
     }
 
     public String getName() {
@@ -66,7 +61,7 @@ public class Player implements Comparable<Player> {
         practiceChips++;
     }
 
-    public void setPracticeChip(){
+    public void setPracticeChip() {
         practiceChips = 0;
     }
 
