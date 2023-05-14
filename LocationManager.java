@@ -1,7 +1,6 @@
 import java.util.*;
 
 public class LocationManager {
-    // private static LocationManager locationManager;
     private static Map<Player, Room> locations = new HashMap<Player, Room>();
     private Player[] players;
     private Room trailers;
@@ -9,7 +8,7 @@ public class LocationManager {
     // constructor
     public LocationManager(Player[] playerList, Room trailers) {
         this.trailers = trailers;
-        //System.out.println(this.trailers.toString());
+        // System.out.println(this.trailers.toString());
         for (Player p : playerList) {
             locations.put(p, this.trailers);
         }
@@ -34,7 +33,7 @@ public class LocationManager {
     public boolean move(Player player, Room new_location) {
         boolean isValidMove = validateMove(player, new_location);
         if (isValidMove) {
-            //System.out.println(locations.get(player).toString());
+            // System.out.println(locations.get(player).toString());
             // locations.get(player).removePlayer(player);
             locations.put(player, new_location);
             // new_location.addPlayer(player);

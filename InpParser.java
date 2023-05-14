@@ -1,10 +1,8 @@
 import java.util.ArrayList;
 
 public class InpParser {
-
     private int days;
     private Player[] players;
-
     private InpManager manager;
 
     public InpParser() {
