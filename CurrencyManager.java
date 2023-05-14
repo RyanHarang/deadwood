@@ -20,11 +20,6 @@ public class CurrencyManager {
         return currencyManager;
     }
 
-    // method to take players, compare all their scores, and determine the winner
-    public Player determineWinner(Player[] players) {
-        return null;
-    }
-
     public static void setLocMan(LocationManager locMan) {
         locationManager = locMan;
     }
