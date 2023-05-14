@@ -37,7 +37,7 @@ public class CastingOffice {
         }
         // verify player is in casting office, might be unnecesary. if it is, we dont
         // need location manager
-        if (locationManager.getPlayerLocation(player).getName() != "Casting Office") {
+        if (locationManager.getPlayerLocation(player).getName() != "office") {
             return false;
         }
 

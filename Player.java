@@ -66,6 +66,10 @@ public class Player implements Comparable<Player> {
         practiceChips++;
     }
 
+    public void setPracticeChip(){
+        practiceChips = 0;
+    }
+
     public void setMoney(int money) {
         this.money = money;
     }

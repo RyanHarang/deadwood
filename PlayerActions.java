@@ -52,7 +52,7 @@ public class PlayerActions {
         // list possible roles
         // get role the user wants
         // give player that role
-        System.out.println(location.toString());
+        //System.out.println(location.toString());
         offCardList = location.getRoles();
         /*
          * for (Role role : offCardList) {
@@ -96,7 +96,7 @@ public class PlayerActions {
             }
             Role role = inpP.takeRole(availableRoles);
             // role is null???????
-            System.out.print(role.toString());
+            //System.out.print(role.toString());
             role.setOccupant(p);
             p.setRole(role);
             return true;
@@ -107,7 +107,9 @@ public class PlayerActions {
     }
 
     public boolean playerAct(Player p, LocationManager locationManager, CurrencyManager currencyManager, InpParser inpP) {
+        
         Room room = locationManager.getPlayerLocation(p);
+
         // might be useless/////////////
         ////////////////////////////////
         if (p.getRole().isMain()) {
@@ -124,6 +126,7 @@ public class PlayerActions {
             currencyManager.wrapPay(room);
             for(Player pl: locationManager.getOccupants(room)){
                 pl.setRole(null);
+                pl.setPracticeChip();
             }
             return true;// scene has wrapped
         }
@@ -171,7 +174,17 @@ public class PlayerActions {
         return castingOffice.upgrade(p, rank, upgradingWithMoney, locationManager, currencyManager);
     }
 
-    public void playerRehearse(Player p) {
-        p.addPracticeChip();
+    public boolean playerRehearse(Player p, LocationManager locationManager, InpParser inpP) {
+        Room room = locationManager.getPlayerLocation(p);
+        int budget = room.getScene().getBudget();
+        if (p.getPracticeChips() >= budget-1){
+            inpP.pass("You must act!");
+            return false;
+        }
+        else{
+            p.addPracticeChip();
+            return true;
+        }
+        
     }
 }
