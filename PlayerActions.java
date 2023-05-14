@@ -34,7 +34,6 @@ public class PlayerActions {
                 playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
             }
         }
-
         // if invalid, repeat. if valid, prompt upgrade.
     }
 
@@ -142,7 +141,7 @@ public class PlayerActions {
             inpP.pass("Success!");
             return true;
         }
-        // falure - prompt failure with model
+        // falure - prompt failure with view
         inpP.pass("Fail!");
         return false;
     }
@@ -156,7 +155,7 @@ public class PlayerActions {
             inpP.pass("Success!");
             return true;
         }
-        // falure - prompt failure with model
+        // falure - prompt failure with view
         else {
             currencyManager.adjustMoney(1, player);
             inpP.pass("Fail!");
