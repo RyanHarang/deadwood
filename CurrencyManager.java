@@ -49,10 +49,12 @@ public class CurrencyManager {
         ArrayList<Player> onCard = new ArrayList<Player>();
         ArrayList<Player> offCard = new ArrayList<Player>();
         for (Player p : locationManager.getOccupants(room)) {
-            if (p.getRole().isMain()) {
-                onCard.add(p);
-            } else {
-                offCard.add(p);
+            if (p.getRole() != null) {
+                if (p.getRole().isMain()) {
+                    onCard.add(p);
+                } else {
+                    offCard.add(p);
+                }
             }
         }
         Collections.sort(onCard, Collections.reverseOrder());
