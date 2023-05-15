@@ -20,8 +20,9 @@ public class Player implements Comparable<Player> {
         if (role != null) {
             roleString = role.toString();
         }
-        return "Name: " + name + " | Credits: " + credits + " | Rank: " + rank + " | Money: " + money +
-                " |\n\t\tActive Role: " + roleString;
+        return "Name: " + name + " | Credits: " + credits + " | Rank: " + rank + " | Money: " + money
+                + " | Practice Chips: " + practiceChips
+                + " |\n\t\tActive Role: " + roleString;
     }
 
     // getters

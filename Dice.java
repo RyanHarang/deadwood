@@ -14,10 +14,10 @@ public class Dice {
         return result;
     }
 
-    // generates a random number between 1 and 6 and adds a given
-    // integer, returning the result
+    // generates a random number between 1 and 6, adds a given
+    // integer and returns the result
     public int roll(int practiceChips) {
         result = 1 + (int) (6 * Math.random());
-        return Math.min(result + practiceChips, 6);
+        return result + practiceChips;
     }
 }
