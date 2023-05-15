@@ -232,7 +232,7 @@ public class InpParser {
     public Role takeRole(ArrayList<Role> availableRoles) {
         boolean validName = false;
         String name = "";
-        String output = "Which role would you like to take?";
+        String output = "Which role would you like to take?\n";
         ArrayList<String> names = new ArrayList<String>();
         for (Role r : availableRoles) {
             output += r.toString() + "\n";

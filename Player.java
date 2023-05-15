@@ -16,7 +16,12 @@ public class Player implements Comparable<Player> {
     }
 
     public String toString() {
-        return "Name: " + name + " | Credits: " + credits + " | Rank: " + rank + " | Money: " + money;
+        String roleString = "none";
+        if (role != null) {
+            roleString = role.toString();
+        }
+        return "Name: " + name + " | Credits: " + credits + " | Rank: " + rank + " | Money: " + money +
+                "\nActive Role: " + roleString;
     }
 
     // getters
