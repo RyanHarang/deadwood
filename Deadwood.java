@@ -90,7 +90,7 @@ public class Deadwood {
                 inpP.pass("Current Player [" + p.toString() + "]");
                 inpP.pass("Current Location [" + loc.toString() + "]");
                 if (loc.getScene() != null) {
-                    inpP.pass("Current Scene [" + loc.getScene().toString() + "]");
+                    inpP.pass("Current Scene  [" + loc.getScene().toString() + "]");
                 }
                 while (!validAction) {
                     char action = inpP.handleAction();
