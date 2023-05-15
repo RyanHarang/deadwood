@@ -85,8 +85,9 @@ public class Deadwood {
             for (Player p : players) {
                 // print player name
                 boolean validAction = false;
-                inpP.pass("Current player: " + p.toString());
-                inpP.pass("Current location: " + locationManager.getPlayerLocation(p).getName() + ". Shots left: " + locationManager.getPlayerLocation(p).getShots());
+                inpP.pass("Current player[" + p.toString() + "]");
+                inpP.pass("Current location: " + locationManager.getPlayerLocation(p).getName() + ". Shots left: "
+                        + locationManager.getPlayerLocation(p).getShots());
                 while (!validAction) {
                     char action = inpP.handleAction();
                     switch (action) {
@@ -101,7 +102,7 @@ public class Deadwood {
                             break;
                         case ('a'):
                             if (p.getRole() != null) {
-                                if(playerActions.playerAct(p, locationManager, currencyManager, inpP)){
+                                if (playerActions.playerAct(p, locationManager, currencyManager, inpP)) {
                                     numActiveScenes--;
                                 }
                                 validAction = true;
@@ -111,29 +112,29 @@ public class Deadwood {
                             break;
                         case ('r'):
                             if (p.getRole() != null) {
-                                if(playerActions.playerRehearse(p, locationManager, inpP)){
+                                if (playerActions.playerRehearse(p, locationManager, inpP)) {
                                     validAction = true;
-                                }                              
+                                }
                             } else {
                                 inpP.pass("You need to take a role before you can rehearse.");
                             }
                             break;
                         case ('u'):
                             if (locationManager.getPlayerLocation(p).equals(board.roomByName("office"))) {
-                                boolean validUpgrade = playerActions.playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
-                                if(!validUpgrade){
+                                boolean validUpgrade = playerActions.playerUpgrade(p, inpP, castingOffice,
+                                        locationManager, currencyManager);
+                                if (!validUpgrade) {
                                     inpP.pass("You can't upgrade to that rank just yet!");
-                                }
-                                else{
+                                } else {
                                     if (inpP.moveAfterUpgrade()) {
-                                    playerActions.playerMove(p, locationManager, board, inpP, castingOffice,
-                                            currencyManager);
+                                        playerActions.playerMove(p, locationManager, board, inpP, castingOffice,
+                                                currencyManager);
                                     }
                                     validAction = true;
                                 }
-                                
+
                                 // currently ends players turn after failed upgrade
-                                
+
                             } else {
                                 inpP.pass("You must be in the Casting Office to upgrade.");
                             }
@@ -143,14 +144,13 @@ public class Deadwood {
                             // it offers roles?
                             // tried checking if onCard and offCard roles are null in playerTakeRole, didn't
                             // work
-                            if(playerActions.playerTakeRole(inpP, p, locationManager.getPlayerLocation(p))){
+                            if (playerActions.playerTakeRole(inpP, p, locationManager.getPlayerLocation(p))) {
                                 validAction = true;
-                            }
-                            else{
-                                
+                            } else {
+
                             }
                             // currently ends players turn after failed attempt to take role
-                            
+
                             break;
                     }
                 }

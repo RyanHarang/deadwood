@@ -33,7 +33,7 @@ public class Room {
         for (int j = 0; j < adjacents.size(); j++) {
             adjs += " " + adjacents.get(j).getName();
         }
-        return "RoomName: " + name + " | Shots: " + shots + " | SceneAreas:" + areas + " | Adjacents: " + adjs;
+        return "RoomName: " + name + " | Shots: " + shots;
     }
 
     // getters

@@ -30,7 +30,7 @@ public class InpParser {
                     validPC = true;
                     manager.newOutput("You have selected to play with " + playerCount + " players.");
                 } else {
-                    manager.newOutput("Deadwood requires a [2-8] players to play! Please try again");
+                    manager.newOutput("Deadwood requires [2-8] players to play! Please try again");
                 }
 
             } catch (Exception e) {

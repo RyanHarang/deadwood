@@ -16,7 +16,7 @@ public class Player implements Comparable<Player> {
     }
 
     public String toString() {
-        return "Name: " + name + " credits: " + credits + " rank: " + rank + " money: " + money;
+        return "Name: " + name + " | Credits: " + credits + " | Rank: " + rank + " | Money: " + money;
     }
 
     // getters
