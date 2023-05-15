@@ -73,7 +73,9 @@ public class Deadwood {
                 board.getRooms()[i].setScene(deck.getScene());
             }
             dayLoop();
+            days--;
         }
+        end();
     }
 
     // for smaller methods we can break this up, currently represents one game day
@@ -83,8 +85,8 @@ public class Deadwood {
             for (Player p : players) {
                 // print player name
                 boolean validAction = false;
-                inpP.pass("It is " + p.getName() + "'s turn.");
-                inpP.pass(locationManager.getPlayerLocation(p).toString());
+                inpP.pass("Current player: " + p.toString());
+                inpP.pass("Current location: " + locationManager.getPlayerLocation(p).getName() + ". Shots left: " + locationManager.getPlayerLocation(p).getShots());
                 while (!validAction) {
                     char action = inpP.handleAction();
                     switch (action) {
@@ -109,8 +111,9 @@ public class Deadwood {
                             break;
                         case ('r'):
                             if (p.getRole() != null) {
-                                playerActions.playerRehearse(p);
-                                validAction = true;
+                                if(playerActions.playerRehearse(p, locationManager, inpP)){
+                                    validAction = true;
+                                }                              
                             } else {
                                 inpP.pass("You need to take a role before you can rehearse.");
                             }
@@ -156,7 +159,6 @@ public class Deadwood {
                 }
             }
         }
-        days--;
     }
 
     public static void endDay() {
