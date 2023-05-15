@@ -18,12 +18,7 @@ public class Role {
     }
 
     public String toString() {
-        String areas = "";
-        for (int i = 0; i < 4; i++) {
-            areas += " " + area[i];
-        }
-        return "RoleName: " + name + " | RoleLine: " + line + " | RoleRank: " + rank + " | isMain: " + isMain
-                + " | RoleAreas: " + areas;
+        return "RoleName: " + name + " | RoleLine: " + line + " | RoleRank: " + rank;
     }
 
     // getters
@@ -54,8 +49,6 @@ public class Role {
     public boolean isMain() {
         return isMain;
     }
-
-    
 
     // setters
     public void setOccupant(Player player) {

@@ -86,6 +86,7 @@ public class Deadwood {
                 // print player name
                 boolean validAction = false;
                 Room loc = locationManager.getPlayerLocation(p);
+                inpP.pass("");
                 inpP.pass("Current Player [" + p.toString() + "]");
                 inpP.pass("Current Location [" + loc.toString() + "]");
                 if (loc.getScene() != null) {
@@ -143,10 +144,6 @@ public class Deadwood {
                             }
                             break;
                         case ('t'):
-                            // current issue: players start in trailer, where there should be no roles, but
-                            // it offers roles?
-                            // tried checking if onCard and offCard roles are null in playerTakeRole, didn't
-                            // work
                             if (playerActions.playerTakeRole(inpP, p, locationManager.getPlayerLocation(p))) {
                                 validAction = true;
                             } else {

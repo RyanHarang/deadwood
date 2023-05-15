@@ -19,7 +19,7 @@ public class Scene {
     }
 
     public String toString() {
-        return "Name: " + name + " | Description: " + description + " | Budget: " + budget;
+        return "Name: " + name + "\n | Description: " + description + "\n | Budget: " + budget;
     }
 
     // getters
