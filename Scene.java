@@ -19,13 +19,7 @@ public class Scene {
     }
 
     public String toString() {
-        String rolesString = "";
-        for (int a = 0; a < roles.size(); a++) {
-            rolesString += " " + roles.get(a).toString();
-        }
-
-        return "Name: " + name + " | Description: " + description + " | Number: " + num + " | Budget: " + budget
-                + " | Roles: " + rolesString;
+        return "Name: " + name + " | Description: " + description + " | Budget: " + budget;
     }
 
     // getters

@@ -85,9 +85,12 @@ public class Deadwood {
             for (Player p : players) {
                 // print player name
                 boolean validAction = false;
-                inpP.pass("Current player[" + p.toString() + "]");
-                inpP.pass("Current location: " + locationManager.getPlayerLocation(p).getName() + ". Shots left: "
-                        + locationManager.getPlayerLocation(p).getShots());
+                Room loc = locationManager.getPlayerLocation(p);
+                inpP.pass("Current Player [" + p.toString() + "]");
+                inpP.pass("Current Location [" + loc.toString() + "]");
+                if (loc.getScene() != null) {
+                    inpP.pass("Current Scene [" + loc.getScene().toString() + "]");
+                }
                 while (!validAction) {
                     char action = inpP.handleAction();
                     switch (action) {

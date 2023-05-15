@@ -26,13 +26,6 @@ public class Room {
     }
 
     public String toString() {
-        String adjs = "", areas = "";
-        for (int i = 0; i < 4; i++) {
-            areas += " " + area[i];
-        }
-        for (int j = 0; j < adjacents.size(); j++) {
-            adjs += " " + adjacents.get(j).getName();
-        }
         return "RoomName: " + name + " | Shots: " + shots;
     }
 
