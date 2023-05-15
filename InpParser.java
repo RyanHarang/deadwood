@@ -89,8 +89,11 @@ public class InpParser {
             if (input.length() != 1) {
                 manager.newOutput("Please enter a single character: m, r, a, u, or t");
             } else {
-                if (!(input.equals("m") || input.equals("r") || input.equals("a") || input.equals("u")
-                        || input.equals("t"))) {
+                if (!(input.equalsIgnoreCase("m")
+                        || input.equalsIgnoreCase("r")
+                        || input.equalsIgnoreCase("a")
+                        || input.equalsIgnoreCase("u")
+                        || input.equalsIgnoreCase("t"))) {
                     manager.newOutput("Please enter a valid character: m, r, a, u, or t");
                 } else {
                     manager.newOutput("You have chosen " + input);
@@ -139,11 +142,11 @@ public class InpParser {
             if (input.length() != 1) {
                 manager.newOutput("Please enter a single character: m or c");
             } else {
-                if (!(input.equals("m") || input.equals("c"))) {
+                if (!(input.equalsIgnoreCase("m") || input.equalsIgnoreCase("c"))) {
                     manager.newOutput("Please enter a valid character: m or c");
                 } else {
                     manager.newOutput("You have chosen " + input);
-                    if (input.equals("m")) {
+                    if (input.equalsIgnoreCase("m")) {
                         money = 1;
                     }
                     manager.newOutput("What rank would you like to upgrade to?");
@@ -250,7 +253,7 @@ public class InpParser {
         }
 
         for (Role r : availableRoles) {
-            if (name.equals(r.getName())) {
+            if (name.equalsIgnoreCase(r.getName())) {
                 return r;
             }
         }
