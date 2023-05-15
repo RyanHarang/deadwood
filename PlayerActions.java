@@ -138,11 +138,11 @@ public class PlayerActions {
         // success
         if (roll >= roomBudget) {
             currencyManager.adjustCredits(2, player);
-            inpP.pass("Success!");
+            inpP.pass("Your roll and practicechips total to: " + roll + "Act succeeds!");
             return true;
         }
         // falure - prompt failure with view
-        inpP.pass("Fail!");
+        inpP.pass("Your roll and practicechips total to: " + roll + "Act failed!");
         return false;
     }
 
