@@ -28,7 +28,13 @@ public class PlayerActions {
         // does player want to take a role?
         if (location.getName().equals("office")) {
             if (inpP.upgrading()) {
-                playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager); // <-- ***
+                boolean validUpgrade = playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
+                while (!validUpgrade) {
+                    if (!validUpgrade) {
+                        inpP.pass("You can't upgrade to that rank just yet!");
+                    }
+                    validUpgrade = playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
+                }
             }
         }
         // if invalid, repeat. if valid, prompt upgrade.
