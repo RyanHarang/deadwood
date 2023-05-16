@@ -1,6 +1,5 @@
 public class CastingOffice {
-    private static CastingOffice castingOffice;
-
+    private static CastingOffice castingOffice = new CastingOffice();
     // three column array with column one being the target rank,
     // column two being the cost to upgrade to the corresponding
     // target in dollars, and column three being the cost in credits.
@@ -17,10 +16,7 @@ public class CastingOffice {
 
     }
 
-    public static CastingOffice getCastingOffice(){
-        if(castingOffice == null){
-            castingOffice = new CastingOffice();
-        }
+    public static CastingOffice getCastingOffice() {
         return castingOffice;
     }
 
@@ -35,8 +31,7 @@ public class CastingOffice {
         if (player.getRank() >= rank) {
             return false;
         }
-        // verify player is in casting office, might be unnecesary. if it is, we dont
-        // need location manager
+        // verify player is in casting office
         if (locationManager.getPlayerLocation(player).getName() != "office") {
             return false;
         }

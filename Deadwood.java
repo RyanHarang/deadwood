@@ -63,6 +63,7 @@ public class Deadwood {
                 inpP.pass("This was a winning score.");
             }
         }
+        // close the scanner
         inpP.end();
     }
 
@@ -78,7 +79,6 @@ public class Deadwood {
         end();
     }
 
-    // for smaller methods we can break this up, currently represents one game day
     public static void dayLoop() {
 
         while (numActiveScenes > 1) {
@@ -95,7 +95,7 @@ public class Deadwood {
                 while (!validAction) {
                     char action = inpP.handleAction();
                     switch (action) {
-                        case ('m'): // can you move with a roll? no, you must act
+                        case ('m'):
                             if (p.getRole() == null) {
                                 playerActions.playerMove(p, locationManager, board, inpP, castingOffice,
                                         currencyManager);
@@ -137,8 +137,6 @@ public class Deadwood {
                                     validAction = true;
                                 }
 
-                                // currently ends players turn after failed upgrade
-
                             } else {
                                 inpP.pass("You must be in the Casting Office to upgrade.");
                             }
@@ -149,8 +147,6 @@ public class Deadwood {
                             } else {
 
                             }
-                            // currently ends players turn after failed attempt to take role
-
                             break;
                     }
                 }
@@ -163,8 +159,6 @@ public class Deadwood {
 
     public static void endDay() {
         locationManager.returnTrailers();
-        // inpP.startDay();
-
     }
 
     public static void act(Player player) {
@@ -203,19 +197,6 @@ public class Deadwood {
         else {
             currencyManager.adjustMoney(1, player);
         }
-    }
-
-    // getters
-    public static int getDays() {
-        return days;
-    }
-
-    public static int getNumPlayers() {
-        return players.length;
-    }
-
-    public static Player[] getPlayers() {
-        return players;
     }
 
     // setters

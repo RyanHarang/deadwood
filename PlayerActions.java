@@ -12,9 +12,6 @@ public class PlayerActions {
         // prompt for new location
         Room playerLocation = locationManager.getPlayerLocation(p);
         Room location = board.roomByName(inpP.getDestination(playerLocation.neighborsString()));
-        // in theory, the way getDestination is implemented in InpManager should force a
-        // valid room name to be returned
-
         locationManager.move(p, location);
 
         // must then check: scene card face up or down?
@@ -31,7 +28,7 @@ public class PlayerActions {
         // does player want to take a role?
         if (location.getName().equals("office")) {
             if (inpP.upgrading()) {
-                playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager);
+                playerUpgrade(p, inpP, castingOffice, locationManager, currencyManager); // <-- ***
             }
         }
         // if invalid, repeat. if valid, prompt upgrade.
@@ -48,24 +45,11 @@ public class PlayerActions {
         }
         ArrayList<Role> offCardList = null;
         ArrayList<Role> onCardList = null;
-        // list possible roles
-        // get role the user wants
-        // give player that role
-        // System.out.println(location.toString());
+        // list possible roles, get role the user wants and give player that role
         offCardList = location.getRoles();
-        /*
-         * for (Role role : offCardList) {
-         * System.out.println(role.toString());
-         * }
-         */
         if (location.getScene() != null) {
             onCardList = location.getScene().getRoles();
         }
-        /*
-         * for (Role role : onCardList) {
-         * System.out.println(role.toString());
-         * }
-         */
         // get roles available to take
         ArrayList<Role> availableRoles = new ArrayList<Role>();
         if (offCardList != null || onCardList != null) {
@@ -94,8 +78,6 @@ public class PlayerActions {
                 return false;
             }
             Role role = inpP.takeRole(availableRoles);
-            // role is null???????
-            // System.out.print(role.toString());
             role.setOccupant(p);
             p.setRole(role);
             return true;
@@ -110,8 +92,6 @@ public class PlayerActions {
 
         Room room = locationManager.getPlayerLocation(p);
 
-        // might be useless/////////////
-        ////////////////////////////////
         if (p.getRole().isMain()) {
             if (actOnCard(p, room.getScene().getBudget(), currencyManager, inpP)) {
                 room.removeShot();

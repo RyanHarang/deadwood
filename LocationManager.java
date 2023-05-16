@@ -8,13 +8,11 @@ public class LocationManager {
     // constructor
     public LocationManager(Player[] playerList, Room trailers) {
         this.trailers = trailers;
-        // System.out.println(this.trailers.toString());
         for (Player p : playerList) {
             locations.put(p, this.trailers);
         }
         players = playerList;
-        // all players in the trailers
-        // make list for later use of all players
+        // all players in the trailers make list for later use of all players
     }
 
     // method to check if moves are legal, called by move
@@ -54,7 +52,6 @@ public class LocationManager {
     }
 
     public ArrayList<Player> getOccupants(Room room) {
-        // can have a list of all players
         // loop through the list of players and get their rooms from the hashmap
         ArrayList<Player> occupants = new ArrayList<Player>();
         for (Player player : players) {

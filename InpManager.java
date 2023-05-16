@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 public class InpManager {
-
     private static Scanner scan;
     private static InpManager manager = new InpManager();
 
@@ -9,7 +8,7 @@ public class InpManager {
     private InpManager() {
     }
 
-    public static InpManager getInstance() {
+    public static InpManager getInpManager() {
         return manager;
     }
 

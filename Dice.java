@@ -1,7 +1,6 @@
 import java.lang.Math;
 
 public class Dice {
-
     private int result;
 
     // constructor

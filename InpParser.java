@@ -6,7 +6,7 @@ public class InpParser {
     private InpManager manager;
 
     public InpParser() {
-        manager = InpManager.getInstance();
+        manager = InpManager.getInpManager();
     }
 
     // method for getting player count and names from players

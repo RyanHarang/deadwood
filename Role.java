@@ -56,8 +56,10 @@ public class Role {
         occupied = true;
     }
 
-    public void removePlayer() {
-        occupant = null;
-        occupied = false;
-    }
+    /*
+     * public void removePlayer() {
+     * occupant = null;
+     * occupied = false;
+     * }
+     */
 }

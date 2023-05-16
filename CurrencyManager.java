@@ -2,11 +2,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class CurrencyManager {
-    private static CurrencyManager currencyManager;
+    private static CurrencyManager currencyManager = new CurrencyManager();
     private static LocationManager locationManager;
-
-    // temporary?
-    public Dice dice;
+    private Dice dice;
 
     // constructor
     private CurrencyManager() {
@@ -14,9 +12,6 @@ public class CurrencyManager {
     }
 
     public static CurrencyManager getCurrencyManager() {
-        if (currencyManager == null) {
-            currencyManager = new CurrencyManager();
-        }
         return currencyManager;
     }
 
@@ -35,17 +30,10 @@ public class CurrencyManager {
         player.setCredits(currentCredits += num);
     }
 
-    public void adjustRank(int num, Player player) {
-
-    }
-
     // method to pay players when scenes are wrapped
     public void wrapPay(Room room) {
-        // loop through all players in room
-        // for each player, check if main or extra
-        // call corresponding pay method for each player
-        // unless there are no mains in the entire room
-        // in which case nobody gets payed
+        // for each player, check if main or extra and call corresponding pay method
+        // unless there are no mains in the entire room in which case nobody gets payed
         ArrayList<Player> onCard = new ArrayList<Player>();
         ArrayList<Player> offCard = new ArrayList<Player>();
         for (Player p : locationManager.getOccupants(room)) {
