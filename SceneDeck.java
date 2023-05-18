@@ -1,16 +1,16 @@
 import java.util.ArrayList;
 
 public class SceneDeck {
-    private ArrayList<Scene> scenes;
+    private ArrayList<SceneCard> scenes;
 
-    public SceneDeck(ArrayList<Scene> scenes) {
+    public SceneDeck(ArrayList<SceneCard> scenes) {
         this.scenes = scenes;
     }
 
     // return random scene, remove scene from deck
-    public Scene getScene() {
+    public SceneCard getScene() {
         int rand = (int) (Math.random() * scenes.size());
-        Scene sc = scenes.get(rand);
+        SceneCard sc = scenes.get(rand);
         scenes.remove(rand);
         return sc;
     }

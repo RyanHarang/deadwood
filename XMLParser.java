@@ -55,10 +55,10 @@ public class XMLParser {
         } // exception handling
     }
 
-    public ArrayList<Scene> readCardData() {
+    public ArrayList<SceneCard> readCardData() {
         Element root = cardDoc.getDocumentElement();
         NodeList cards = root.getElementsByTagName("card");
-        ArrayList<Scene> scenes = new ArrayList<Scene>();
+        ArrayList<SceneCard> scenes = new ArrayList<SceneCard>();
         Role roleHolder = null;
         ArrayList<Role> roles = new ArrayList<Role>();
         ArrayList<ArrayList<Role>> rolesLists = new ArrayList<ArrayList<Role>>(40);
@@ -112,7 +112,7 @@ public class XMLParser {
 
             ArrayList<Role> alCopy = new ArrayList<Role>(roles);
             rolesLists.add(i, alCopy);
-            Scene sceneHolder = new Scene(cardName, sceneText, budget, sceneNum, rolesLists.get(i));
+            SceneCard sceneHolder = new SceneCard(cardName, sceneText, budget, sceneNum, rolesLists.get(i));
             scenes.add(sceneHolder);
             roles.clear();
         }

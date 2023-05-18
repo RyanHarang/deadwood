@@ -4,8 +4,8 @@ public class Room {
     private int shots;
     private int[] area; // area formatted as x, y, h, w
     private String name;
-    private boolean sceneDone = false;
-    private Scene scene = null;
+    private boolean SceneCardDone = false;
+    private SceneCard SceneCard = null;
     private ArrayList<Role> roles;
     private ArrayList<Room> adjacents;
 
@@ -50,12 +50,12 @@ public class Room {
         return area;
     }
 
-    public Scene getScene() {
-        return scene;
+    public SceneCard getScene() {
+        return SceneCard;
     }
 
-    public boolean isSceneDone() {
-        return sceneDone;
+    public boolean isSceneCardDone() {
+        return SceneCardDone;
     }
 
     // setters
@@ -67,11 +67,11 @@ public class Room {
         shots--;
     }
 
-    public void setScene(Scene scene) {
-        this.scene = scene;
+    public void setScene(SceneCard SceneCard) {
+        this.SceneCard = SceneCard;
     }
 
-    public void setSceneDone(boolean sceneDone) {
-        this.sceneDone = sceneDone;
+    public void setSceneCardDone(boolean SceneCardDone) {
+        this.SceneCardDone = SceneCardDone;
     }
 }

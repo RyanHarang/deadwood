@@ -30,7 +30,7 @@ public class CurrencyManager {
         player.setCredits(currentCredits += num);
     }
 
-    // method to pay players when scenes are wrapped
+
     public void wrapPay(Room room) {
         // for each player, check if main or extra and call corresponding pay method
         // unless there are no mains in the entire room in which case nobody gets payed
@@ -47,16 +47,16 @@ public class CurrencyManager {
         }
         Collections.sort(onCard, Collections.reverseOrder());
         if (onCard.size() != 0) {
-            mainPay(room.getScene(), onCard);
+
             extraPay(offCard);
         }
 
     }
 
     // method to be called by wrapPay based on players role type
-    private void mainPay(Scene scene, ArrayList<Player> onCard) {
+    private void mainPay(SceneCard sceneCard, ArrayList<Player> onCard) {
         ArrayList<Integer> diceList = new ArrayList<Integer>();
-        for (int i = 0; i < scene.getBudget(); i++) {
+        for (int i = 0; i < sceneCard.getBudget(); i++) {
             diceList.add(dice.roll());
         }
         Collections.sort(diceList);
