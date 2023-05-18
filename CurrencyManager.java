@@ -47,7 +47,7 @@ public class CurrencyManager {
         }
         Collections.sort(onCard, Collections.reverseOrder());
         if (onCard.size() != 0) {
-
+            mainPay(room.getScene(), onCard);
             extraPay(offCard);
         }
 
