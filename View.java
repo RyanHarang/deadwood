@@ -10,23 +10,22 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
-public class View extends Application{
-    public void start(Stage primaryStage) throws FileNotFoundException{
-        //root
+public class View extends Application {
+    public void start(Stage primaryStage) throws FileNotFoundException {
+        // root
         HBox root = new HBox();
 
-        //stage image
-        FileInputStream boardStream = new FileInputStream("testing_javafx/images/board.jpg");
+        // stage image
+        FileInputStream boardStream = new FileInputStream("images/board.jpg");
         Image board = new Image(boardStream, 0, 0, true, true);
         ImageView boardView = new ImageView(board);
         boardView.setPreserveRatio(true);
         boardView.setFitHeight(600);
         root.getChildren().add(boardView);
-        
 
-        //User interface
+        // User interface
         VBox ui = new VBox();
-        //Player info
+        // Player info
         GridPane playerInfo = new GridPane();
         playerInfo.setMinSize(300, 200);
         playerInfo.setPadding(new Insets(10, 10, 10, 10));
@@ -51,7 +50,7 @@ public class View extends Application{
         playerInfo.add(currentPlayerRole, 1, 3);
         ui.getChildren().add(playerInfo);
 
-        //Player buttons
+        // Player buttons
         GridPane actions = new GridPane();
         actions.setMinSize(300, 300);
         actions.setPadding(new Insets(10, 10, 10, 10));
@@ -73,14 +72,12 @@ public class View extends Application{
 
         root.getChildren().add(ui);
 
-
-
         Scene mainScene = new Scene(root, 1100, 600);
         primaryStage.setScene(mainScene);
         primaryStage.show();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         launch(args);
     }
 }
