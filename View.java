@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.event.*;
 import javafx.stage.Stage;
 import javafx.scene.image.*;
 import javafx.scene.*;
@@ -45,6 +46,8 @@ public class View extends Application {
         Font infoFont = new Font(20);
         Font btnFont = new Font(20);
 
+        // System.out.println(javafx.scene.text.Font.getFamilies());
+
         player.setFont(infoFont);
         playerMoney.setFont(infoFont);
         playerCredits.setFont(infoFont);
@@ -78,24 +81,71 @@ public class View extends Application {
         Button rehearse = new Button("Rehearse");
         Button endTurn = new Button("End Turn");
 
+        // setting width
         move.setMinWidth(110.0);
         upgrade.setMinWidth(110.0);
         act.setMinWidth(110.0);
         rehearse.setMinWidth(110.0);
         endTurn.setMinWidth(224.0);
 
+        // setting height
         move.setMinHeight(40.0);
         upgrade.setMinHeight(40.0);
         act.setMinHeight(40.0);
         rehearse.setMinHeight(40.0);
         endTurn.setMinHeight(40.0);
 
+        /*
+         * //This is how to set a button with an image
+         * ImageView moveImg = new ImageView(new Image("images/CardBack.jpg"));
+         * moveImg.setFitHeight(40);
+         * moveImg.setPreserveRatio(true);
+         * move.setGraphic(moveImg);
+         */
+
+        // applying font
         move.setFont(btnFont);
         upgrade.setFont(btnFont);
         act.setFont(btnFont);
         rehearse.setFont(btnFont);
         endTurn.setFont(btnFont);
 
+        move.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                System.out.println("move clicked");
+            }
+        });
+
+        upgrade.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                System.out.println("upgrade clicked");
+            }
+        });
+
+        act.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                System.out.println("act clicked");
+            }
+        });
+
+        rehearse.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                System.out.println("rehearse clicked");
+            }
+        });
+
+        endTurn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                System.out.println("endTurn clicked");
+            }
+        });
+
+        // adding buttons to grid pane
         actions.add(move, 0, 0);
         actions.add(upgrade, 1, 0);
         actions.add(act, 0, 1);
