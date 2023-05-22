@@ -30,7 +30,7 @@ public class View extends Application {
         HBox root = new HBox();
 
         // stage image
-        FileInputStream boardStream = new FileInputStream("images/board.jpg");
+        FileInputStream boardStream = new FileInputStream("assets/images/board.jpg");
         Image board = new Image(boardStream, 0, 0, true, true);
         ImageView boardView = new ImageView(board);
         boardView.setPreserveRatio(true);
@@ -175,7 +175,7 @@ public class View extends Application {
         root.getChildren().add(ui);
 
         Scene mainScene = new Scene(root, 1100, 600);
-        mainScene.getStylesheets().add("style.css");
+        mainScene.getStylesheets().add("assets/css/style.css");
         primaryStage.setScene(mainScene);
         primaryStage.show();
     }
