@@ -12,7 +12,20 @@ import javafx.scene.control.*;
 import javafx.scene.text.*;
 
 public class View extends Application {
+
+    // constructor
+    public View() {
+
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     public void start(Stage primaryStage) throws FileNotFoundException {
+        // create control
+        Control control = new Control();
+
         // root
         HBox root = new HBox();
 
@@ -110,38 +123,46 @@ public class View extends Application {
         rehearse.setFont(btnFont);
         endTurn.setFont(btnFont);
 
+        // button colors
+        /*
+         * move.setStyle("-fx-background-color: #e0e0e0; ");
+         * upgrade.setStyle("-fx-background-color: #e0e0e0; ");
+         * act.setStyle("-fx-background-color: #e0e0e0; ");
+         * rehearse.setStyle("-fx-background-color: #e0e0e0; ");
+         * endTurn.setStyle("-fx-background-color: #b81106; ");
+         */
         move.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                System.out.println("move clicked");
+                control.move();
             }
         });
 
         upgrade.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                System.out.println("upgrade clicked");
+                control.upgrade();
             }
         });
 
         act.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                System.out.println("act clicked");
+                control.act();
             }
         });
 
         rehearse.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                System.out.println("rehearse clicked");
+                control.rehearse();
             }
         });
 
         endTurn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                System.out.println("endTurn clicked");
+                control.endTurn();
             }
         });
 
@@ -156,11 +177,9 @@ public class View extends Application {
         root.getChildren().add(ui);
 
         Scene mainScene = new Scene(root, 1100, 600);
+        mainScene.getStylesheets().add("style.css");
         primaryStage.setScene(mainScene);
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
