@@ -3,8 +3,12 @@
 #act,
 #rehearse {
   background-color: #3973cc;
-  -fx-background-color: #3973cc;
-  -fx-text-fill: #fff;
+  font-size: 2opx;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+  -fx-font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+  -fx-font-size: 20;
+  -fx-background-color: #fef5ec;
+  -fx-text-fill: #000;
   -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 6, 0, 0, 0);
 }
 
@@ -14,6 +18,10 @@
 #rehearse:hover,
 #endTurn:hover {
   cursor: hand;
+  font-size: 20px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+  -fx-font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+  -fx-font-size: 20;
   -fx-cursor: hand;
   -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 10, 0, 0, 0);
 }
@@ -35,8 +43,12 @@
 #endTurn {
   border-radius: 0;
   background-color: #b81106;
-  -fx-background-color: #b81106;
-  -fx-text-fill: #fff;
+  font-size: 20px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+  -fx-font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+  -fx-font-size: 20;
+  -fx-background-color: #b17246;
+  -fx-text-fill: #000;
   -fx-border-radius: 0px 0px 20px 20px;
   -fx-background-radius: 0px 0px 20px 20px;
   -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 6, 0, 0, 0);
@@ -44,12 +56,20 @@
 
 #deactivatedMove {
   background-color: #8d9db5;
+  font-size: 20px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+  -fx-font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+  -fx-font-size: 20px;
   -fx-background-color: #8d9db5;
   -fx-text-fill: #eee;
 }
 
 #deactivatedUpgrade {
   background-color: #8d9db5;
+  font-size: 20px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+  -fx-font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+  -fx-font-size: 20px;
   -fx-background-color: #8d9db5;
   -fx-text-fill: #eee;
 }
@@ -57,6 +77,10 @@
 #deactivatedAct,
 #deactivatedRehearse {
   background-color: #8d9db5;
+  font-size: 20px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+  -fx-font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+  -fx-font-size: 20px;
   -fx-background-color: #8d9db5;
   -fx-text-fill: #eee;
 }
