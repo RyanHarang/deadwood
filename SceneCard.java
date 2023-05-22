@@ -4,12 +4,14 @@ public class SceneCard {
     private int num;
     private int budget;
     private String name;
+    private String img;
     private String description;
     private boolean faceUp;
     private ArrayList<Role> roles;
 
     // constructor
-    public SceneCard(String name, String description, int budget, int num, ArrayList<Role> roles) {
+    public SceneCard(String img, String name, String description, int budget, int num, ArrayList<Role> roles) {
+        this.img = img;
         this.name = name;
         this.description = description;
         this.budget = budget;
@@ -19,7 +21,7 @@ public class SceneCard {
     }
 
     public String toString() {
-        return "Name: " + name + " |\n\t\tDescription: " + description + "|\n\t\tBudget: " + budget;
+        return "Img: " + img + " Name: " + name + " |\n\t\tDescription: " + description + "|\n\t\tBudget: " + budget;
     }
 
     // getters

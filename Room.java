@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 public class Room {
     private int shots;
-    private int[] area; // area formatted as x, y, h, w
     private String name;
     private boolean SceneCardDone = false;
     private SceneCard SceneCard = null;
@@ -10,9 +9,8 @@ public class Room {
     private ArrayList<Room> adjacents;
 
     // constructor
-    public Room(int shots, int[] area, String name, ArrayList<Role> roles) {
+    public Room(int shots, String name, ArrayList<Role> roles) {
         this.shots = shots;
-        this.area = area;
         this.name = name;
         this.roles = roles;
     }
@@ -44,10 +42,6 @@ public class Room {
 
     public int getShots() {
         return shots;
-    }
-
-    public int[] getArea() {
-        return area;
     }
 
     public SceneCard getScene() {

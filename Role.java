@@ -5,15 +5,12 @@ public class Role {
     private int rank;
     private boolean occupied = false;
     private Player occupant = null;
-    private int[] area;
-    // area formatted as x, y, h, w
 
     // constructor
-    public Role(String name, String line, int rank, int[] area, boolean isMain) {
+    public Role(String name, String line, int rank, boolean isMain) {
         this.name = name;
         this.line = line;
         this.rank = rank;
-        this.area = area;
         this.isMain = isMain;
     }
 
@@ -28,10 +25,6 @@ public class Role {
 
     public int getRank() {
         return rank;
-    }
-
-    public int[] getArea() {
-        return area;
     }
 
     public Player getOccupant() {
@@ -55,11 +48,4 @@ public class Role {
         occupant = player;
         occupied = true;
     }
-
-    /*
-     * public void removePlayer() {
-     * occupant = null;
-     * occupied = false;
-     * }
-     */
 }
