@@ -56,19 +56,20 @@ public class View extends Application {
         Text currentPlayerCredits = new Text("no clout");
         Text currentPlayerRole = new Text("trash");
 
-        Font infoFont = new Font(20);
-        Font btnFont = new Font(20);
-
-        // System.out.println(javafx.scene.text.Font.getFamilies());
-
-        player.setFont(infoFont);
-        playerMoney.setFont(infoFont);
-        playerCredits.setFont(infoFont);
-        playerRole.setFont(infoFont);
-        currentPlayer.setFont(infoFont);
-        currentPlayerMoney.setFont(infoFont);
-        currentPlayerCredits.setFont(infoFont);
-        currentPlayerRole.setFont(infoFont);
+        /*
+         * Font infoFont = new Font(20);
+         * Font btnFont = new Font(20);
+         */
+        /*
+         * player.setFont(infoFont);
+         * playerMoney.setFont(infoFont);
+         * playerCredits.setFont(infoFont);
+         * playerRole.setFont(infoFont);
+         * currentPlayer.setFont(infoFont);
+         * currentPlayerMoney.setFont(infoFont);
+         * currentPlayerCredits.setFont(infoFont);
+         * currentPlayerRole.setFont(infoFont);
+         */
 
         playerInfo.add(player, 0, 0);
         playerInfo.add(currentPlayer, 1, 0);
@@ -116,12 +117,14 @@ public class View extends Application {
          * move.setGraphic(moveImg);
          */
 
-        // applying font
-        move.setFont(btnFont);
-        upgrade.setFont(btnFont);
-        act.setFont(btnFont);
-        rehearse.setFont(btnFont);
-        endTurn.setFont(btnFont);
+        /*
+         * // applying font
+         * move.setFont(btnFont);
+         * upgrade.setFont(btnFont);
+         * act.setFont(btnFont);
+         * rehearse.setFont(btnFont);
+         * endTurn.setFont(btnFont);
+         */
 
         move.setId("move");
         upgrade.setId("upgrade");
