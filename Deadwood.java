@@ -85,7 +85,7 @@ public class Deadwood {
         while (numActiveScenes > 1) {
             for (Player p : players) {
                 ////////////
-                view.updatePlayer(p);
+                // view.updatePlayer(p);
                 ///////////////
                 boolean validAction = false;
                 Room loc = locationManager.getPlayerLocation(p);
