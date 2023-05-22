@@ -12,7 +12,7 @@ public class Deadwood {
     private static Board board;
     private static SceneDeck deck;
     private static InpParser inpP;
-    private static View view;
+    // private static View view;
 
     public static void main(String[] args) {
         start();
