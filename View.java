@@ -132,28 +132,28 @@ public class View extends Application {
         move.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                control.move();
+                move.setId(control.move(move.getId()));
             }
         });
 
         upgrade.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                control.upgrade();
+                upgrade.setId(control.upgrade(upgrade.getId()));
             }
         });
 
         act.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                control.act();
+                act.setId(control.act(act.getId()));
             }
         });
 
         rehearse.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                control.rehearse();
+                rehearse.setId(control.rehearse(rehearse.getId()));
             }
         });
 
@@ -179,5 +179,4 @@ public class View extends Application {
         primaryStage.setScene(mainScene);
         primaryStage.show();
     }
-
 }
