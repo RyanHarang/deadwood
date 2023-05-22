@@ -1,0 +1,62 @@
+#move,
+#upgrade,
+#act,
+#rehearse {
+  background-color: #3973cc;
+  -fx-background-color: #3973cc;
+  -fx-text-fill: #fff;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 6, 0, 0, 0);
+}
+
+#move:hover,
+#upgrade:hover,
+#act:hover,
+#rehearse:hover,
+#endTurn:hover {
+  cursor: hand;
+  -fx-cursor: hand;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 10, 0, 0, 0);
+}
+
+#move,
+#deactivatedMove {
+  border-radius: 0;
+  -fx-border-radius: 20px 0 0 0;
+  -fx-background-radius: 20px 0 0 0;
+}
+
+#upgrade,
+#deactivatedUpgrade {
+  border-radius: 0;
+  -fx-border-radius: 0 20px 0 0;
+  -fx-background-radius: 0 20px 0 0;
+}
+
+#endTurn {
+  border-radius: 0;
+  background-color: #b81106;
+  -fx-background-color: #b81106;
+  -fx-text-fill: #fff;
+  -fx-border-radius: 0px 0px 20px 20px;
+  -fx-background-radius: 0px 0px 20px 20px;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 6, 0, 0, 0);
+}
+
+#deactivatedMove {
+  background-color: #8d9db5;
+  -fx-background-color: #8d9db5;
+  -fx-text-fill: #eee;
+}
+
+#deactivatedUpgrade {
+  background-color: #8d9db5;
+  -fx-background-color: #8d9db5;
+  -fx-text-fill: #eee;
+}
+
+#deactivatedAct,
+#deactivatedRehearse {
+  background-color: #8d9db5;
+  -fx-background-color: #8d9db5;
+  -fx-text-fill: #eee;
+}

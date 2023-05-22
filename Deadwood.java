@@ -12,6 +12,7 @@ public class Deadwood {
     private static Board board;
     private static SceneDeck deck;
     private static InpParser inpP;
+    private static View view;
 
     public static void main(String[] args) {
         start();
@@ -83,7 +84,9 @@ public class Deadwood {
 
         while (numActiveScenes > 1) {
             for (Player p : players) {
-                // print player name
+                ////////////
+                view.updatePlayer(p);
+                ///////////////
                 boolean validAction = false;
                 Room loc = locationManager.getPlayerLocation(p);
                 inpP.pass("");
