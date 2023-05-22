@@ -1,6 +1,24 @@
 /* Sets color for all buttons, will use IDs to target specific buttons later*/
-/*
-.button {
-  -fx-background-color: #000;
+
+#move,
+#upgrade,
+#act,
+#rehearse {
+  -fx-background-color: #9f9f9f;
 }
-/*
+
+#move {
+  -fx-border-radius: 20px 0 0 0;
+  -fx-background-radius: 20px 0 0 0;
+}
+
+#upgrade {
+  -fx-border-radius: 0 20px 0 0;
+  -fx-background-radius: 0 20px 0 0;
+}
+
+#endTurn {
+  -fx-background-color: #b81106;
+  -fx-border-radius: 0px 0px 20px 20px;
+  -fx-background-radius: 0px 0px 20px 20px;
+}
