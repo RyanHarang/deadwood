@@ -123,14 +123,12 @@ public class View extends Application {
         rehearse.setFont(btnFont);
         endTurn.setFont(btnFont);
 
-        // button colors
-        /*
-         * move.setStyle("-fx-background-color: #e0e0e0; ");
-         * upgrade.setStyle("-fx-background-color: #e0e0e0; ");
-         * act.setStyle("-fx-background-color: #e0e0e0; ");
-         * rehearse.setStyle("-fx-background-color: #e0e0e0; ");
-         * endTurn.setStyle("-fx-background-color: #b81106; ");
-         */
+        move.setId("move");
+        upgrade.setId("upgrade");
+        act.setId("act");
+        rehearse.setId("rehearse");
+        endTurn.setId("endTurn");
+
         move.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
