@@ -1,12 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap");
+
+/* Buttone Styling */
 #move,
 #upgrade,
 #act,
 #rehearse {
   background-color: #3973cc;
-  font-size: 2opx;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
-  -fx-font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "PT Serif", serif;
+  -fx-font-family: "PT Serif", serif;
   -fx-font-size: 20;
+  -fx-font-weight: 700;
   -fx-background-color: #fef5ec;
   -fx-text-fill: #000;
   -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 6, 0, 0, 0);
@@ -19,9 +24,11 @@
 #endTurn:hover {
   cursor: hand;
   font-size: 20px;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
-  -fx-font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+  font-weight: 700;
+  font-family: "PT Serif", serif;
+  -fx-font-family: "PT Serif", serif;
   -fx-font-size: 20;
+  -fx-font-weight: 700;
   -fx-cursor: hand;
   -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 10, 0, 0, 0);
 }
@@ -44,9 +51,11 @@
   border-radius: 0;
   background-color: #b81106;
   font-size: 20px;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
-  -fx-font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
+  font-weight: 700;
+  font-family: "PT Serif", serif;
+  -fx-font-family: "PT Serif", serif;
   -fx-font-size: 20;
+  -fx-font-weight: 700;
   -fx-background-color: #b17246;
   -fx-text-fill: #000;
   -fx-border-radius: 0px 0px 20px 20px;
@@ -57,9 +66,11 @@
 #deactivatedMove {
   background-color: #8d9db5;
   font-size: 20px;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
-  -fx-font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
-  -fx-font-size: 20px;
+  font-weight: 700;
+  font-family: "PT Serif", serif;
+  -fx-font-family: "PT Serif", serif;
+  -fx-font-size: 20;
+  -fx-font-weight: 700;
   -fx-background-color: #8d9db5;
   -fx-text-fill: #eee;
 }
@@ -67,9 +78,11 @@
 #deactivatedUpgrade {
   background-color: #8d9db5;
   font-size: 20px;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
-  -fx-font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
-  -fx-font-size: 20px;
+  font-weight: 700;
+  font-family: "PT Serif", serif;
+  -fx-font-family: "PT Serif", serif;
+  -fx-font-size: 20;
+  -fx-ont-weight: 700;
   -fx-background-color: #8d9db5;
   -fx-text-fill: #eee;
 }
@@ -78,9 +91,38 @@
 #deactivatedRehearse {
   background-color: #8d9db5;
   font-size: 20px;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
-  -fx-font-family: Impact, Haettenschweiler, "Arial Narrow Bold", serif;
-  -fx-font-size: 20px;
+  font-weight: 700;
+  font-family: "PT Serif", serif;
+  -fx-font-family: "PT Serif", serif;
+  -fx-font-size: 20;
+  -fx-font-weight: 700;
   -fx-background-color: #8d9db5;
   -fx-text-fill: #eee;
+}
+
+/* Text Display Styling */
+#player,
+#playerMoney,
+#playerCredits,
+#playerRole {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "PT Serif", serif;
+  -fx-font-family: "PT Serif", serif;
+  -fx-font-size: 20;
+  -fx-font-weight: 700;
+  -fx-text-fill: #000;
+}
+
+#currentPlayer,
+#currentPlayerMoney,
+#currentPlayerCredits,
+#currentPlayerRole {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: "PT Serif", serif;
+  -fx-font-family: "PT Serif", serif;
+  -fx-font-size: 18;
+  -fx-font-weight: 700;
+  -fx-text-fill: #000;
 }
