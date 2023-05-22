@@ -8,7 +8,7 @@ import javafx.scene.image.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javafx.scene.text.Text;
+import javafx.scene.text.*;
 
 public class View extends Application {
     public void start(Stage primaryStage) throws FileNotFoundException {
@@ -32,21 +32,35 @@ public class View extends Application {
         playerInfo.setVgap(5);
         playerInfo.setHgap(5);
         playerInfo.setAlignment(Pos.CENTER);
-        Text Player = new Text("Active player: ");
-        Text PlayerMoney = new Text("Money: ");
-        Text PlayerCredits = new Text("Credits: ");
-        Text PlayerRole = new Text("Role: ");
+
+        Text player = new Text("Active player: ");
+        Text playerMoney = new Text("Money: ");
+        Text playerCredits = new Text("Credits: ");
+        Text playerRole = new Text("Role: ");
         Text currentPlayer = new Text("hi");
         Text currentPlayerMoney = new Text("broke");
         Text currentPlayerCredits = new Text("no clout");
         Text currentPlayerRole = new Text("trash");
-        playerInfo.add(Player, 0, 0);
+
+        Font infoFont = new Font(20);
+        Font btnFont = new Font(20);
+
+        player.setFont(infoFont);
+        playerMoney.setFont(infoFont);
+        playerCredits.setFont(infoFont);
+        playerRole.setFont(infoFont);
+        currentPlayer.setFont(infoFont);
+        currentPlayerMoney.setFont(infoFont);
+        currentPlayerCredits.setFont(infoFont);
+        currentPlayerRole.setFont(infoFont);
+
+        playerInfo.add(player, 0, 0);
         playerInfo.add(currentPlayer, 1, 0);
-        playerInfo.add(PlayerMoney, 0, 1);
+        playerInfo.add(playerMoney, 0, 1);
         playerInfo.add(currentPlayerMoney, 1, 1);
-        playerInfo.add(PlayerCredits, 0, 2);
+        playerInfo.add(playerCredits, 0, 2);
         playerInfo.add(currentPlayerCredits, 1, 2);
-        playerInfo.add(PlayerRole, 0, 3);
+        playerInfo.add(playerRole, 0, 3);
         playerInfo.add(currentPlayerRole, 1, 3);
         ui.getChildren().add(playerInfo);
 
@@ -57,19 +71,38 @@ public class View extends Application {
         actions.setVgap(5);
         actions.setHgap(5);
         actions.setAlignment(Pos.CENTER);
+
         Button move = new Button("Move");
         Button upgrade = new Button("Upgrade");
         Button act = new Button("Act");
         Button rehearse = new Button("Rehearse");
+        Button endTurn = new Button("End Turn");
+
+        move.setMinWidth(110.0);
+        upgrade.setMinWidth(110.0);
+        act.setMinWidth(110.0);
+        rehearse.setMinWidth(110.0);
+        endTurn.setMinWidth(224.0);
+
+        move.setMinHeight(40.0);
+        upgrade.setMinHeight(40.0);
+        act.setMinHeight(40.0);
+        rehearse.setMinHeight(40.0);
+        endTurn.setMinHeight(40.0);
+
+        move.setFont(btnFont);
+        upgrade.setFont(btnFont);
+        act.setFont(btnFont);
+        rehearse.setFont(btnFont);
+        endTurn.setFont(btnFont);
+
         actions.add(move, 0, 0);
         actions.add(upgrade, 1, 0);
         actions.add(act, 0, 1);
         actions.add(rehearse, 1, 1);
+        actions.add(endTurn, 0, 2, 2, 1);
+
         ui.getChildren().add(actions);
-
-        Button endTurn = new Button("End Turn");
-        ui.getChildren().add(endTurn);
-
         root.getChildren().add(ui);
 
         Scene mainScene = new Scene(root, 1100, 600);
