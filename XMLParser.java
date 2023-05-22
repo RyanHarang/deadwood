@@ -15,8 +15,8 @@ public class XMLParser {
     private Document boardDoc = null;
 
     public XMLParser() {
-        setCardDoc("xml/cards.xml");
-        setBoardDoc("xml/board.xml");
+        setCardDoc("assets/xml/cards.xml");
+        setBoardDoc("assets/xml/board.xml");
     }
 
     private void setCardDoc(String fileName) {
