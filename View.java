@@ -56,20 +56,14 @@ public class View extends Application {
         Text currentPlayerCredits = new Text("no clout");
         Text currentPlayerRole = new Text("trash");
 
-        /*
-         * Font infoFont = new Font(20);
-         * Font btnFont = new Font(20);
-         */
-        /*
-         * player.setFont(infoFont);
-         * playerMoney.setFont(infoFont);
-         * playerCredits.setFont(infoFont);
-         * playerRole.setFont(infoFont);
-         * currentPlayer.setFont(infoFont);
-         * currentPlayerMoney.setFont(infoFont);
-         * currentPlayerCredits.setFont(infoFont);
-         * currentPlayerRole.setFont(infoFont);
-         */
+        player.setId("player");
+        playerMoney.setId("playerMoney");
+        playerCredits.setId("playerCredits");
+        playerRole.setId("playerRole");
+        currentPlayer.setId("currentPlayer");
+        currentPlayerMoney.setId("currentPlayerMoney");
+        currentPlayerCredits.setId("currentPlayerCredits");
+        currentPlayerRole.setId("currentPlayerRole");
 
         playerInfo.add(player, 0, 0);
         playerInfo.add(currentPlayer, 1, 0);
@@ -96,11 +90,11 @@ public class View extends Application {
         Button endTurn = new Button("End Turn");
 
         // setting width
-        move.setMinWidth(110.0);
-        upgrade.setMinWidth(110.0);
-        act.setMinWidth(110.0);
-        rehearse.setMinWidth(110.0);
-        endTurn.setMinWidth(224.0);
+        move.setMinWidth(120.0);
+        upgrade.setMinWidth(120.0);
+        act.setMinWidth(120.0);
+        rehearse.setMinWidth(120.0);
+        endTurn.setMinWidth(244.0);
 
         // setting height
         move.setMinHeight(40.0);
@@ -108,23 +102,6 @@ public class View extends Application {
         act.setMinHeight(40.0);
         rehearse.setMinHeight(40.0);
         endTurn.setMinHeight(40.0);
-
-        /*
-         * //This is how to set a button with an image
-         * ImageView moveImg = new ImageView(new Image("images/CardBack.jpg"));
-         * moveImg.setFitHeight(40);
-         * moveImg.setPreserveRatio(true);
-         * move.setGraphic(moveImg);
-         */
-
-        /*
-         * // applying font
-         * move.setFont(btnFont);
-         * upgrade.setFont(btnFont);
-         * act.setFont(btnFont);
-         * rehearse.setFont(btnFont);
-         * endTurn.setFont(btnFont);
-         */
 
         move.setId("move");
         upgrade.setId("upgrade");
