@@ -24,9 +24,6 @@ public class View extends Application {
     }
 
     public void start(Stage primaryStage) throws FileNotFoundException {
-        // create control
-        Control control = new Control();
-
         // root
         HBox root = new HBox();
 
@@ -113,35 +110,35 @@ public class View extends Application {
         move.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                move.setId(control.move(move.getId()));
+                move.setId(move(move.getId()));
             }
         });
 
         upgrade.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                upgrade.setId(control.upgrade(upgrade.getId()));
+                upgrade.setId(upgrade(upgrade.getId()));
             }
         });
 
         act.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                act.setId(control.act(act.getId()));
+                act.setId(act(act.getId()));
             }
         });
 
         rehearse.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                rehearse.setId(control.rehearse(rehearse.getId()));
+                rehearse.setId(rehearse(rehearse.getId()));
             }
         });
 
         endTurn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                control.endTurn();
+                endTurn();
             }
         });
 
@@ -157,8 +154,7 @@ public class View extends Application {
 
         Button show = new Button("show popup");
         GridPane popGrid = new GridPane();
-        // creating 7 radio buttons, adding them to a toggle group, and putting them in
-        // a grid pane
+        // creating 7 radio buttons and adding them to a toggle group
         Label pc = new Label("Select a player count:");
         pc.setId("pc");
         ToggleGroup group = new ToggleGroup();
@@ -172,6 +168,7 @@ public class View extends Application {
         Button submit = new Button("Submit");
         submit.setId("submit");
 
+        // putting all radio buttons in one group
         r2.setToggleGroup(group);
         r3.setToggleGroup(group);
         r4.setToggleGroup(group);
@@ -179,7 +176,9 @@ public class View extends Application {
         r6.setToggleGroup(group);
         r7.setToggleGroup(group);
         r8.setToggleGroup(group);
+        r4.setSelected(true);
 
+        // adding things to popup
         popGrid.add(pc, 0, 0);
         popGrid.add(r2, 0, 1);
         popGrid.add(r3, 0, 2);
@@ -197,7 +196,7 @@ public class View extends Application {
         popup.setHeight(600);
 
         popup.getContent().add(popGrid);
-        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+        EventHandler<ActionEvent> playerPopup = new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent e) {
                 if (!popup.isShowing())
@@ -206,11 +205,52 @@ public class View extends Application {
                     popup.hide();
             }
         };
-        show.setOnAction(event);
+        show.setOnAction(playerPopup);
+        submit.setOnAction(playerPopup);
         root.getChildren().add(show);
         Scene mainScene = new Scene(root, 1100, 600);
         mainScene.getStylesheets().add("assets/css/style.css");
         primaryStage.setScene(mainScene);
         primaryStage.show();
+    }
+
+    public void startGame() {
+
+    }
+
+    public String move(String id) {
+        System.out.println("move clicked");
+        if (id.equals("move")) {
+            return "deactivatedMove";
+        }
+        return "move";
+    }
+
+    public String upgrade(String id) {
+        System.out.println("upgrade clicked");
+        if (id.equals("upgrade")) {
+            return "deactivatedUpgrade";
+        }
+        return "upgrade";
+    }
+
+    public String act(String id) {
+        System.out.println("act clicked");
+        if (id.equals("act")) {
+            return "deactivatedAct";
+        }
+        return "act";
+    }
+
+    public String rehearse(String id) {
+        System.out.println("rehearse clicked");
+        if (id.equals("rehearse")) {
+            return "deactivatedRehearse";
+        }
+        return "rehearse";
+    }
+
+    public void endTurn() {
+        System.out.println("endTurn clicked");
     }
 }
