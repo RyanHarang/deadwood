@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.event.*;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.scene.image.*;
 import javafx.scene.*;
@@ -154,6 +155,59 @@ public class View extends Application {
         ui.getChildren().add(actions);
         root.getChildren().add(ui);
 
+        Button show = new Button("show popup");
+        GridPane popGrid = new GridPane();
+        // creating 7 radio buttons, adding them to a toggle group, and putting them in
+        // a grid pane
+        Label pc = new Label("Select a player count:");
+        pc.setId("pc");
+        ToggleGroup group = new ToggleGroup();
+        RadioButton r2 = new RadioButton("2 Players");
+        RadioButton r3 = new RadioButton("3 Players");
+        RadioButton r4 = new RadioButton("4 Players");
+        RadioButton r5 = new RadioButton("5 Players");
+        RadioButton r6 = new RadioButton("6 Players");
+        RadioButton r7 = new RadioButton("7 Players");
+        RadioButton r8 = new RadioButton("8 Players");
+        Button submit = new Button("Submit");
+        submit.setId("submit");
+
+        r2.setToggleGroup(group);
+        r3.setToggleGroup(group);
+        r4.setToggleGroup(group);
+        r5.setToggleGroup(group);
+        r6.setToggleGroup(group);
+        r7.setToggleGroup(group);
+        r8.setToggleGroup(group);
+
+        popGrid.add(pc, 0, 0);
+        popGrid.add(r2, 0, 1);
+        popGrid.add(r3, 0, 2);
+        popGrid.add(r4, 0, 3);
+        popGrid.add(r5, 0, 4);
+        popGrid.add(r6, 0, 5);
+        popGrid.add(r7, 0, 6);
+        popGrid.add(r8, 0, 7);
+        popGrid.add(submit, 0, 8);
+
+        popGrid.setId("popGrid");
+        // create a popup
+        Popup popup = new Popup();
+        popup.setWidth(600);
+        popup.setHeight(600);
+
+        popup.getContent().add(popGrid);
+        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent e) {
+                if (!popup.isShowing())
+                    popup.show(primaryStage);
+                else
+                    popup.hide();
+            }
+        };
+        show.setOnAction(event);
+        root.getChildren().add(show);
         Scene mainScene = new Scene(root, 1100, 600);
         mainScene.getStylesheets().add("assets/css/style.css");
         primaryStage.setScene(mainScene);
