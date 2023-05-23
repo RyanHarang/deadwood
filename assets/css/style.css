@@ -136,16 +136,16 @@
 }
 
 #popGrid {
-  min-width: 300;
+  min-width: 250;
   min-height: 500;
-  -fx-min-width: 300;
+  -fx-min-width: 250;
   -fx-min-height: 500;
 }
 
 #popGrid2 {
   min-width: 150;
   min-height: 150;
-  -fx-min-width: 310;
+  -fx-min-width: 380;
   -fx-min-height: 150;
 }
 
