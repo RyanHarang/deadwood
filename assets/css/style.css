@@ -138,6 +138,15 @@
   -fx-min-height: 500;
 }
 
+#popGrid2 {
+  min-width: 100;
+  min-height: 200;
+  background-color: #fff;
+  -fx-background-color: #fff;
+  -fx-min-width: 110;
+  -fx-min-height: 140;
+}
+
 #pc {
   padding: 20 20;
   font-size: 20px;
