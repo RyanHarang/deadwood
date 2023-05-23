@@ -12,6 +12,8 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.text.*;
 
+import java.util.ArrayList;
+
 public class View extends Application {
 
     // constructor
@@ -196,15 +198,13 @@ public class View extends Application {
 
         popGrid.setId("popGrid");
         // create a popup
-        Popup popup = new Popup();
-        popup.setWidth(600);
-        popup.setHeight(600);
-
-        popup.getContent().add(popGrid);
+        Popup countPopup = new Popup();
+        countPopup.getContent().add(popGrid);
         EventHandler<ActionEvent> playerPopup = new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent e) {
                 int players = 0;
+                ArrayList<String> names = new ArrayList<String>();
                 if (r2.isSelected()) {
                     players = 2;
                 } else if (r3.isSelected()) {
@@ -220,8 +220,37 @@ public class View extends Application {
                 } else if (r8.isSelected()) {
                     players = 8;
                 }
-                Deadwood.setDays(players);
-                popup.hide();
+
+                GridPane popGrid2 = new GridPane();
+                popGrid2.setId("popGrid2");
+                Label enterName = new Label("");
+                enterName.setId("enterName");
+                Button submit2 = new Button("Submit");
+                submit2.setId("submit");
+                TextField textField = new TextField();
+
+                popGrid2.add(enterName, 0, 0);
+                popGrid2.add(textField, 0, 1);
+                popGrid2.add(submit2, 0, 2);
+                Popup namePopup = new Popup();
+
+                namePopup.getContent().add(popGrid2);
+                EventHandler<ActionEvent> textPopup = new EventHandler<ActionEvent>() {
+                    public void handle(ActionEvent e) {
+                        namePopup.hide();
+                    }
+                };
+                submit2.setOnAction(textPopup);
+
+                // need to loop through total number of players and for each player
+                // show the name popup, and when the submit button is clicked add the
+                // input text to names arraylist and show the next name input popup
+                for (int i = 1; i <= players; i++) {
+                    enterName.setText("Enter a name for player " + i);
+                    namePopup.show(primaryStage);
+                }
+                Deadwood.initializePlayers(names);
+                countPopup.hide();
             }
         };
 
@@ -230,7 +259,7 @@ public class View extends Application {
         mainScene.getStylesheets().add("assets/css/style.css");
         primaryStage.setScene(mainScene);
         primaryStage.show();
-        popup.show(primaryStage);
+        countPopup.show(primaryStage);
     }
 
     public void startGame() {
