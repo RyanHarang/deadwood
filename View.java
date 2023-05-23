@@ -204,7 +204,23 @@ public class View extends Application {
         EventHandler<ActionEvent> playerPopup = new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent e) {
-                Deadwood.setDays(2);
+                int players = 0;
+                if (r2.isSelected()) {
+                    players = 2;
+                } else if (r3.isSelected()) {
+                    players = 3;
+                } else if (r4.isSelected()) {
+                    players = 4;
+                } else if (r5.isSelected()) {
+                    players = 5;
+                } else if (r6.isSelected()) {
+                    players = 6;
+                } else if (r7.isSelected()) {
+                    players = 7;
+                } else if (r8.isSelected()) {
+                    players = 8;
+                }
+                Deadwood.setDays(players);
                 popup.hide();
             }
         };
