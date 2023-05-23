@@ -198,10 +198,8 @@ public class View extends Application {
         EventHandler<ActionEvent> playerPopup = new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent e) {
-                if (!popup.isShowing())
-                    popup.show(primaryStage);
-                else
-                    popup.hide();
+
+                popup.hide();
             }
         };
 
