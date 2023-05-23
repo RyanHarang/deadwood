@@ -152,7 +152,6 @@ public class View extends Application {
         ui.getChildren().add(actions);
         root.getChildren().add(ui);
 
-        Button show = new Button("show popup");
         GridPane popGrid = new GridPane();
         // creating 7 radio buttons and adding them to a toggle group
         Label pc = new Label("Select a player count:");
@@ -205,13 +204,13 @@ public class View extends Application {
                     popup.hide();
             }
         };
-        show.setOnAction(playerPopup);
+
         submit.setOnAction(playerPopup);
-        root.getChildren().add(show);
         Scene mainScene = new Scene(root, 1100, 600);
         mainScene.getStylesheets().add("assets/css/style.css");
         primaryStage.setScene(mainScene);
         primaryStage.show();
+        popup.show(primaryStage);
     }
 
     public void startGame() {
