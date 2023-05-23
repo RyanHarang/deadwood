@@ -23,6 +23,12 @@ public class View extends Application {
         launch(args);
     }
 
+    /*
+     * public static void open(String[] args) {
+     * launch(args);
+     * }
+     */
+
     public void start(Stage primaryStage) throws FileNotFoundException {
         // root
         HBox root = new HBox();
@@ -198,7 +204,7 @@ public class View extends Application {
         EventHandler<ActionEvent> playerPopup = new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent e) {
-
+                Deadwood.setDays(2);
                 popup.hide();
             }
         };

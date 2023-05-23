@@ -15,6 +15,8 @@ public class Deadwood {
     // private static View view;
 
     public static void main(String[] args) {
+        // view = new View();
+        // View.open(args);
         start();
     }
 
@@ -200,6 +202,11 @@ public class Deadwood {
         else {
             currencyManager.adjustMoney(1, player);
         }
+    }
+
+    public static void setDays(int newDays) {
+        System.out.println("setDays called with newDays = " + newDays);
+        days = newDays;
     }
 
     // setters
