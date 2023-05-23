@@ -46,7 +46,7 @@ public class View extends Application {
         playerInfo.setVgap(5);
         playerInfo.setHgap(5);
         playerInfo.setAlignment(Pos.CENTER);
-
+        // Info Text
         Text player = new Text("Active player: ");
         Text playerMoney = new Text("Money: ");
         Text playerCredits = new Text("Credits: ");
