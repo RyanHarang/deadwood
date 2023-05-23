@@ -204,8 +204,13 @@ public class Deadwood {
         }
     }
 
+    // used to take a list of strings as input and create players
     public static void initializePlayers(ArrayList<String> names) {
-
+        players = new Player[names.size()];
+        for (int i = 0; i < names.size(); i++) {
+            players[i] = new Player(names.get(i));
+        }
+        System.out.println("Names: " + names.toString());
     }
 
     // setters
