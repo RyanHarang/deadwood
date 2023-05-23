@@ -204,9 +204,8 @@ public class Deadwood {
         }
     }
 
-    public static void setDays(int newDays) {
-        System.out.println("setDays called with newDays = " + newDays);
-        days = newDays;
+    public static void initializePlayers(ArrayList<String> names) {
+
     }
 
     // setters
