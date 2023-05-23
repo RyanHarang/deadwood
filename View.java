@@ -163,7 +163,7 @@ public class View extends Application {
         GridPane popGrid = new GridPane();
         // creating 7 radio buttons and adding them to a toggle group
         Label pc = new Label("Select a player count:");
-        pc.setId("pc");
+        // pc.setId("pc");
         ToggleGroup group = new ToggleGroup();
         RadioButton r2 = new RadioButton("2 Players");
         RadioButton r3 = new RadioButton("3 Players");
@@ -203,53 +203,109 @@ public class View extends Application {
         EventHandler<ActionEvent> playerPopup = new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent e) {
-                int players = 0;
+                int playerCount = 0;
                 ArrayList<String> names = new ArrayList<String>();
                 if (r2.isSelected()) {
-                    players = 2;
+                    playerCount = 2;
                 } else if (r3.isSelected()) {
-                    players = 3;
+                    playerCount = 3;
                 } else if (r4.isSelected()) {
-                    players = 4;
+                    playerCount = 4;
                 } else if (r5.isSelected()) {
-                    players = 5;
+                    playerCount = 5;
                 } else if (r6.isSelected()) {
-                    players = 6;
+                    playerCount = 6;
                 } else if (r7.isSelected()) {
-                    players = 7;
+                    playerCount = 7;
                 } else if (r8.isSelected()) {
-                    players = 8;
+                    playerCount = 8;
                 }
+                final Integer innerPlayerCount = playerCount;
 
                 GridPane popGrid2 = new GridPane();
                 popGrid2.setId("popGrid2");
-                Label enterName = new Label("");
-                enterName.setId("enterName");
+                Label enterName1 = new Label("Player 1 Name");
+                Label enterName2 = new Label("Player 2 Name");
+                Label enterName3 = new Label("Player 3 Name");
+                Label enterName4 = new Label("Player 4 Name");
+                Label enterName5 = new Label("Player 5 Name");
+                Label enterName6 = new Label("Player 6 Name");
+                Label enterName7 = new Label("Player 7 Name");
+                Label enterName8 = new Label("Player 8 Name");
                 Button submit2 = new Button("Submit");
                 submit2.setId("submit");
-                TextField textField = new TextField();
+                TextField tf1 = new TextField();
+                TextField tf2 = new TextField();
+                TextField tf3 = new TextField();
+                TextField tf4 = new TextField();
+                TextField tf5 = new TextField();
+                TextField tf6 = new TextField();
+                TextField tf7 = new TextField();
+                TextField tf8 = new TextField();
 
-                popGrid2.add(enterName, 0, 0);
-                popGrid2.add(textField, 0, 1);
-                popGrid2.add(submit2, 0, 2);
+                popGrid2.add(enterName1, 0, 0);
+                popGrid2.add(tf1, 1, 0);
+                popGrid2.add(enterName2, 0, 1);
+                popGrid2.add(tf2, 1, 1);
+                // adding a textfield per player name needed
+                for (int i = 3; i <= playerCount; i++) {
+                    if (i == 3) {
+                        popGrid2.add(enterName3, 0, 2);
+                        popGrid2.add(tf3, 1, 2);
+                    } else if (i == 4) {
+                        popGrid2.add(enterName4, 0, 3);
+                        popGrid2.add(tf4, 1, 3);
+                    } else if (i == 5) {
+                        popGrid2.add(enterName5, 0, 4);
+                        popGrid2.add(tf5, 1, 4);
+                    } else if (i == 6) {
+                        popGrid2.add(enterName6, 0, 5);
+                        popGrid2.add(tf6, 1, 5);
+                    } else if (i == 7) {
+                        popGrid2.add(enterName7, 0, 6);
+                        popGrid2.add(tf7, 1, 6);
+                    } else if (i == 8) {
+                        popGrid2.add(enterName8, 0, 7);
+                        popGrid2.add(tf8, 1, 7);
+                    }
+                }
+                popGrid2.add(submit2, 0, playerCount + 1);
                 Popup namePopup = new Popup();
 
                 namePopup.getContent().add(popGrid2);
-                EventHandler<ActionEvent> textPopup = new EventHandler<ActionEvent>() {
+                namePopup.show(primaryStage);
+
+                submit2.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
                     public void handle(ActionEvent e) {
+                        names.add(tf1.getText());
+                        names.add(tf2.getText());
+                        for (int j = 3; j <= innerPlayerCount; j++) {
+                            if (j == 3) {
+                                // System.out.println("Adding tf3 = " + tf3.getText());
+                                names.add(tf3.getText());
+                            } else if (j == 4) {
+                                // System.out.println("Adding tf4 = " + tf4.getText());
+                                names.add(tf4.getText());
+                            } else if (j == 5) {
+                                // System.out.println("Adding tf5 = " + tf5.getText());
+                                names.add(tf5.getText());
+                            } else if (j == 6) {
+                                // System.out.println("Adding tf6 = " + tf6.getText());
+                                names.add(tf6.getText());
+                            } else if (j == 7) {
+                                // System.out.println("Adding tf7 = " + tf7.getText());
+                                names.add(tf7.getText());
+                            } else if (j == 8) {
+                                // System.out.println("Adding tf8 = " + tf8.getText());
+                                names.add(tf8.getText());
+                            }
+                        }
+                        Deadwood.initializePlayers(names);
                         namePopup.hide();
                     }
-                };
-                submit2.setOnAction(textPopup);
+                });
 
-                // need to loop through total number of players and for each player
-                // show the name popup, and when the submit button is clicked add the
-                // input text to names arraylist and show the next name input popup
-                for (int i = 1; i <= players; i++) {
-                    enterName.setText("Enter a name for player " + i);
-                    namePopup.show(primaryStage);
-                }
-                Deadwood.initializePlayers(names);
                 countPopup.hide();
             }
         };
