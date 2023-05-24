@@ -15,12 +15,6 @@ import javafx.scene.text.*;
 import java.util.ArrayList;
 
 public class View extends Application {
-    private Text currentPlayerName = new Text("hi");
-    private Text currentPlayerMoney = new Text("broke");
-    private Text currentPlayerCredits = new Text("no clout");
-    private Text currentPlayerRole = new Text("trash");
-    private Player currentPlayer;
-    private Room newPlayerLocation;
 
     // constructor
     public View() {
@@ -63,18 +57,22 @@ public class View extends Application {
         Text playerMoney = new Text("Money: ");
         Text playerCredits = new Text("Credits: ");
         Text playerRole = new Text("Role: ");
+        Text currentPlayer = new Text("hi");
+        Text currentPlayerMoney = new Text("broke");
+        Text currentPlayerCredits = new Text("no clout");
+        Text currentPlayerRole = new Text("trash");
 
         player.setId("player");
         playerMoney.setId("playerMoney");
         playerCredits.setId("playerCredits");
         playerRole.setId("playerRole");
-        currentPlayerName.setId("currentPlayer");
+        currentPlayer.setId("currentPlayer");
         currentPlayerMoney.setId("currentPlayerMoney");
         currentPlayerCredits.setId("currentPlayerCredits");
         currentPlayerRole.setId("currentPlayerRole");
 
         playerInfo.add(player, 0, 0);
-        playerInfo.add(currentPlayerName, 1, 0);
+        playerInfo.add(currentPlayer, 1, 0);
         playerInfo.add(playerMoney, 0, 1);
         playerInfo.add(currentPlayerMoney, 1, 1);
         playerInfo.add(playerCredits, 0, 2);
@@ -165,7 +163,8 @@ public class View extends Application {
         GridPane popGrid = new GridPane();
         // creating 7 radio buttons and adding them to a toggle group
         Label pc = new Label("Select a player count:");
-        ToggleGroup playerGroup = new ToggleGroup();
+        // pc.setId("pc");
+        ToggleGroup group = new ToggleGroup();
         RadioButton r2 = new RadioButton("2 Players");
         RadioButton r3 = new RadioButton("3 Players");
         RadioButton r4 = new RadioButton("4 Players");
@@ -177,13 +176,13 @@ public class View extends Application {
         submit.setId("submit");
 
         // putting all radio buttons in one group
-        r2.setToggleGroup(playerGroup);
-        r3.setToggleGroup(playerGroup);
-        r4.setToggleGroup(playerGroup);
-        r5.setToggleGroup(playerGroup);
-        r6.setToggleGroup(playerGroup);
-        r7.setToggleGroup(playerGroup);
-        r8.setToggleGroup(playerGroup);
+        r2.setToggleGroup(group);
+        r3.setToggleGroup(group);
+        r4.setToggleGroup(group);
+        r5.setToggleGroup(group);
+        r6.setToggleGroup(group);
+        r7.setToggleGroup(group);
+        r8.setToggleGroup(group);
         r4.setSelected(true);
 
         // adding things to popup
@@ -201,9 +200,8 @@ public class View extends Application {
         // create a popup
         Popup countPopup = new Popup();
         countPopup.getContent().add(popGrid);
-        // creating the event for the submit button on the playercount popup
-        submit.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
+        EventHandler<ActionEvent> playerPopup = new EventHandler<ActionEvent>() {
+
             public void handle(ActionEvent e) {
                 int playerCount = 0;
                 ArrayList<String> names = new ArrayList<String>();
@@ -277,7 +275,6 @@ public class View extends Application {
                 namePopup.getContent().add(popGrid2);
                 namePopup.show(primaryStage);
 
-                // setting the action of the submit button of the names popup
                 submit2.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
@@ -311,141 +308,18 @@ public class View extends Application {
 
                 countPopup.hide();
             }
-        });
+        };
+
+        submit.setOnAction(playerPopup);
         Scene mainScene = new Scene(root, 1100, 600);
-        // mainScene.getStylesheets().add("temp/style.css");
-        mainScene.getStylesheets().add("/assets/css/style.css");
+        mainScene.getStylesheets().add("assets/css/style.css");
         primaryStage.setTitle("Deadwood");
         primaryStage.setScene(mainScene);
         primaryStage.show();
-        // countPopup.show(primaryStage);
-        movePopup(primaryStage);
+        countPopup.show(primaryStage);
     }
 
     public void startGame() {
-
-    }
-
-    public void movePopup(Stage primaryStage) {
-
-        Popup movePopup = new Popup();
-        GridPane moveGrid = new GridPane();
-        Label newLoc = new Label("Choose where you want to move");
-        ToggleGroup locationsGroup = new ToggleGroup();
-        RadioButton office = new RadioButton("office");
-        RadioButton trailer = new RadioButton("trailer");
-        RadioButton hotel = new RadioButton("Hotel");
-        RadioButton saloon = new RadioButton("Saloon");
-        RadioButton church = new RadioButton("Church");
-        RadioButton ranch = new RadioButton("Ranch");
-        RadioButton mainStreet = new RadioButton("Main Street");
-        RadioButton secretHideout = new RadioButton("Secret Hideout");
-        RadioButton bank = new RadioButton("Bank");
-        RadioButton trainStation = new RadioButton("Train Station");
-        RadioButton jail = new RadioButton("Jail");
-        RadioButton generalStore = new RadioButton("General Store");
-        Button submitMove = new Button("Submit");
-
-        office.setToggleGroup(locationsGroup);
-        trailer.setToggleGroup(locationsGroup);
-        hotel.setToggleGroup(locationsGroup);
-        saloon.setToggleGroup(locationsGroup);
-        church.setToggleGroup(locationsGroup);
-        ranch.setToggleGroup(locationsGroup);
-        mainStreet.setToggleGroup(locationsGroup);
-        secretHideout.setToggleGroup(locationsGroup);
-        bank.setToggleGroup(locationsGroup);
-        trainStation.setToggleGroup(locationsGroup);
-        jail.setToggleGroup(locationsGroup);
-        generalStore.setToggleGroup(locationsGroup);
-
-        office.setId("Casting Office");
-        trailer.setId("Trailer");
-        hotel.setId("Hotel");
-        saloon.setId("Saloon");
-        church.setId("Church");
-        ranch.setId("Ranch");
-        mainStreet.setId("Main Street");
-        secretHideout.setId("Secret Hideout");
-        bank.setId("Bank");
-        trainStation.setId("Train Station");
-        jail.setId("Jail");
-        generalStore.setId("General Store");
-
-        ArrayList<RadioButton> locationButtons = new ArrayList<RadioButton>();
-        locationButtons.add(office);
-        locationButtons.add(trailer);
-        locationButtons.add(hotel);
-        locationButtons.add(saloon);
-        locationButtons.add(church);
-        locationButtons.add(ranch);
-        locationButtons.add(mainStreet);
-        locationButtons.add(secretHideout);
-        locationButtons.add(bank);
-        locationButtons.add(trainStation);
-        locationButtons.add(jail);
-        locationButtons.add(generalStore);
-
-        ArrayList<RadioButton> selectedButtons = new ArrayList<RadioButton>();
-        /*
-         * Player c = currentPlayer;
-         * int count = 1;
-         * for(Room r: LocationManager.getPlayerLocation(c).getAdjacents()){
-         * for(RadioButton rb: locationButtons){
-         * if(rb.getId().equals(r.getName())){
-         * moveGrid.add(rb, 0, count);
-         * selectedButtons.add(rb);
-         * }
-         * }
-         * count++;
-         * }
-         * moveGrid.add(submitMove, 0, count);
-         */
-        moveGrid.add(newLoc, 0, 0);
-        moveGrid.add(office, 0, 1);
-        moveGrid.add(trailer, 0, 2);
-        moveGrid.add(hotel, 0, 3);
-        moveGrid.add(saloon, 0, 4);
-        moveGrid.add(church, 0, 5);
-        moveGrid.add(ranch, 0, 6);
-        moveGrid.add(mainStreet, 0, 7);
-        moveGrid.add(secretHideout, 0, 8);
-        moveGrid.add(bank, 0, 9);
-        moveGrid.add(trainStation, 0, 10);
-        moveGrid.add(jail, 0, 11);
-        moveGrid.add(generalStore, 0, 12);
-        moveGrid.add(submitMove, 0, 13);
-        selectedButtons.add(office);
-        selectedButtons.add(trailer);
-        selectedButtons.add(hotel);
-        selectedButtons.add(saloon);
-        selectedButtons.add(church);
-        selectedButtons.add(ranch);
-        selectedButtons.add(mainStreet);
-        selectedButtons.add(secretHideout);
-        selectedButtons.add(bank);
-        selectedButtons.add(trainStation);
-        selectedButtons.add(jail);
-        selectedButtons.add(generalStore);
-
-        submitMove.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-
-                // check which radio button is pressed, move player there with dw.playeractions,
-                // move players dice icon.
-                for (RadioButton rb : selectedButtons) {
-                    if (rb.isSelected()) {
-                        System.out.println(rb.getId());
-                        // newPlayerLocation = Board.roomByName(rb.getId());
-                        // System.out.println(newPlayerLocation.getName());
-                    }
-                }
-            }
-        });
-
-        movePopup.getContent().add(moveGrid);
-        movePopup.show(primaryStage);
 
     }
 
@@ -484,18 +358,4 @@ public class View extends Application {
     public void endTurn() {
         System.out.println("endTurn clicked");
     }
-
-    public void updatePlayer(Player p) {
-        currentPlayer = p;
-        currentPlayerName.setText(p.getName());
-        currentPlayerCredits.setText(Integer.toString(p.getCredits()));
-        currentPlayerMoney.setText("$" + Integer.toString(p.getMoney()));
-        if (p.getRole() != null) {
-            currentPlayerRole.setText(p.getRole().getName());
-        } else {
-            currentPlayerRole.setText("N/A");
-        }
-
-    }
-
 }

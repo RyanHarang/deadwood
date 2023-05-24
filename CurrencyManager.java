@@ -30,7 +30,6 @@ public class CurrencyManager {
         player.setCredits(currentCredits += num);
     }
 
-
     public void wrapPay(Room room) {
         // for each player, check if main or extra and call corresponding pay method
         // unless there are no mains in the entire room in which case nobody gets payed
