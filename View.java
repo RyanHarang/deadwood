@@ -21,6 +21,7 @@ public class View extends Application {
     private Text currentPlayerRole = new Text("trash");
     private Player currentPlayer;
     private Room newPlayerLocation;
+
     // constructor
     public View() {
 
@@ -62,7 +63,6 @@ public class View extends Application {
         Text playerMoney = new Text("Money: ");
         Text playerCredits = new Text("Credits: ");
         Text playerRole = new Text("Role: ");
-
 
         player.setId("player");
         playerMoney.setId("playerMoney");
@@ -165,7 +165,6 @@ public class View extends Application {
         GridPane popGrid = new GridPane();
         // creating 7 radio buttons and adding them to a toggle group
         Label pc = new Label("Select a player count:");
-        // pc.setId("pc");
         ToggleGroup playerGroup = new ToggleGroup();
         RadioButton r2 = new RadioButton("2 Players");
         RadioButton r3 = new RadioButton("3 Players");
@@ -202,8 +201,9 @@ public class View extends Application {
         // create a popup
         Popup countPopup = new Popup();
         countPopup.getContent().add(popGrid);
-        EventHandler<ActionEvent> playerPopup = new EventHandler<ActionEvent>() {
-
+        // creating the event for the submit button on the playercount popup
+        submit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
             public void handle(ActionEvent e) {
                 int playerCount = 0;
                 ArrayList<String> names = new ArrayList<String>();
@@ -277,6 +277,7 @@ public class View extends Application {
                 namePopup.getContent().add(popGrid2);
                 namePopup.show(primaryStage);
 
+                // setting the action of the submit button of the names popup
                 submit2.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
@@ -310,20 +311,14 @@ public class View extends Application {
 
                 countPopup.hide();
             }
-        };
-
-        submit.setOnAction(playerPopup);
-
-
-    
-
-
+        });
         Scene mainScene = new Scene(root, 1100, 600);
-        mainScene.getStylesheets().add("temp/style.css");
+        // mainScene.getStylesheets().add("temp/style.css");
+        mainScene.getStylesheets().add("/assets/css/style.css");
         primaryStage.setTitle("Deadwood");
         primaryStage.setScene(mainScene);
         primaryStage.show();
-        //countPopup.show(primaryStage);
+        // countPopup.show(primaryStage);
         movePopup(primaryStage);
     }
 
@@ -331,9 +326,7 @@ public class View extends Application {
 
     }
 
-
-
-    public void movePopup(Stage primaryStage){
+    public void movePopup(Stage primaryStage) {
 
         Popup movePopup = new Popup();
         GridPane moveGrid = new GridPane();
@@ -393,21 +386,21 @@ public class View extends Application {
         locationButtons.add(jail);
         locationButtons.add(generalStore);
 
-        
         ArrayList<RadioButton> selectedButtons = new ArrayList<RadioButton>();
-/*
-        Player c = currentPlayer;
-        int count = 1;
-        for(Room r: LocationManager.getPlayerLocation(c).getAdjacents()){
-            for(RadioButton rb: locationButtons){
-                if(rb.getId().equals(r.getName())){
-                    moveGrid.add(rb, 0, count);
-                    selectedButtons.add(rb);
-                }
-            }
-            count++;
-        }
-        moveGrid.add(submitMove, 0, count);*/
+        /*
+         * Player c = currentPlayer;
+         * int count = 1;
+         * for(Room r: LocationManager.getPlayerLocation(c).getAdjacents()){
+         * for(RadioButton rb: locationButtons){
+         * if(rb.getId().equals(r.getName())){
+         * moveGrid.add(rb, 0, count);
+         * selectedButtons.add(rb);
+         * }
+         * }
+         * count++;
+         * }
+         * moveGrid.add(submitMove, 0, count);
+         */
         moveGrid.add(newLoc, 0, 0);
         moveGrid.add(office, 0, 1);
         moveGrid.add(trailer, 0, 2);
@@ -435,16 +428,17 @@ public class View extends Application {
         selectedButtons.add(jail);
         selectedButtons.add(generalStore);
 
-        submitMove.setOnAction(new EventHandler<ActionEvent>(){
+        submitMove.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
 
-                // check which radio button is pressed, move player there with dw.playeractions, move players dice icon.
-                for(RadioButton rb: selectedButtons){
-                    if(rb.isSelected()){
+                // check which radio button is pressed, move player there with dw.playeractions,
+                // move players dice icon.
+                for (RadioButton rb : selectedButtons) {
+                    if (rb.isSelected()) {
                         System.out.println(rb.getId());
-                        //newPlayerLocation = Board.roomByName(rb.getId());
-                        //System.out.println(newPlayerLocation.getName());
+                        // newPlayerLocation = Board.roomByName(rb.getId());
+                        // System.out.println(newPlayerLocation.getName());
                     }
                 }
             }
@@ -452,7 +446,6 @@ public class View extends Application {
 
         movePopup.getContent().add(moveGrid);
         movePopup.show(primaryStage);
-
 
     }
 
@@ -492,19 +485,17 @@ public class View extends Application {
         System.out.println("endTurn clicked");
     }
 
-    public void updatePlayer(Player p){
+    public void updatePlayer(Player p) {
         currentPlayer = p;
         currentPlayerName.setText(p.getName());
         currentPlayerCredits.setText(Integer.toString(p.getCredits()));
-        currentPlayerMoney.setText("$"+Integer.toString(p.getMoney()));
-        if(p.getRole() != null){
+        currentPlayerMoney.setText("$" + Integer.toString(p.getMoney()));
+        if (p.getRole() != null) {
             currentPlayerRole.setText(p.getRole().getName());
-        }
-        else{
+        } else {
             currentPlayerRole.setText("N/A");
         }
 
     }
-
 
 }
