@@ -47,7 +47,7 @@ public class LocationManager {
     }
 
     // getters
-    public Room getPlayerLocation(Player player) {
+    public static Room getPlayerLocation(Player player) {
         return locations.get(player);
     }
 
