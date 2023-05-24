@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
 public class PlayerActions {
-    private Dice dice = new Dice();
+    private static Dice dice = new Dice();
 
     public PlayerActions() {
 
     }
 
-    public void playerMove(Player p, LocationManager locationManager, Board board, InpParser inpP,
+    public static void playerMove(Player p, LocationManager locationManager, Board board, InpParser inpP,
             CastingOffice castingOffice, CurrencyManager currencyManager) {
         // prompt for new location
         Room playerLocation = locationManager.getPlayerLocation(p);
@@ -40,7 +40,7 @@ public class PlayerActions {
         // if invalid, repeat. if valid, prompt upgrade.
     }
 
-    public boolean playerTakeRole(InpParser inpP, Player p, Room location) {
+    public static boolean playerTakeRole(InpParser inpP, Player p, Room location) {
         if (location.getShots() == 0) {
             inpP.pass("There is no scene for you to take a role in!");
             return false;
@@ -93,7 +93,7 @@ public class PlayerActions {
         return false;
     }
 
-    public boolean playerAct(Player p, LocationManager locationManager, CurrencyManager currencyManager,
+    public static boolean playerAct(Player p, LocationManager locationManager, CurrencyManager currencyManager,
             InpParser inpP) {
 
         Room room = locationManager.getPlayerLocation(p);
@@ -119,7 +119,7 @@ public class PlayerActions {
         return false;// scene not wrapped
     }
 
-    private boolean actOnCard(Player player, int roomBudget, CurrencyManager currencyManager, InpParser inpP) {
+    private static boolean actOnCard(Player player, int roomBudget, CurrencyManager currencyManager, InpParser inpP) {
         int roll = dice.roll(player.getPracticeChips());
         // success
         if (roll >= roomBudget) {
@@ -132,7 +132,7 @@ public class PlayerActions {
         return false;
     }
 
-    private boolean actOffCard(Player player, int roomBudget, CurrencyManager currencyManager, InpParser inpP) {
+    private static boolean actOffCard(Player player, int roomBudget, CurrencyManager currencyManager, InpParser inpP) {
         int roll = dice.roll(player.getPracticeChips());
         // success
         if (roll >= roomBudget) {
@@ -149,7 +149,7 @@ public class PlayerActions {
         }
     }
 
-    public boolean playerUpgrade(Player p, InpParser inpP, CastingOffice castingOffice, LocationManager locationManager,
+    public static boolean playerUpgrade(Player p, InpParser inpP, CastingOffice castingOffice, LocationManager locationManager,
             CurrencyManager currencyManager) {
         int[] upgrade = inpP.upgradeInfo();
         int rank = upgrade[1];
@@ -160,7 +160,7 @@ public class PlayerActions {
         return castingOffice.upgrade(p, rank, upgradingWithMoney, locationManager, currencyManager);
     }
 
-    public boolean playerRehearse(Player p, LocationManager locationManager, InpParser inpP) {
+    public static boolean playerRehearse(Player p, LocationManager locationManager, InpParser inpP) {
         Room room = locationManager.getPlayerLocation(p);
         int budget = room.getScene().getBudget();
         if (p.getPracticeChips() >= budget - 1) {

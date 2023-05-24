@@ -15,7 +15,11 @@ import javafx.scene.text.*;
 import java.util.ArrayList;
 
 public class View extends Application {
-
+    private Text currentPlayerName = new Text("hi");
+    private Text currentPlayerMoney = new Text("broke");
+    private Text currentPlayerCredits = new Text("no clout");
+    private Text currentPlayerRole = new Text("trash");
+    private Player currentPlayer;
     // constructor
     public View() {
 
@@ -57,22 +61,19 @@ public class View extends Application {
         Text playerMoney = new Text("Money: ");
         Text playerCredits = new Text("Credits: ");
         Text playerRole = new Text("Role: ");
-        Text currentPlayer = new Text("hi");
-        Text currentPlayerMoney = new Text("broke");
-        Text currentPlayerCredits = new Text("no clout");
-        Text currentPlayerRole = new Text("trash");
+
 
         player.setId("player");
         playerMoney.setId("playerMoney");
         playerCredits.setId("playerCredits");
         playerRole.setId("playerRole");
-        currentPlayer.setId("currentPlayer");
+        currentPlayerName.setId("currentPlayer");
         currentPlayerMoney.setId("currentPlayerMoney");
         currentPlayerCredits.setId("currentPlayerCredits");
         currentPlayerRole.setId("currentPlayerRole");
 
         playerInfo.add(player, 0, 0);
-        playerInfo.add(currentPlayer, 1, 0);
+        playerInfo.add(currentPlayerName, 1, 0);
         playerInfo.add(playerMoney, 0, 1);
         playerInfo.add(currentPlayerMoney, 1, 1);
         playerInfo.add(playerCredits, 0, 2);
@@ -311,8 +312,12 @@ public class View extends Application {
         };
 
         submit.setOnAction(playerPopup);
+
+        
+
+
         Scene mainScene = new Scene(root, 1100, 600);
-        mainScene.getStylesheets().add("assets/css/style.css");
+        mainScene.getStylesheets().add("temp/style.css");
         primaryStage.setTitle("Deadwood");
         primaryStage.setScene(mainScene);
         primaryStage.show();
@@ -358,4 +363,20 @@ public class View extends Application {
     public void endTurn() {
         System.out.println("endTurn clicked");
     }
+
+    public void updatePlayer(Player p){
+        currentPlayer = p;
+        currentPlayerName.setText(p.getName());
+        currentPlayerCredits.setText(Integer.toString(p.getCredits()));
+        currentPlayerMoney.setText("$"+Integer.toString(p.getMoney()));
+        if(p.getRole() != null){
+            currentPlayerRole.setText(p.getRole().getName());
+        }
+        else{
+            currentPlayerRole.setText("N/A");
+        }
+
+    }
+
+
 }
