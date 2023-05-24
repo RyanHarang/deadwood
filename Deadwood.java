@@ -4,11 +4,11 @@ public class Deadwood {
     private static int days;
     private static int numActiveScenes;
     private static Player[] players;
-    private static Dice dice;
+    // private static Dice dice;
     private static LocationManager locationManager;
     private static CurrencyManager currencyManager;
     private static CastingOffice castingOffice;
-    private static PlayerActions playerActions;
+    // private static PlayerActions playerActions;
     private static Board board;
     private static SceneDeck deck;
     private static InpParser inpP;
@@ -38,7 +38,7 @@ public class Deadwood {
         board = new Board(xml.readBoardData());
         castingOffice = CastingOffice.getCastingOffice();
         currencyManager = CurrencyManager.getCurrencyManager();
-        playerActions = new PlayerActions();
+        // playerActions = new PlayerActions();
         // loop for setting an initial scene at each room
 
         locationManager = new LocationManager(players, board.roomByName("trailer"));
@@ -90,7 +90,7 @@ public class Deadwood {
                 // view.updatePlayer(p);
                 ///////////////
                 boolean validAction = false;
-                Room loc = locationManager.getPlayerLocation(p);
+                Room loc = LocationManager.getPlayerLocation(p);
                 inpP.pass("");
                 inpP.pass("Current Player [" + p.toString() + "]");
                 inpP.pass("Current Location [" + loc.toString() + "]");
@@ -102,7 +102,7 @@ public class Deadwood {
                     switch (action) {
                         case ('m'):
                             if (p.getRole() == null) {
-                                playerActions.playerMove(p, locationManager, board, inpP, castingOffice,
+                                PlayerActions.playerMove(p, locationManager, board, inpP, castingOffice,
                                         currencyManager);
                                 validAction = true;
                             } else {
@@ -111,7 +111,7 @@ public class Deadwood {
                             break;
                         case ('a'):
                             if (p.getRole() != null) {
-                                if (playerActions.playerAct(p, locationManager, currencyManager, inpP)) {
+                                if (PlayerActions.playerAct(p, locationManager, currencyManager, inpP)) {
                                     numActiveScenes--;
                                 }
                                 validAction = true;
@@ -121,7 +121,7 @@ public class Deadwood {
                             break;
                         case ('r'):
                             if (p.getRole() != null) {
-                                if (playerActions.playerRehearse(p, locationManager, inpP)) {
+                                if (PlayerActions.playerRehearse(p, locationManager, inpP)) {
                                     validAction = true;
                                 }
                             } else {
@@ -129,14 +129,14 @@ public class Deadwood {
                             }
                             break;
                         case ('u'):
-                            if (locationManager.getPlayerLocation(p).equals(board.roomByName("office"))) {
-                                boolean validUpgrade = playerActions.playerUpgrade(p, inpP, castingOffice,
+                            if (LocationManager.getPlayerLocation(p).equals(board.roomByName("office"))) {
+                                boolean validUpgrade = PlayerActions.playerUpgrade(p, inpP, castingOffice,
                                         locationManager, currencyManager);
                                 if (!validUpgrade) {
                                     inpP.pass("You can't upgrade to that rank just yet!");
                                 } else {
                                     if (inpP.moveAfterUpgrade()) {
-                                        playerActions.playerMove(p, locationManager, board, inpP, castingOffice,
+                                        PlayerActions.playerMove(p, locationManager, board, inpP, castingOffice,
                                                 currencyManager);
                                     }
                                     validAction = true;
@@ -147,7 +147,7 @@ public class Deadwood {
                             }
                             break;
                         case ('t'):
-                            if (playerActions.playerTakeRole(inpP, p, locationManager.getPlayerLocation(p))) {
+                            if (PlayerActions.playerTakeRole(inpP, p, LocationManager.getPlayerLocation(p))) {
                                 validAction = true;
                             } else {
 
@@ -167,7 +167,7 @@ public class Deadwood {
     }
 
     public static void act(Player player) {
-        Room room = locationManager.getPlayerLocation(player);
+        Room room = LocationManager.getPlayerLocation(player);
         if (player.getRole().isMain()) {
             if (actOnCard(player, room.getScene().getBudget())) {
                 room.removeShot();
@@ -176,15 +176,15 @@ public class Deadwood {
             actOffCard(player, room.getScene().getBudget());
         }
         if (room.getShots() == 0) {
-            currencyManager.wrapPay(room);
+            CurrencyManager.wrapPay(room);
         }
     }
 
     public static boolean actOnCard(Player player, int roomBudget) {
-        int roll = dice.roll(player.getPracticeChips());
+        int roll = Dice.roll(player.getPracticeChips());
         // success
         if (roll >= roomBudget) {
-            currencyManager.adjustCredits(2, player);
+            CurrencyManager.adjustCredits(2, player);
             return true;
         }
         // falure - prompt failure with model
@@ -192,15 +192,15 @@ public class Deadwood {
     }
 
     public static void actOffCard(Player player, int roomBudget) {
-        int roll = dice.roll(player.getPracticeChips());
+        int roll = Dice.roll(player.getPracticeChips());
         // success
         if (roll >= roomBudget) {
-            currencyManager.adjustCredits(1, player);
-            currencyManager.adjustMoney(1, player);
+            CurrencyManager.adjustCredits(1, player);
+            CurrencyManager.adjustMoney(1, player);
         }
         // falure - prompt failure with model
         else {
-            currencyManager.adjustMoney(1, player);
+            CurrencyManager.adjustMoney(1, player);
         }
     }
 

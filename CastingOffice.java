@@ -32,7 +32,7 @@ public class CastingOffice {
             return false;
         }
         // verify player is in casting office
-        if (locationManager.getPlayerLocation(player).getName() != "office") {
+        if (LocationManager.getPlayerLocation(player).getName() != "office") {
             return false;
         }
 
@@ -59,12 +59,12 @@ public class CastingOffice {
     public void upgradeMoney(Player player, int rank, CurrencyManager currencyManager) {
         player.setRank(rank);
         // remove money from info
-        currencyManager.adjustMoney(-(info[rank - 2][1]), player);
+        CurrencyManager.adjustMoney(-(info[rank - 2][1]), player);
     }
 
     public void upgradeCredits(Player player, int rank, CurrencyManager currencyManager) {
         player.setRank(rank);
         // remove credits from info
-        currencyManager.adjustCredits(-(info[rank - 2][2]), player);
+        CurrencyManager.adjustCredits(-(info[rank - 2][2]), player);
     }
 }

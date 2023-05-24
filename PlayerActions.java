@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class PlayerActions {
-    private static Dice dice = new Dice();
+    // private static Dice dice = new Dice();
 
     public PlayerActions() {
 
@@ -10,7 +10,7 @@ public class PlayerActions {
     public static void playerMove(Player p, LocationManager locationManager, Board board, InpParser inpP,
             CastingOffice castingOffice, CurrencyManager currencyManager) {
         // prompt for new location
-        Room playerLocation = locationManager.getPlayerLocation(p);
+        Room playerLocation = LocationManager.getPlayerLocation(p);
         Room location = board.roomByName(inpP.getDestination(playerLocation.neighborsString()));
         locationManager.move(p, location);
 
@@ -96,7 +96,7 @@ public class PlayerActions {
     public static boolean playerAct(Player p, LocationManager locationManager, CurrencyManager currencyManager,
             InpParser inpP) {
 
-        Room room = locationManager.getPlayerLocation(p);
+        Room room = LocationManager.getPlayerLocation(p);
 
         if (p.getRole().isMain()) {
             if (actOnCard(p, room.getScene().getBudget(), currencyManager, inpP)) {
@@ -109,7 +109,7 @@ public class PlayerActions {
         }
         if (room.getShots() == 0) {
             inpP.pass("Scene has wrapped!");
-            currencyManager.wrapPay(room);
+            CurrencyManager.wrapPay(room);
             for (Player pl : locationManager.getOccupants(room)) {
                 pl.setRole(null);
                 pl.setPracticeChip();
@@ -120,10 +120,10 @@ public class PlayerActions {
     }
 
     private static boolean actOnCard(Player player, int roomBudget, CurrencyManager currencyManager, InpParser inpP) {
-        int roll = dice.roll(player.getPracticeChips());
+        int roll = Dice.roll(player.getPracticeChips());
         // success
         if (roll >= roomBudget) {
-            currencyManager.adjustCredits(2, player);
+            CurrencyManager.adjustCredits(2, player);
             inpP.pass("Your roll and practicechips total to: " + roll + " Act succeeds!");
             return true;
         }
@@ -133,23 +133,24 @@ public class PlayerActions {
     }
 
     private static boolean actOffCard(Player player, int roomBudget, CurrencyManager currencyManager, InpParser inpP) {
-        int roll = dice.roll(player.getPracticeChips());
+        int roll = Dice.roll(player.getPracticeChips());
         // success
         if (roll >= roomBudget) {
-            currencyManager.adjustCredits(1, player);
-            currencyManager.adjustMoney(1, player);
+            CurrencyManager.adjustCredits(1, player);
+            CurrencyManager.adjustMoney(1, player);
             inpP.pass("Your roll and practicechips total to: " + roll + " Act succeeds!");
             return true;
         }
         // falure - prompt failure with view
         else {
-            currencyManager.adjustMoney(1, player);
+            CurrencyManager.adjustMoney(1, player);
             inpP.pass("Your roll and practicechips total to: " + roll + " Act failed!");
             return false;
         }
     }
 
-    public static boolean playerUpgrade(Player p, InpParser inpP, CastingOffice castingOffice, LocationManager locationManager,
+    public static boolean playerUpgrade(Player p, InpParser inpP, CastingOffice castingOffice,
+            LocationManager locationManager,
             CurrencyManager currencyManager) {
         int[] upgrade = inpP.upgradeInfo();
         int rank = upgrade[1];
@@ -161,7 +162,7 @@ public class PlayerActions {
     }
 
     public static boolean playerRehearse(Player p, LocationManager locationManager, InpParser inpP) {
-        Room room = locationManager.getPlayerLocation(p);
+        Room room = LocationManager.getPlayerLocation(p);
         int budget = room.getScene().getBudget();
         if (p.getPracticeChips() >= budget - 1) {
             inpP.pass("You must act!");

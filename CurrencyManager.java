@@ -4,11 +4,11 @@ import java.util.Collections;
 public class CurrencyManager {
     private static CurrencyManager currencyManager = new CurrencyManager();
     private static LocationManager locationManager;
-    private Dice dice;
+    // private static Dice dice;
 
     // constructor
     private CurrencyManager() {
-        dice = new Dice();
+        // dice = new Dice();
     }
 
     public static CurrencyManager getCurrencyManager() {
@@ -20,17 +20,17 @@ public class CurrencyManager {
     }
 
     // setters
-    public void adjustMoney(int num, Player player) {
+    public static void adjustMoney(int num, Player player) {
         int currentMoney = player.getMoney();
         player.setMoney(currentMoney += num);
     }
 
-    public void adjustCredits(int num, Player player) {
+    public static void adjustCredits(int num, Player player) {
         int currentCredits = player.getCredits();
         player.setCredits(currentCredits += num);
     }
 
-    public void wrapPay(Room room) {
+    public static void wrapPay(Room room) {
         // for each player, check if main or extra and call corresponding pay method
         // unless there are no mains in the entire room in which case nobody gets payed
         ArrayList<Player> onCard = new ArrayList<Player>();
@@ -53,10 +53,10 @@ public class CurrencyManager {
     }
 
     // method to be called by wrapPay based on players role type
-    private void mainPay(SceneCard sceneCard, ArrayList<Player> onCard) {
+    private static void mainPay(SceneCard sceneCard, ArrayList<Player> onCard) {
         ArrayList<Integer> diceList = new ArrayList<Integer>();
         for (int i = 0; i < sceneCard.getBudget(); i++) {
-            diceList.add(dice.roll());
+            diceList.add(Dice.roll());
         }
         Collections.sort(diceList);
         int numPlayers = onCard.size();
@@ -67,7 +67,7 @@ public class CurrencyManager {
         }
     }
 
-    private void extraPay(ArrayList<Player> offCard) {
+    private static void extraPay(ArrayList<Player> offCard) {
         for (Player p : offCard) {
             adjustMoney(p.getRole().getRank(), p);
         }
