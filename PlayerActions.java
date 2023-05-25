@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class PlayerActions {
     // private static Dice dice = new Dice();
-    private static CurrencyManager currencyManager = CurrencyManager.getCurrencyManager();
+    //private static CurrencyManager currencyManager = CurrencyManager.getCurrencyManager();
 
     public PlayerActions() {
 
@@ -109,7 +109,7 @@ public class PlayerActions {
         }
         if (room.getShots() == 0) {
             //inpP.pass("Scene has wrapped!");
-            currencyManager.wrapPay(room);
+            CurrencyManager.wrapPay(room);
             for (Player pl : LocationManager.getOccupants(room)) {
                 pl.setRole(null);
                 pl.setPracticeChip();
@@ -123,7 +123,7 @@ public class PlayerActions {
         int roll = Dice.roll(player.getPracticeChips());
         // success
         if (roll >= roomBudget) {
-            currencyManager.adjustCredits(2, player);
+            CurrencyManager.adjustCredits(2, player);
             //inpP.pass("Your roll and practicechips total to: " + roll + " Act succeeds!");
             return true;
         }
@@ -136,14 +136,14 @@ public class PlayerActions {
         int roll = Dice.roll(player.getPracticeChips());
         // success
         if (roll >= roomBudget) {
-            currencyManager.adjustCredits(1, player);
-            currencyManager.adjustMoney(1, player);
+            CurrencyManager.adjustCredits(1, player);
+            CurrencyManager.adjustMoney(1, player);
             //inpP.pass("Your roll and practicechips total to: " + roll + " Act succeeds!");
             return true;
         }
         // falure - prompt failure with view
         else {
-            currencyManager.adjustMoney(1, player);
+            CurrencyManager.adjustMoney(1, player);
             //inpP.pass("Your roll and practicechips total to: " + roll + " Act failed!");
             return false;
         }
