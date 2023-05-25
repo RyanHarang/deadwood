@@ -33,11 +33,9 @@ public class LocationManager {
         boolean isValidMove = validateMove(player, new_location);
         if (isValidMove) {
             // System.out.println(locations.get(player).toString());
-            // locations.get(player).removePlayer(player);
             String test = locations.get(player).getName();
             locations.put(player, new_location);
             System.out.println("moved " + player.getName() + " from " + test + " to " + new_location.getName());
-            // new_location.addPlayer(player);
         }
         return isValidMove;
     }

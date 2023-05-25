@@ -12,6 +12,7 @@ public class Deadwood {
     private static InpParser inpP;
     private static Player activePlayer;
     private static int activeTurn;
+    //private static XMLParser xml = new XMLParser();
 
     public static void main(String[] args) {
         // view = new View();

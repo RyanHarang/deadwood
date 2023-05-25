@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class PlayerActions {
     // private static Dice dice = new Dice();
+    private static CurrencyManager currencyManager = CurrencyManager.getCurrencyManager();
 
     public PlayerActions() {
 
@@ -108,7 +109,7 @@ public class PlayerActions {
         }
         if (room.getShots() == 0) {
             //inpP.pass("Scene has wrapped!");
-            CurrencyManager.wrapPay(room);
+            currencyManager.wrapPay(room);
             for (Player pl : LocationManager.getOccupants(room)) {
                 pl.setRole(null);
                 pl.setPracticeChip();
@@ -122,7 +123,7 @@ public class PlayerActions {
         int roll = Dice.roll(player.getPracticeChips());
         // success
         if (roll >= roomBudget) {
-            CurrencyManager.adjustCredits(2, player);
+            currencyManager.adjustCredits(2, player);
             //inpP.pass("Your roll and practicechips total to: " + roll + " Act succeeds!");
             return true;
         }
@@ -135,14 +136,14 @@ public class PlayerActions {
         int roll = Dice.roll(player.getPracticeChips());
         // success
         if (roll >= roomBudget) {
-            CurrencyManager.adjustCredits(1, player);
-            CurrencyManager.adjustMoney(1, player);
+            currencyManager.adjustCredits(1, player);
+            currencyManager.adjustMoney(1, player);
             //inpP.pass("Your roll and practicechips total to: " + roll + " Act succeeds!");
             return true;
         }
         // falure - prompt failure with view
         else {
-            CurrencyManager.adjustMoney(1, player);
+            currencyManager.adjustMoney(1, player);
             //inpP.pass("Your roll and practicechips total to: " + roll + " Act failed!");
             return false;
         }
