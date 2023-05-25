@@ -1,8 +1,8 @@
 public class Board {
     private static Room[] rooms;
 
-    public Board(Room[] rooms) {
-        this.rooms = rooms;
+    public Board(Room[] nRooms) {
+        rooms = nRooms;
     }
 
     public Room[] getRooms() {
