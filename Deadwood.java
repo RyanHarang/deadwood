@@ -41,7 +41,7 @@ public class Deadwood {
         // loop for setting an initial scene at each room
 
         locationManager = new LocationManager(players, Board.roomByName("trailer"));
-        CurrencyManager.setLocMan(locationManager);
+        //CurrencyManager.setLocMan(locationManager);
         numActiveScenes = 10;
         gameLoop();
     }
@@ -187,7 +187,7 @@ public class Deadwood {
         //
 
         // locationManager = new LocationManager(players, board.roomByName("trailer"));
-        CurrencyManager.setLocMan(locationManager);
+        //CurrencyManager.setLocMan(locationManager);
         for (int i = 0; i < names.size(); i++) {
             players[i] = new Player(names.get(i));
         }
