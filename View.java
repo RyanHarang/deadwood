@@ -387,7 +387,8 @@ public class View extends Application {
 
         countSubmit.setOnAction(playerPopup);
         Scene mainScene = new Scene(root, 1100, 600);
-        mainScene.getStylesheets().add("temp/style.css");
+        mainScene.getStylesheets().add("/assets/css/style.css");
+        // mainScene.getStylesheets().add("temp/style.css");
         primaryStage.setTitle("Deadwood");
         primaryStage.setScene(mainScene);
         primaryStage.show();
