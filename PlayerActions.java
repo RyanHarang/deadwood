@@ -11,8 +11,8 @@ public class PlayerActions {
             CastingOffice castingOffice, CurrencyManager currencyManager) {
         // prompt for new location
         Room playerLocation = LocationManager.getPlayerLocation(p);
-        Room location = board.roomByName(inpP.getDestination(playerLocation.neighborsString()));
-        locationManager.move(p, location);
+        Room location = Board.roomByName(inpP.getDestination(playerLocation.neighborsString()));
+        LocationManager.move(p, location);
 
         // must then check: scene card face up or down?
         // would you like to take a roll?
