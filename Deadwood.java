@@ -4,15 +4,14 @@ public class Deadwood {
     private static int days;
     private static int numActiveScenes;
     private static Player[] players;
-    // private static Dice dice;
     private static LocationManager locationManager;
     private static CurrencyManager currencyManager;
     private static CastingOffice castingOffice;
-    // private static PlayerActions playerActions;
     private static Board board;
     private static SceneDeck deck;
     private static InpParser inpP;
-    // private static View view;
+    private static Player activePlayer;
+    private static int activeTurn;
 
     public static void main(String[] args) {
         // view = new View();
@@ -166,6 +165,16 @@ public class Deadwood {
         locationManager.returnTrailers();
     }
 
+    // method to be called when the end turn button is clicked, will need further
+    // funcionality but for now just started by making it continue to the next
+    // player instantly
+    public static void endTurn() {
+        if (activeTurn < players.length - 1) {
+            activeTurn++;
+            activePlayer = players[activeTurn];
+        }
+    }
+
     public static void act(Player player) {
         Room room = LocationManager.getPlayerLocation(player);
         if (player.getRole().isMain()) {
@@ -176,7 +185,7 @@ public class Deadwood {
             actOffCard(player, room.getScene().getBudget());
         }
         if (room.getShots() == 0) {
-            CurrencyManager.wrapPay(room);
+            currencyManager.wrapPay(room);
         }
     }
 
@@ -184,7 +193,7 @@ public class Deadwood {
         int roll = Dice.roll(player.getPracticeChips());
         // success
         if (roll >= roomBudget) {
-            CurrencyManager.adjustCredits(2, player);
+            currencyManager.adjustCredits(2, player);
             return true;
         }
         // falure - prompt failure with model
@@ -195,22 +204,52 @@ public class Deadwood {
         int roll = Dice.roll(player.getPracticeChips());
         // success
         if (roll >= roomBudget) {
-            CurrencyManager.adjustCredits(1, player);
-            CurrencyManager.adjustMoney(1, player);
+            currencyManager.adjustCredits(1, player);
+            currencyManager.adjustMoney(1, player);
         }
         // falure - prompt failure with model
         else {
-            CurrencyManager.adjustMoney(1, player);
+            currencyManager.adjustMoney(1, player);
         }
     }
 
     // used to take a list of strings as input and create players
     public static void initializePlayers(ArrayList<String> names) {
         players = new Player[names.size()];
+        //
+        //
+
+        //
+        //
+
+        // locationManager = new LocationManager(players, board.roomByName("trailer"));
+        CurrencyManager.setLocMan(locationManager);
         for (int i = 0; i < names.size(); i++) {
             players[i] = new Player(names.get(i));
         }
+        days = 2;
+
+        XMLParser xml = new XMLParser();
+        deck = new SceneDeck(xml.readCardData());
+        board = new Board(xml.readBoardData());
+        locationManager = new LocationManager(players, board.roomByName("trailer"));
+        castingOffice = CastingOffice.getCastingOffice();
+        currencyManager = CurrencyManager.getCurrencyManager();
+        for (int i = 2; i < board.getRooms().length; i++) {
+            board.getRooms()[i].setScene(deck.getScene());
+        }
         System.out.println("Names: " + names.toString());
+        // initialize player one as the active player
+        // sets active turn to the index of the array of the player with turn
+        activeTurn = 0;
+        activePlayer = players[0];
+        // any time the end turn button is clicked, active player is incremented, unless
+        // it's at last index in which case it restarts at index 0
+    }
+
+    // getters
+    public static Player getActivePlayer() {
+        return activePlayer;
     }
 
     // setters

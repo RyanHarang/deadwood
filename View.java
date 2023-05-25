@@ -118,6 +118,49 @@ public class View extends Application {
         move.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                System.out.println("First things first!");
+                // get the string name of the players current room
+                // use board to get the room object with that name
+                // use room object to get all adjacent rooms
+                // use names of all adjacent rooms to create options
+                // once options created, show popup with the options
+                // when popup is submitted, take the selected name
+                // turn it back into a room object and send it
+                // to location manager to move the player
+                //
+                //
+                // this requires an active player variable in deadwood
+
+                // step 1: generating list of room names
+                ArrayList<Room> adjRooms = new ArrayList<Room>();
+                ArrayList<String> rNames = new ArrayList<String>();
+                System.out.println(Deadwood.getActivePlayer().toString());
+                System.out.println(LocationManager.getPlayerLocation(Deadwood.getActivePlayer()));
+                // adjRooms.add(LocationManager.getPlayerLocation(Deadwood.getActivePlayer()));
+                adjRooms = (LocationManager.getPlayerLocation(Deadwood.getActivePlayer()).getAdjacents());
+                System.out.println("Did we make it here?");
+                for (Room r : adjRooms) {
+                    rNames.add(r.getName());
+                }
+                System.out.println(rNames.toString());
+                // at this point rNames holds the names of all adjacent rooms
+
+                // step 2: Create gridPane and popup with radio button options and submit button
+                GridPane movePane = new GridPane();
+                movePane.setId("popGrid");
+                Label moveLabel = new Label("Select a room to move to:");
+                for (int i = 0; i < rNames.size(); i++) {
+                    movePane.add(new RadioButton(rNames.get(i)), 0, i + 1);
+                }
+                movePane.add(moveLabel, 0, 0);
+                Button moveSubmit = new Button("Submit");
+                moveSubmit.setId("submit");
+                movePane.add(moveSubmit, 0, rNames.size() + 1);
+
+                Popup movePopup = new Popup();
+                movePopup.getContent().add(movePane);
+                // at this point the popup contains everything it needs
+                movePopup.show(primaryStage);
                 move.setId(move(move.getId()));
             }
         });
@@ -172,8 +215,8 @@ public class View extends Application {
         RadioButton r6 = new RadioButton("6 Players");
         RadioButton r7 = new RadioButton("7 Players");
         RadioButton r8 = new RadioButton("8 Players");
-        Button submit = new Button("Submit");
-        submit.setId("submit");
+        Button countSubmit = new Button("Submit");
+        countSubmit.setId("submit");
 
         // putting all radio buttons in one group
         r2.setToggleGroup(group);
@@ -194,7 +237,7 @@ public class View extends Application {
         popGrid.add(r6, 0, 5);
         popGrid.add(r7, 0, 6);
         popGrid.add(r8, 0, 7);
-        popGrid.add(submit, 0, 8);
+        popGrid.add(countSubmit, 0, 8);
 
         popGrid.setId("popGrid");
         // create a popup
@@ -232,8 +275,8 @@ public class View extends Application {
                 Label enterName6 = new Label("Player 6 Name");
                 Label enterName7 = new Label("Player 7 Name");
                 Label enterName8 = new Label("Player 8 Name");
-                Button submit2 = new Button("Submit");
-                submit2.setId("submit");
+                Button nameSubmit = new Button("Submit");
+                nameSubmit.setId("submit");
                 TextField tf1 = new TextField();
                 TextField tf2 = new TextField();
                 TextField tf3 = new TextField();
@@ -269,13 +312,13 @@ public class View extends Application {
                         popGrid2.add(tf8, 1, 7);
                     }
                 }
-                popGrid2.add(submit2, 0, playerCount + 1);
+                popGrid2.add(nameSubmit, 0, playerCount + 1);
                 Popup namePopup = new Popup();
 
                 namePopup.getContent().add(popGrid2);
                 namePopup.show(primaryStage);
 
-                submit2.setOnAction(new EventHandler<ActionEvent>() {
+                nameSubmit.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
                         names.add(tf1.getText());
@@ -310,7 +353,7 @@ public class View extends Application {
             }
         };
 
-        submit.setOnAction(playerPopup);
+        countSubmit.setOnAction(playerPopup);
         Scene mainScene = new Scene(root, 1100, 600);
         mainScene.getStylesheets().add("assets/css/style.css");
         primaryStage.setTitle("Deadwood");
@@ -328,17 +371,7 @@ public class View extends Application {
         if (id.equals("move")) {
             return "deactivatedMove";
         }
-        // get the string name of the players current room
-        // use board to get the room object with that name
-        // use room object to get all adjacent rooms
-        // use names of all adjacent rooms to create options
-        // once options created, show popup with the options
-        // when popup is submitted, take the selected name
-        // turn it back into a room object and send it
-        // to location manager to move the player
-        //
-        //
-        // this requires an active player variable in deadwood
+
         return "move";
     }
 

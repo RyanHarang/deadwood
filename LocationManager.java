@@ -2,7 +2,7 @@ import java.util.*;
 
 public class LocationManager {
     private static Map<Player, Room> locations = new HashMap<Player, Room>();
-    private Player[] players;
+    private static Player[] players;
     private Room trailers;
 
     // constructor
@@ -11,6 +11,7 @@ public class LocationManager {
         for (Player p : playerList) {
             locations.put(p, this.trailers);
         }
+
         players = playerList;
         // all players in the trailers make list for later use of all players
     }
