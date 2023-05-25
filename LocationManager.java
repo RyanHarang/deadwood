@@ -6,10 +6,10 @@ public class LocationManager {
     private static Room trailers;
 
     // constructor
-    public LocationManager(Player[] playerList, Room trailers) {
-        this.trailers = trailers;
+    public LocationManager(Player[] playerList, Room nTrailers) {
+        trailers = nTrailers;
         for (Player p : playerList) {
-            locations.put(p, this.trailers);
+            locations.put(p, trailers);
         }
 
         players = playerList;
