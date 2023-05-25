@@ -450,8 +450,7 @@ public class View extends Application {
         RadioButton trainStation = new RadioButton("Train Station");
         RadioButton jail = new RadioButton("Jail");
         RadioButton generalStore = new RadioButton("General Store");
-        Button submitMove = new Button("Submit");
-
+        
         office.setToggleGroup(locationsGroup);
         trailer.setToggleGroup(locationsGroup);
         hotel.setToggleGroup(locationsGroup);
