@@ -3,7 +3,7 @@ import java.util.Collections;
 
 public class CurrencyManager {
     private static CurrencyManager currencyManager = new CurrencyManager();
-    private static LocationManager locationManager;
+    // private static LocationManager locationManager;
     // private static Dice dice;
 
     // constructor
@@ -15,9 +15,9 @@ public class CurrencyManager {
         return currencyManager;
     }
 
-    public static void setLocMan(LocationManager locMan) {
+    /* public static void setLocMan(LocationManager locMan) {
         locationManager = locMan;
-    }
+    } */
 
     // setters
     public static void adjustMoney(int num, Player player) {
@@ -35,7 +35,7 @@ public class CurrencyManager {
         // unless there are no mains in the entire room in which case nobody gets payed
         ArrayList<Player> onCard = new ArrayList<Player>();
         ArrayList<Player> offCard = new ArrayList<Player>();
-        for (Player p : locationManager.getOccupants(room)) {
+        for (Player p : LocationManager.getOccupants(room)) {
             if (p.getRole() != null) {
                 if (p.getRole().isMain()) {
                     onCard.add(p);
