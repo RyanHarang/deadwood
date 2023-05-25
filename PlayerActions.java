@@ -93,24 +93,23 @@ public class PlayerActions {
         return false;
     }
 
-    public static boolean playerAct(Player p, LocationManager locationManager, CurrencyManager currencyManager,
-            InpParser inpP) {
+    public static boolean playerAct(Player p) {
 
         Room room = LocationManager.getPlayerLocation(p);
 
         if (p.getRole().isMain()) {
-            if (actOnCard(p, room.getScene().getBudget(), currencyManager, inpP)) {
+            if (actOnCard(p, room.getScene().getBudget())) {
                 room.removeShot();
             }
         } else {
-            if (actOffCard(p, room.getScene().getBudget(), currencyManager, inpP)) {
+            if (actOffCard(p, room.getScene().getBudget())) {
                 room.removeShot();
             }
         }
         if (room.getShots() == 0) {
-            inpP.pass("Scene has wrapped!");
+            //inpP.pass("Scene has wrapped!");
             CurrencyManager.wrapPay(room);
-            for (Player pl : locationManager.getOccupants(room)) {
+            for (Player pl : LocationManager.getOccupants(room)) {
                 pl.setRole(null);
                 pl.setPracticeChip();
             }
@@ -119,32 +118,32 @@ public class PlayerActions {
         return false;// scene not wrapped
     }
 
-    private static boolean actOnCard(Player player, int roomBudget, CurrencyManager currencyManager, InpParser inpP) {
+    private static boolean actOnCard(Player player, int roomBudget) {
         int roll = Dice.roll(player.getPracticeChips());
         // success
         if (roll >= roomBudget) {
             CurrencyManager.adjustCredits(2, player);
-            inpP.pass("Your roll and practicechips total to: " + roll + " Act succeeds!");
+            //inpP.pass("Your roll and practicechips total to: " + roll + " Act succeeds!");
             return true;
         }
         // falure - prompt failure with view
-        inpP.pass("Your roll and practicechips total to: " + roll + " Act failed!");
+        //inpP.pass("Your roll and practicechips total to: " + roll + " Act failed!");
         return false;
     }
 
-    private static boolean actOffCard(Player player, int roomBudget, CurrencyManager currencyManager, InpParser inpP) {
+    private static boolean actOffCard(Player player, int roomBudget) {
         int roll = Dice.roll(player.getPracticeChips());
         // success
         if (roll >= roomBudget) {
             CurrencyManager.adjustCredits(1, player);
             CurrencyManager.adjustMoney(1, player);
-            inpP.pass("Your roll and practicechips total to: " + roll + " Act succeeds!");
+            //inpP.pass("Your roll and practicechips total to: " + roll + " Act succeeds!");
             return true;
         }
         // falure - prompt failure with view
         else {
             CurrencyManager.adjustMoney(1, player);
-            inpP.pass("Your roll and practicechips total to: " + roll + " Act failed!");
+            //inpP.pass("Your roll and practicechips total to: " + roll + " Act failed!");
             return false;
         }
     }
@@ -161,11 +160,11 @@ public class PlayerActions {
         return castingOffice.upgrade(p, rank, upgradingWithMoney, locationManager, currencyManager);
     }
 
-    public static boolean playerRehearse(Player p, LocationManager locationManager, InpParser inpP) {
+    public static boolean playerRehearse(Player p) {
+        System.out.println("hi");
         Room room = LocationManager.getPlayerLocation(p);
         int budget = room.getScene().getBudget();
         if (p.getPracticeChips() >= budget - 1) {
-            inpP.pass("You must act!");
             return false;
         } else {
             p.addPracticeChip();

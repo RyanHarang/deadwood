@@ -3,7 +3,7 @@ import java.util.*;
 public class LocationManager {
     private static Map<Player, Room> locations = new HashMap<Player, Room>();
     private static Player[] players;
-    private Room trailers;
+    private static Room trailers;
 
     // constructor
     public LocationManager(Player[] playerList, Room trailers) {
@@ -17,7 +17,7 @@ public class LocationManager {
     }
 
     // method to check if moves are legal, called by move
-    private boolean validateMove(Player player, Room new_location) {
+    private static boolean validateMove(Player player, Room new_location) {
         // array of rooms adjacent to the player
         ArrayList<Room> adjRooms = locations.get(player).getAdjacents();
         for (Room r : adjRooms) {
@@ -29,19 +29,21 @@ public class LocationManager {
     }
 
     // method to attempt to move players
-    public boolean move(Player player, Room new_location) {
+    public static boolean move(Player player, Room new_location) {
         boolean isValidMove = validateMove(player, new_location);
         if (isValidMove) {
             // System.out.println(locations.get(player).toString());
             // locations.get(player).removePlayer(player);
+            String test = locations.get(player).getName();
             locations.put(player, new_location);
+            System.out.println("moved " + player.getName() + " from " + test + " to " + new_location.getName());
             // new_location.addPlayer(player);
         }
         return isValidMove;
     }
 
     // method to send all players to the trailers
-    public void returnTrailers() {
+    public static void returnTrailers() {
         for (Player p : locations.keySet()) {
             locations.put(p, trailers);
         }
@@ -52,7 +54,7 @@ public class LocationManager {
         return locations.get(player);
     }
 
-    public ArrayList<Player> getOccupants(Room room) {
+    public static ArrayList<Player> getOccupants(Room room) {
         // loop through the list of players and get their rooms from the hashmap
         ArrayList<Player> occupants = new ArrayList<Player>();
         for (Player player : players) {

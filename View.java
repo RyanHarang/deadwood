@@ -15,7 +15,7 @@ import javafx.scene.text.*;
 import java.util.ArrayList;
 
 public class View extends Application {
-
+    private static ArrayList<RadioButton> locations;
     // constructor
     public View() {
 
@@ -33,6 +33,8 @@ public class View extends Application {
 
     public void start(Stage primaryStage) throws FileNotFoundException {
         // root
+        rooms();
+
         HBox root = new HBox();
 
         // stage image
@@ -57,19 +59,23 @@ public class View extends Application {
         Text playerMoney = new Text("Money: ");
         Text playerCredits = new Text("Credits: ");
         Text playerRole = new Text("Role: ");
+        Text playerRehearseChips = new Text("Rehearse chips:");
         Text currentPlayer = new Text("hi");
         Text currentPlayerMoney = new Text("broke");
         Text currentPlayerCredits = new Text("no clout");
         Text currentPlayerRole = new Text("trash");
+        Text currentPlayerRehearseChips = new Text("trash");
 
         player.setId("player");
         playerMoney.setId("playerMoney");
         playerCredits.setId("playerCredits");
         playerRole.setId("playerRole");
+        playerRehearseChips.setId("playerRehearseChips");
         currentPlayer.setId("currentPlayer");
         currentPlayerMoney.setId("currentPlayerMoney");
         currentPlayerCredits.setId("currentPlayerCredits");
         currentPlayerRole.setId("currentPlayerRole");
+        currentPlayerRehearseChips.setId("currentPlayerRehearseChips");
 
         playerInfo.add(player, 0, 0);
         playerInfo.add(currentPlayer, 1, 0);
@@ -79,6 +85,8 @@ public class View extends Application {
         playerInfo.add(currentPlayerCredits, 1, 2);
         playerInfo.add(playerRole, 0, 3);
         playerInfo.add(currentPlayerRole, 1, 3);
+        playerInfo.add(playerRehearseChips, 0, 4);
+        playerInfo.add(currentPlayerRehearseChips, 1, 4);
         ui.getChildren().add(playerInfo);
 
         // Player buttons
@@ -147,17 +155,33 @@ public class View extends Application {
 
                 // step 2: Create gridPane and popup with radio button options and submit button
                 GridPane movePane = new GridPane();
+                ToggleGroup moveToggleGroup = new ToggleGroup();
                 movePane.setId("popGrid");
                 Label moveLabel = new Label("Select a room to move to:");
                 for (int i = 0; i < rNames.size(); i++) {
-                    movePane.add(new RadioButton(rNames.get(i)), 0, i + 1);
+                    //movePane.add(new RadioButton(rNames.get(i)), 0, i + 1);
+                    for(RadioButton rb: View.locations){
+                        if(rb.getId().equals(rNames.get(i))){
+                            movePane.add(rb, 0, i+1);
+                            rb.setToggleGroup(moveToggleGroup);
+                        }
+                    }
                 }
+                Popup movePopup = new Popup();
                 movePane.add(moveLabel, 0, 0);
                 Button moveSubmit = new Button("Submit");
                 moveSubmit.setId("submit");
                 movePane.add(moveSubmit, 0, rNames.size() + 1);
+                moveSubmit.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        RadioButton rb = (RadioButton)moveToggleGroup.getSelectedToggle();
+                        System.out.println(rb.getId());
+                        LocationManager.move(Deadwood.getActivePlayer(), Board.roomByName(rb.getId()));
+                        movePopup.hide();
+                    }
+                });
 
-                Popup movePopup = new Popup();
                 movePopup.getContent().add(movePane);
                 // at this point the popup contains everything it needs
                 movePopup.show(primaryStage);
@@ -169,6 +193,7 @@ public class View extends Application {
             @Override
             public void handle(ActionEvent e) {
                 upgrade.setId(upgrade(upgrade.getId()));
+
             }
         });
 
@@ -176,6 +201,7 @@ public class View extends Application {
             @Override
             public void handle(ActionEvent e) {
                 act.setId(act(act.getId()));
+                PlayerActions.playerAct(Deadwood.getActivePlayer());
             }
         });
 
@@ -183,6 +209,12 @@ public class View extends Application {
             @Override
             public void handle(ActionEvent e) {
                 rehearse.setId(rehearse(rehearse.getId()));
+                boolean rehearsed = PlayerActions.playerRehearse(Deadwood.getActivePlayer());
+                if(rehearsed){
+                    System.out.println(Deadwood.getActivePlayer().getName() + " got a r-chip");
+                } else{
+                    System.out.println("Unable to reheasre");
+                }
             }
         });
 
@@ -355,7 +387,7 @@ public class View extends Application {
 
         countSubmit.setOnAction(playerPopup);
         Scene mainScene = new Scene(root, 1100, 600);
-        mainScene.getStylesheets().add("assets/css/style.css");
+        mainScene.getStylesheets().add("temp/style.css");
         primaryStage.setTitle("Deadwood");
         primaryStage.setScene(mainScene);
         primaryStage.show();
@@ -401,5 +433,63 @@ public class View extends Application {
 
     public void endTurn() {
         System.out.println("endTurn clicked");
+    }
+
+    public void rooms(){
+        ToggleGroup locationsGroup = new ToggleGroup();
+        RadioButton office = new RadioButton("Casting Office");
+        RadioButton trailer = new RadioButton("Trailer");
+        RadioButton hotel = new RadioButton("Hotel");
+        RadioButton saloon = new RadioButton("Saloon");
+        RadioButton church = new RadioButton("Church");
+        RadioButton ranch = new RadioButton("Ranch");
+        RadioButton mainStreet = new RadioButton("Main Street");
+        RadioButton secretHideout = new RadioButton("Secret Hideout");
+        RadioButton bank = new RadioButton("Bank");
+        RadioButton trainStation = new RadioButton("Train Station");
+        RadioButton jail = new RadioButton("Jail");
+        RadioButton generalStore = new RadioButton("General Store");
+        Button submitMove = new Button("Submit");
+
+        office.setToggleGroup(locationsGroup);
+        trailer.setToggleGroup(locationsGroup);
+        hotel.setToggleGroup(locationsGroup);
+        saloon.setToggleGroup(locationsGroup);
+        church.setToggleGroup(locationsGroup);
+        ranch.setToggleGroup(locationsGroup);
+        mainStreet.setToggleGroup(locationsGroup);
+        secretHideout.setToggleGroup(locationsGroup);
+        bank.setToggleGroup(locationsGroup);
+        trainStation.setToggleGroup(locationsGroup);
+        jail.setToggleGroup(locationsGroup);
+        generalStore.setToggleGroup(locationsGroup);
+
+        office.setId("office");
+        trailer.setId("trailer");
+        hotel.setId("Hotel");
+        saloon.setId("Saloon");
+        church.setId("Church");
+        ranch.setId("Ranch");
+        mainStreet.setId("Main Street");
+        secretHideout.setId("Secret Hideout");
+        bank.setId("Bank");
+        trainStation.setId("Train Station");
+        jail.setId("Jail");
+        generalStore.setId("General Store");
+
+        ArrayList<RadioButton> locationButtons = new ArrayList<RadioButton>();
+        locationButtons.add(office);
+        locationButtons.add(trailer);
+        locationButtons.add(hotel);
+        locationButtons.add(saloon);
+        locationButtons.add(church);
+        locationButtons.add(ranch);
+        locationButtons.add(mainStreet);
+        locationButtons.add(secretHideout);
+        locationButtons.add(bank);
+        locationButtons.add(trainStation);
+        locationButtons.add(jail);
+        locationButtons.add(generalStore);
+        View.locations = locationButtons;
     }
 }

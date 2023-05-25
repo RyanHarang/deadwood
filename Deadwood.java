@@ -40,7 +40,7 @@ public class Deadwood {
         // playerActions = new PlayerActions();
         // loop for setting an initial scene at each room
 
-        locationManager = new LocationManager(players, board.roomByName("trailer"));
+        locationManager = new LocationManager(players, Board.roomByName("trailer"));
         CurrencyManager.setLocMan(locationManager);
         numActiveScenes = 10;
         gameLoop();
@@ -110,7 +110,7 @@ public class Deadwood {
                             break;
                         case ('a'):
                             if (p.getRole() != null) {
-                                if (PlayerActions.playerAct(p, locationManager, currencyManager, inpP)) {
+                                if (PlayerActions.playerAct(p)) {
                                     numActiveScenes--;
                                 }
                                 validAction = true;
@@ -120,7 +120,7 @@ public class Deadwood {
                             break;
                         case ('r'):
                             if (p.getRole() != null) {
-                                if (PlayerActions.playerRehearse(p, locationManager, inpP)) {
+                                if (PlayerActions.playerRehearse(p)) {
                                     validAction = true;
                                 }
                             } else {
@@ -128,7 +128,7 @@ public class Deadwood {
                             }
                             break;
                         case ('u'):
-                            if (LocationManager.getPlayerLocation(p).equals(board.roomByName("office"))) {
+                            if (LocationManager.getPlayerLocation(p).equals(Board.roomByName("office"))) {
                                 boolean validUpgrade = PlayerActions.playerUpgrade(p, inpP, castingOffice,
                                         locationManager, currencyManager);
                                 if (!validUpgrade) {
@@ -162,7 +162,7 @@ public class Deadwood {
     }
 
     public static void endDay() {
-        locationManager.returnTrailers();
+        LocationManager.returnTrailers();
     }
 
     // method to be called when the end turn button is clicked, will need further
@@ -175,43 +175,7 @@ public class Deadwood {
         }
     }
 
-    public static void act(Player player) {
-        Room room = LocationManager.getPlayerLocation(player);
-        if (player.getRole().isMain()) {
-            if (actOnCard(player, room.getScene().getBudget())) {
-                room.removeShot();
-            }
-        } else {
-            actOffCard(player, room.getScene().getBudget());
-        }
-        if (room.getShots() == 0) {
-            currencyManager.wrapPay(room);
-        }
-    }
 
-    public static boolean actOnCard(Player player, int roomBudget) {
-        int roll = Dice.roll(player.getPracticeChips());
-        // success
-        if (roll >= roomBudget) {
-            currencyManager.adjustCredits(2, player);
-            return true;
-        }
-        // falure - prompt failure with model
-        return false;
-    }
-
-    public static void actOffCard(Player player, int roomBudget) {
-        int roll = Dice.roll(player.getPracticeChips());
-        // success
-        if (roll >= roomBudget) {
-            currencyManager.adjustCredits(1, player);
-            currencyManager.adjustMoney(1, player);
-        }
-        // falure - prompt failure with model
-        else {
-            currencyManager.adjustMoney(1, player);
-        }
-    }
 
     // used to take a list of strings as input and create players
     public static void initializePlayers(ArrayList<String> names) {
@@ -232,7 +196,7 @@ public class Deadwood {
         XMLParser xml = new XMLParser();
         deck = new SceneDeck(xml.readCardData());
         board = new Board(xml.readBoardData());
-        locationManager = new LocationManager(players, board.roomByName("trailer"));
+        locationManager = new LocationManager(players, Board.roomByName("trailer"));
         castingOffice = CastingOffice.getCastingOffice();
         currencyManager = CurrencyManager.getCurrencyManager();
         for (int i = 2; i < board.getRooms().length; i++) {
