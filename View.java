@@ -328,6 +328,17 @@ public class View extends Application {
         if (id.equals("move")) {
             return "deactivatedMove";
         }
+        // get the string name of the players current room
+        // use board to get the room object with that name
+        // use room object to get all adjacent rooms
+        // use names of all adjacent rooms to create options
+        // once options created, show popup with the options
+        // when popup is submitted, take the selected name
+        // turn it back into a room object and send it
+        // to location manager to move the player
+        //
+        //
+        // this requires an active player variable in deadwood
         return "move";
     }
 
