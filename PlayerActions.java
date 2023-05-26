@@ -2,7 +2,8 @@ import java.util.ArrayList;
 
 public class PlayerActions {
     // private static Dice dice = new Dice();
-    //private static CurrencyManager currencyManager = CurrencyManager.getCurrencyManager();
+    // private static CurrencyManager currencyManager =
+    // CurrencyManager.getCurrencyManager();
 
     public PlayerActions() {
 
@@ -94,6 +95,39 @@ public class PlayerActions {
         return false;
     }
 
+    public static ArrayList<Role> availableRoles(Player p, Room location) {
+        ArrayList<Role> offCardList = null;
+        ArrayList<Role> onCardList = null;
+        // list possible roles, get role the user wants and give player that role
+        offCardList = location.getRoles();
+        if (location.getScene() != null) {
+            onCardList = location.getScene().getRoles();
+        }
+        // get roles available to take
+        ArrayList<Role> availableRoles = new ArrayList<Role>();
+        if (offCardList != null || onCardList != null) {
+            if (offCardList != null) {
+                for (Role r : offCardList) {
+                    if (!r.isOccupied()) {
+                        if (r.getRank() <= p.getRank()) {
+                            availableRoles.add(r);
+                        }
+                    }
+                }
+            }
+            if (onCardList != null) {
+                for (Role r : onCardList) {
+                    if (!r.isOccupied()) {
+                        if (r.getRank() <= p.getRank()) {
+                            availableRoles.add(r);
+                        }
+                    }
+                }
+            }
+        }
+        return availableRoles;
+    }
+
     public static boolean playerAct(Player p) {
 
         Room room = LocationManager.getPlayerLocation(p);
@@ -108,7 +142,7 @@ public class PlayerActions {
             }
         }
         if (room.getShots() == 0) {
-            //inpP.pass("Scene has wrapped!");
+            // inpP.pass("Scene has wrapped!");
             CurrencyManager.wrapPay(room);
             for (Player pl : LocationManager.getOccupants(room)) {
                 pl.setRole(null);
@@ -124,11 +158,12 @@ public class PlayerActions {
         // success
         if (roll >= roomBudget) {
             CurrencyManager.adjustCredits(2, player);
-            //inpP.pass("Your roll and practicechips total to: " + roll + " Act succeeds!");
+            // inpP.pass("Your roll and practicechips total to: " + roll + " Act
+            // succeeds!");
             return true;
         }
         // falure - prompt failure with view
-        //inpP.pass("Your roll and practicechips total to: " + roll + " Act failed!");
+        // inpP.pass("Your roll and practicechips total to: " + roll + " Act failed!");
         return false;
     }
 
@@ -138,13 +173,14 @@ public class PlayerActions {
         if (roll >= roomBudget) {
             CurrencyManager.adjustCredits(1, player);
             CurrencyManager.adjustMoney(1, player);
-            //inpP.pass("Your roll and practicechips total to: " + roll + " Act succeeds!");
+            // inpP.pass("Your roll and practicechips total to: " + roll + " Act
+            // succeeds!");
             return true;
         }
         // falure - prompt failure with view
         else {
             CurrencyManager.adjustMoney(1, player);
-            //inpP.pass("Your roll and practicechips total to: " + roll + " Act failed!");
+            // inpP.pass("Your roll and practicechips total to: " + roll + " Act failed!");
             return false;
         }
     }
