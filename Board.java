@@ -9,6 +9,7 @@ public class Board {
         return rooms;
     }
 
+    // returns room with a given name if it exists
     public static Room roomByName(String name) {
         for (int i = 0; i < rooms.length; i++) {
             if (rooms[i].getName().equalsIgnoreCase(name)) {
