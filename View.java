@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class View extends Application {
     private static ArrayList<RadioButton> locations;
+    private static ArrayList<Role> availableRoles;
 
     // constructor
     public View() {
@@ -55,34 +56,34 @@ public class View extends Application {
         Text playerMoney = new Text("Money: ");
         Text playerCredits = new Text("Credits: ");
         Text playerRole = new Text("Role: ");
-        Text playerRehearseChips = new Text("Rehearse chips:");
+        Text playerPracticeChips = new Text("Practice chips:");
         Text currentPlayer = new Text("hi");
         Text currentPlayerMoney = new Text("broke");
         Text currentPlayerCredits = new Text("no clout");
         Text currentPlayerRole = new Text("trash");
-        Text currentPlayerRehearseChips = new Text("trash");
+        Text currentPlayerPracticeChips = new Text("trash");
 
         player.setId("player");
         playerMoney.setId("playerMoney");
         playerCredits.setId("playerCredits");
         playerRole.setId("playerRole");
-        playerRehearseChips.setId("playerRehearseChips");
+        playerPracticeChips.setId("playerPracticeChips");
         currentPlayer.setId("currentPlayer");
         currentPlayerMoney.setId("currentPlayerMoney");
         currentPlayerCredits.setId("currentPlayerCredits");
         currentPlayerRole.setId("currentPlayerRole");
-        currentPlayerRehearseChips.setId("currentPlayerRehearseChips");
+        currentPlayerPracticeChips.setId("currentPlayerPracticeChips");
 
         playerInfo.add(player, 0, 0);
         playerInfo.add(currentPlayer, 1, 0);
-        playerInfo.add(playerMoney, 0, 1);
-        playerInfo.add(currentPlayerMoney, 1, 1);
-        playerInfo.add(playerCredits, 0, 2);
-        playerInfo.add(currentPlayerCredits, 1, 2);
-        playerInfo.add(playerRole, 0, 3);
-        playerInfo.add(currentPlayerRole, 1, 3);
-        playerInfo.add(playerRehearseChips, 0, 4);
-        playerInfo.add(currentPlayerRehearseChips, 1, 4);
+        playerInfo.add(playerPracticeChips, 0, 1);
+        playerInfo.add(currentPlayerPracticeChips, 1, 1);
+        playerInfo.add(playerMoney, 0, 2);
+        playerInfo.add(currentPlayerMoney, 1, 2);
+        playerInfo.add(playerCredits, 0, 3);
+        playerInfo.add(currentPlayerCredits, 1, 3);
+        playerInfo.add(playerRole, 0, 4);
+        playerInfo.add(currentPlayerRole, 1, 4);
         ui.getChildren().add(playerInfo);
 
         // Player buttons
@@ -113,12 +114,14 @@ public class View extends Application {
         rehearse.setMinHeight(40.0);
         endTurn.setMinHeight(40.0);
 
+        // setting id
         move.setId("move");
         upgrade.setId("upgrade");
         act.setId("act");
         rehearse.setId("rehearse");
         endTurn.setId("endTurn");
 
+        // move onCLick
         move.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -140,7 +143,6 @@ public class View extends Application {
                 movePane.setId("popGrid");
                 Label moveLabel = new Label("Select a room to move to:");
                 for (int i = 0; i < rNames.size(); i++) {
-                    // movePane.add(new RadioButton(rNames.get(i)), 0, i + 1);
                     for (RadioButton rb : View.locations) {
                         if (rb.getId().equals(rNames.get(i))) {
                             movePane.add(rb, 0, i + 1);
@@ -154,6 +156,8 @@ public class View extends Application {
                 Button moveSubmit = new Button("Submit");
                 moveSubmit.setId("submit");
                 movePane.add(moveSubmit, 0, rNames.size() + 1);
+
+                // moveSubmit onClick
                 moveSubmit.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
@@ -161,16 +165,97 @@ public class View extends Application {
                         System.out.println(rb.getId());
                         LocationManager.move(Deadwood.getActivePlayer(), Board.roomByName(rb.getId()));
                         movePopup.hide();
+
+                        // step 1: determine list of roles active player can choose from their new room
+                        // setting arraylist using method in playeractions, passing active player and
+                        // their new location
+                        availableRoles = PlayerActions.availableRoles(Deadwood.getActivePlayer(),
+                                Board.roomByName(rb.getId()));
+                        // step 2: make radio buttons using availableRoles
+                        Label roleLabel = new Label("Select a role to take, or none.");
+                        ToggleGroup roleTG = new ToggleGroup();
+                        RadioButton role1 = new RadioButton("");
+                        RadioButton role2 = new RadioButton("");
+                        RadioButton role3 = new RadioButton("");
+                        RadioButton role4 = new RadioButton("");
+                        RadioButton role5 = new RadioButton("");
+                        RadioButton role6 = new RadioButton("");
+                        RadioButton role7 = new RadioButton("");
+                        RadioButton none = new RadioButton("None");
+                        none.setId("none");
+                        role1.setToggleGroup(roleTG);
+                        role2.setToggleGroup(roleTG);
+                        role3.setToggleGroup(roleTG);
+                        role4.setToggleGroup(roleTG);
+                        role5.setToggleGroup(roleTG);
+                        role6.setToggleGroup(roleTG);
+                        role7.setToggleGroup(roleTG);
+                        none.setToggleGroup(roleTG);
+                        none.setSelected(true);
+
+                        GridPane rolePane = new GridPane();
+                        rolePane.setId("popGrid");
+                        rolePane.add(roleLabel, 0, 0);
+                        for (int i = 0; i < availableRoles.size(); i++) {
+                            if (i == 0) {
+                                role1.setText(availableRoles.get(i).getName());
+                                role1.setId("0");
+                                rolePane.add(role1, 0, i + 1);
+                            } else if (i == 1) {
+                                role2.setText(availableRoles.get(i).getName());
+                                role2.setId("1");
+                                rolePane.add(role2, 0, i + 1);
+                            } else if (i == 2) {
+                                role3.setText(availableRoles.get(i).getName());
+                                role3.setId("2");
+                                rolePane.add(role3, 0, i + 1);
+                            } else if (i == 3) {
+                                role4.setText(availableRoles.get(i).getName());
+                                role4.setId("3");
+                                rolePane.add(role4, 0, i + 1);
+                            } else if (i == 4) {
+                                role5.setText(availableRoles.get(i).getName());
+                                role5.setId("4");
+                                rolePane.add(role5, 0, i + 1);
+                            } else if (i == 5) {
+                                role6.setText(availableRoles.get(i).getName());
+                                role6.setId("5");
+                                rolePane.add(role6, 0, i + 1);
+                            } else if (i == 6) {
+                                role7.setText(availableRoles.get(i).getName());
+                                role7.setId("6");
+                                rolePane.add(role7, 0, i + 1);
+                            }
+                        }
+                        rolePane.add(none, 0, availableRoles.size() + 1);
+                        Button roleSubmit = new Button("Submit");
+                        roleSubmit.setId("submit");
+                        rolePane.add(roleSubmit, 0, availableRoles.size() + 2);
+                        Popup rolePopup = new Popup();
+                        rolePopup.getContent().add(rolePane);
+                        rolePopup.show(primaryStage);
+
+                        roleSubmit.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent e) {
+                                RadioButton chose = (RadioButton) roleTG.getSelectedToggle();
+                                if (!chose.getId().equals("none")) {
+                                    Role chosen = availableRoles.get(Integer.parseInt(chose.getId()));
+                                    Deadwood.updateRole(chosen);
+                                }
+                                rolePopup.hide();
+                            }
+                        });
                     }
                 });
 
                 movePopup.getContent().add(movePane);
-                // at this point the popup contains everything it needs
                 movePopup.show(primaryStage);
                 move.setId(move(move.getId()));
             }
         });
 
+        // upgrade onClick
         upgrade.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -179,6 +264,7 @@ public class View extends Application {
             }
         });
 
+        // act onClick
         act.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -187,6 +273,7 @@ public class View extends Application {
             }
         });
 
+        // rehearse onClick
         rehearse.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -200,6 +287,7 @@ public class View extends Application {
             }
         });
 
+        // endTurn onClick
         endTurn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -362,7 +450,6 @@ public class View extends Application {
                         namePopup.hide();
                     }
                 });
-
                 countPopup.hide();
             }
         };
@@ -415,6 +502,7 @@ public class View extends Application {
     }
 
     public void endTurn() {
+        Deadwood.endTurn();
         System.out.println("endTurn clicked");
     }
 
