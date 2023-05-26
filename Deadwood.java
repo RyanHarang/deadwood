@@ -165,6 +165,10 @@ public class Deadwood {
 
     public static void endDay() {
         LocationManager.returnTrailers();
+        adjustDays();
+        if (days == 0) {
+            // end the game
+        }
     }
 
     public static void updateRole(Role role) {
