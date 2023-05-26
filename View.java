@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class View extends Application {
     private static ArrayList<RadioButton> locations;
+
     // constructor
     public View() {
 
@@ -25,16 +26,11 @@ public class View extends Application {
         launch(args);
     }
 
-    /*
-     * public static void open(String[] args) {
-     * launch(args);
-     * }
-     */
-
     public void start(Stage primaryStage) throws FileNotFoundException {
-        // root
+        // initialize rooms
         rooms();
 
+        // root
         HBox root = new HBox();
 
         // stage image
@@ -126,32 +122,17 @@ public class View extends Application {
         move.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                System.out.println("First things first!");
-                // get the string name of the players current room
-                // use board to get the room object with that name
-                // use room object to get all adjacent rooms
-                // use names of all adjacent rooms to create options
-                // once options created, show popup with the options
-                // when popup is submitted, take the selected name
-                // turn it back into a room object and send it
-                // to location manager to move the player
-                //
-                //
-                // this requires an active player variable in deadwood
-
                 // step 1: generating list of room names
                 ArrayList<Room> adjRooms = new ArrayList<Room>();
                 ArrayList<String> rNames = new ArrayList<String>();
                 System.out.println(Deadwood.getActivePlayer().toString());
                 System.out.println(LocationManager.getPlayerLocation(Deadwood.getActivePlayer()));
-                // adjRooms.add(LocationManager.getPlayerLocation(Deadwood.getActivePlayer()));
                 adjRooms = (LocationManager.getPlayerLocation(Deadwood.getActivePlayer()).getAdjacents());
-                System.out.println("Did we make it here?");
+
                 for (Room r : adjRooms) {
                     rNames.add(r.getName());
                 }
                 System.out.println(rNames.toString());
-                // at this point rNames holds the names of all adjacent rooms
 
                 // step 2: Create gridPane and popup with radio button options and submit button
                 GridPane movePane = new GridPane();
@@ -159,11 +140,12 @@ public class View extends Application {
                 movePane.setId("popGrid");
                 Label moveLabel = new Label("Select a room to move to:");
                 for (int i = 0; i < rNames.size(); i++) {
-                    //movePane.add(new RadioButton(rNames.get(i)), 0, i + 1);
-                    for(RadioButton rb: View.locations){
-                        if(rb.getId().equals(rNames.get(i))){
-                            movePane.add(rb, 0, i+1);
+                    // movePane.add(new RadioButton(rNames.get(i)), 0, i + 1);
+                    for (RadioButton rb : View.locations) {
+                        if (rb.getId().equals(rNames.get(i))) {
+                            movePane.add(rb, 0, i + 1);
                             rb.setToggleGroup(moveToggleGroup);
+                            rb.setSelected(true);
                         }
                     }
                 }
@@ -175,7 +157,7 @@ public class View extends Application {
                 moveSubmit.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
-                        RadioButton rb = (RadioButton)moveToggleGroup.getSelectedToggle();
+                        RadioButton rb = (RadioButton) moveToggleGroup.getSelectedToggle();
                         System.out.println(rb.getId());
                         LocationManager.move(Deadwood.getActivePlayer(), Board.roomByName(rb.getId()));
                         movePopup.hide();
@@ -210,9 +192,9 @@ public class View extends Application {
             public void handle(ActionEvent e) {
                 rehearse.setId(rehearse(rehearse.getId()));
                 boolean rehearsed = PlayerActions.playerRehearse(Deadwood.getActivePlayer());
-                if(rehearsed){
+                if (rehearsed) {
                     System.out.println(Deadwood.getActivePlayer().getName() + " got a r-chip");
-                } else{
+                } else {
                     System.out.println("Unable to reheasre");
                 }
             }
@@ -436,7 +418,7 @@ public class View extends Application {
         System.out.println("endTurn clicked");
     }
 
-    public void rooms(){
+    public void rooms() {
         ToggleGroup locationsGroup = new ToggleGroup();
         RadioButton office = new RadioButton("Casting Office");
         RadioButton trailer = new RadioButton("Trailer");
@@ -450,7 +432,7 @@ public class View extends Application {
         RadioButton trainStation = new RadioButton("Train Station");
         RadioButton jail = new RadioButton("Jail");
         RadioButton generalStore = new RadioButton("General Store");
-        
+
         office.setToggleGroup(locationsGroup);
         trailer.setToggleGroup(locationsGroup);
         hotel.setToggleGroup(locationsGroup);
