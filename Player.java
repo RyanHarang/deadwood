@@ -5,6 +5,7 @@ public class Player implements Comparable<Player> {
     private int practiceChips;
     private String name;
     private Role role = null;
+    private boolean canUpgrade = false;
 
     // constructor
     public Player(String name) {
@@ -77,6 +78,10 @@ public class Player implements Comparable<Player> {
 
     public void setCredits(int credits) {
         this.credits = credits;
+    }
+
+    public void setCanUpgrade(boolean canUpgrade){
+        this.canUpgrade = canUpgrade;
     }
 
     public int compareTo(Player p) {

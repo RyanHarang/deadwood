@@ -158,7 +158,7 @@ public class PlayerActions {
         if (upgrade[0] == 1) {
             upgradingWithMoney = true;
         }
-        return castingOffice.upgrade(p, rank, upgradingWithMoney, locationManager, currencyManager);
+        return castingOffice.upgrade(p, rank, upgradingWithMoney);
     }
 
     public static boolean playerRehearse(Player p) {

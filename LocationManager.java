@@ -35,6 +35,7 @@ public class LocationManager {
             // System.out.println(locations.get(player).toString());
             String test = locations.get(player).getName();
             locations.put(player, new_location);
+            
             System.out.println("moved " + player.getName() + " from " + test + " to " + new_location.getName());
         }
         return isValidMove;

@@ -11,6 +11,8 @@ public class CastingOffice {
             { 6, 40, 25 }
     };
 
+
+
     // constructor
     private CastingOffice() {
 
@@ -25,8 +27,7 @@ public class CastingOffice {
         return info;
     }
 
-    public boolean upgrade(Player player, int rank, boolean upgradingWithMoney, LocationManager locationManager,
-            CurrencyManager currencyManager) {
+    public boolean upgrade(Player player, int rank, boolean upgradingWithMoney) {
         // cant upgrade to a lower or equal rank
         if (player.getRank() >= rank) {
             return false;
@@ -40,14 +41,14 @@ public class CastingOffice {
         if (upgradingWithMoney) {
             // if enough money
             if (player.getMoney() >= info[rank - 2][1]) {
-                upgradeMoney(player, rank, currencyManager);
+                upgradeMoney(player, rank);
             } else {
                 return false;
             }
         } else {
             // if enough credits
             if (player.getCredits() >= info[rank - 2][2]) {
-                upgradeCredits(player, rank, currencyManager);
+                upgradeCredits(player, rank);
             } else {
                 return false;
             }
@@ -56,15 +57,32 @@ public class CastingOffice {
 
     }
 
-    public void upgradeMoney(Player player, int rank, CurrencyManager currencyManager) {
+    public void upgradeMoney(Player player, int rank) {
         player.setRank(rank);
         // remove money from info
         CurrencyManager.adjustMoney(-(info[rank - 2][1]), player);
     }
 
-    public void upgradeCredits(Player player, int rank, CurrencyManager currencyManager) {
+    public void upgradeCredits(Player player, int rank) {
         player.setRank(rank);
         // remove credits from info
         CurrencyManager.adjustCredits(-(info[rank - 2][2]), player);
+    }
+
+    public static int[][] validRanks(Player p){
+        int[][] ranks = new int[5][3];
+        for(int i = 2; i < 7; i++){
+            ranks[i-2][0] = i;
+            if(p.getRank() < i){
+                if (p.getMoney() >= info[i - 2][1]) {
+                    ranks[i-2][1] = 1;
+                }
+                if (p.getCredits() >= info[i  -2][2]){
+                    ranks[i-2][2] = 1;
+                }  
+            }
+
+        }
+        return ranks;
     }
 }
