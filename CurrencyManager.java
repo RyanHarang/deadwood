@@ -3,21 +3,14 @@ import java.util.Collections;
 
 public class CurrencyManager {
     private static CurrencyManager currencyManager = new CurrencyManager();
-    // private static LocationManager locationManager;
-    // private static Dice dice;
 
     // constructor
     private CurrencyManager() {
-        // dice = new Dice();
     }
 
     public static CurrencyManager getCurrencyManager() {
         return currencyManager;
     }
-
-    /* public static void setLocMan(LocationManager locMan) {
-        locationManager = locMan;
-    } */
 
     // setters
     public static void adjustMoney(int num, Player player) {
