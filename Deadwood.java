@@ -12,7 +12,7 @@ public class Deadwood {
     private static InpParser inpP;
     private static Player activePlayer;
     private static int activeTurn;
-    //private static XMLParser xml = new XMLParser();
+    // private static XMLParser xml = new XMLParser();
 
     public static void main(String[] args) {
         // view = new View();
@@ -42,7 +42,7 @@ public class Deadwood {
         // loop for setting an initial scene at each room
 
         locationManager = new LocationManager(players, Board.roomByName("trailer"));
-        //CurrencyManager.setLocMan(locationManager);
+        // CurrencyManager.setLocMan(locationManager);
         numActiveScenes = 10;
         gameLoop();
     }
@@ -166,6 +166,12 @@ public class Deadwood {
         LocationManager.returnTrailers();
     }
 
+    public static void updateRole(Role role) {
+        activePlayer.setRole(role);
+        role.setOccupant(activePlayer);
+        System.out.println("Active player: " + activePlayer.toString() + " has chosen " + role.toString());
+    }
+
     // method to be called when the end turn button is clicked, will need further
     // funcionality but for now just started by making it continue to the next
     // player instantly
@@ -176,23 +182,14 @@ public class Deadwood {
         }
     }
 
-
-
     // used to take a list of strings as input and create players
     public static void initializePlayers(ArrayList<String> names) {
         players = new Player[names.size()];
-        //
-        //
 
-        //
-        //
-
-        // locationManager = new LocationManager(players, board.roomByName("trailer"));
-        //CurrencyManager.setLocMan(locationManager);
         for (int i = 0; i < names.size(); i++) {
             players[i] = new Player(names.get(i));
         }
-        days = 2;
+        days = 0;
 
         XMLParser xml = new XMLParser();
         deck = new SceneDeck(xml.readCardData());
