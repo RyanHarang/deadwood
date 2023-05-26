@@ -106,7 +106,8 @@
 #player,
 #playerMoney,
 #playerCredits,
-#playerRole {
+#playerRole,
+#playerPracticeChips {
   font-size: 20px;
   font-weight: 700;
   font-family: "PT Serif", serif;
@@ -119,7 +120,8 @@
 #currentPlayer,
 #currentPlayerMoney,
 #currentPlayerCredits,
-#currentPlayerRole {
+#currentPlayerRole,
+#currentPlayerPracticeChips {
   font-size: 18px;
   font-weight: 700;
   font-family: "PT Serif", serif;
