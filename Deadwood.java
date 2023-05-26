@@ -5,44 +5,42 @@ public class Deadwood {
     private static int numActiveScenes;
     private static Player[] players;
     private static LocationManager locationManager;
-    private static CurrencyManager currencyManager;
-    private static CastingOffice castingOffice;
+    // private static CurrencyManager currencyManager;
+    // private static CastingOffice castingOffice;
     private static Board board;
     private static SceneDeck deck;
     private static InpParser inpP;
     private static Player activePlayer;
     private static int activeTurn;
 
-    public static void main(String[] args) {
-        start();
-    }
-
     // method to start a game
-    public static void start() {
-        // creating an input parser, which creates an input manager
-        // parser acts as the control, manager acts as the view
-        inpP = new InpParser();
-        // calling startgame in InpParser
-        // initializes days and players
-        inpP.startGame();
-        days = inpP.getDays();
-        players = inpP.getPlayers();
-
-        // creating an XMLParser which creates the board and scene deck
-        XMLParser xml = new XMLParser();
-        deck = new SceneDeck(xml.readCardData());
-        // board gets created by parser, each room has no scene to start
-        board = new Board(xml.readBoardData());
-        castingOffice = CastingOffice.getCastingOffice();
-        currencyManager = CurrencyManager.getCurrencyManager();
-        // playerActions = new PlayerActions();
-        // loop for setting an initial scene at each room
-
-        locationManager = new LocationManager(players, Board.roomByName("trailer"));
-        // CurrencyManager.setLocMan(locationManager);
-        numActiveScenes = 10;
-        gameLoop();
-    }
+    /*
+     * public static void start() {
+     * // creating an input parser, which creates an input manager
+     * // parser acts as the control, manager acts as the view
+     * inpP = new InpParser();
+     * // calling startgame in InpParser
+     * // initializes days and players
+     * inpP.startGame();
+     * days = inpP.getDays();
+     * players = inpP.getPlayers();
+     * 
+     * // creating an XMLParser which creates the board and scene deck
+     * XMLParser xml = new XMLParser();
+     * deck = new SceneDeck(xml.readCardData());
+     * // board gets created by parser, each room has no scene to start
+     * board = new Board(xml.readBoardData());
+     * castingOffice = CastingOffice.getCastingOffice();
+     * currencyManager = CurrencyManager.getCurrencyManager();
+     * // playerActions = new PlayerActions();
+     * // loop for setting an initial scene at each room
+     * 
+     * locationManager = new LocationManager(players, Board.roomByName("trailer"));
+     * // CurrencyManager.setLocMan(locationManager);
+     * numActiveScenes = 10;
+     * // gameLoop();
+     * }
+     */
 
     // method to end a game
     public static void end() {
@@ -67,97 +65,103 @@ public class Deadwood {
         inpP.end();
     }
 
-    public static void gameLoop() {
-        while (days > 0) {
-            // start at 2 because 0 and 1 are office and trailer
-            for (int i = 2; i < board.getRooms().length; i++) {
-                board.getRooms()[i].setScene(deck.getScene());
-            }
-            dayLoop();
-            days--;
-        }
-        end();
-    }
+    /*
+     * public static void gameLoop() {
+     * while (days > 0) {
+     * // start at 2 because 0 and 1 are office and trailer
+     * for (int i = 2; i < board.getRooms().length; i++) {
+     * board.getRooms()[i].setScene(deck.getScene());
+     * }
+     * dayLoop();
+     * days--;
+     * }
+     * end();
+     * }
+     */
 
-    public static void dayLoop() {
-
-        while (numActiveScenes > 1) {
-            for (Player p : players) {
-                ////////////
-                // view.updatePlayer(p);
-                ///////////////
-                boolean validAction = false;
-                Room loc = LocationManager.getPlayerLocation(p);
-                inpP.pass("");
-                inpP.pass("Current Player [" + p.toString() + "]");
-                inpP.pass("Current Location [" + loc.toString() + "]");
-                if (loc.getScene() != null) {
-                    inpP.pass("Current Scene  [" + loc.getScene().toString() + "]");
-                }
-                while (!validAction) {
-                    char action = inpP.handleAction();
-                    switch (action) {
-                        case ('m'):
-                            if (p.getRole() == null) {
-                                PlayerActions.playerMove(p, locationManager, board, inpP, castingOffice,
-                                        currencyManager);
-                                validAction = true;
-                            } else {
-                                inpP.pass("You can't move while you have a role.");
-                            }
-                            break;
-                        case ('a'):
-                            if (p.getRole() != null) {
-                                if (PlayerActions.playerAct(p)) {
-                                    numActiveScenes--;
-                                }
-                                validAction = true;
-                            } else {
-                                inpP.pass("You need to take a role before you can act.");
-                            }
-                            break;
-                        case ('r'):
-                            if (p.getRole() != null) {
-                                if (PlayerActions.playerRehearse(p)) {
-                                    validAction = true;
-                                }
-                            } else {
-                                inpP.pass("You need to take a role before you can rehearse.");
-                            }
-                            break;
-                        case ('u'):
-                            if (LocationManager.getPlayerLocation(p).equals(Board.roomByName("office"))) {
-                                boolean validUpgrade = PlayerActions.playerUpgrade(p, inpP, castingOffice,
-                                        locationManager, currencyManager);
-                                if (!validUpgrade) {
-                                    inpP.pass("You can't upgrade to that rank just yet!");
-                                } else {
-                                    if (inpP.moveAfterUpgrade()) {
-                                        PlayerActions.playerMove(p, locationManager, board, inpP, castingOffice,
-                                                currencyManager);
-                                    }
-                                    validAction = true;
-                                }
-
-                            } else {
-                                inpP.pass("You must be in the Casting Office to upgrade.");
-                            }
-                            break;
-                        case ('t'):
-                            if (PlayerActions.playerTakeRole(inpP, p, LocationManager.getPlayerLocation(p))) {
-                                validAction = true;
-                            } else {
-
-                            }
-                            break;
-                    }
-                }
-                if (numActiveScenes == 1) {
-                    endDay();
-                }
-            }
-        }
-    }
+    /*
+     * public static void dayLoop() {
+     * 
+     * while (numActiveScenes > 1) {
+     * for (Player p : players) {
+     * ////////////
+     * // view.updatePlayer(p);
+     * ///////////////
+     * boolean validAction = false;
+     * Room loc = LocationManager.getPlayerLocation(p);
+     * inpP.pass("");
+     * inpP.pass("Current Player [" + p.toString() + "]");
+     * inpP.pass("Current Location [" + loc.toString() + "]");
+     * if (loc.getScene() != null) {
+     * inpP.pass("Current Scene  [" + loc.getScene().toString() + "]");
+     * }
+     * while (!validAction) {
+     * char action = inpP.handleAction();
+     * switch (action) {
+     * case ('m'):
+     * if (p.getRole() == null) {
+     * PlayerActions.playerMove(p, locationManager, board, inpP, castingOffice,
+     * currencyManager);
+     * validAction = true;
+     * } else {
+     * inpP.pass("You can't move while you have a role.");
+     * }
+     * break;
+     * case ('a'):
+     * if (p.getRole() != null) {
+     * if (PlayerActions.playerAct(p)) {
+     * numActiveScenes--;
+     * }
+     * validAction = true;
+     * } else {
+     * inpP.pass("You need to take a role before you can act.");
+     * }
+     * break;
+     * case ('r'):
+     * if (p.getRole() != null) {
+     * if (PlayerActions.playerRehearse(p)) {
+     * validAction = true;
+     * }
+     * } else {
+     * inpP.pass("You need to take a role before you can rehearse.");
+     * }
+     * break;
+     * case ('u'):
+     * if (LocationManager.getPlayerLocation(p).equals(Board.roomByName("office")))
+     * {
+     * boolean validUpgrade = PlayerActions.playerUpgrade(p, inpP, castingOffice,
+     * locationManager, currencyManager);
+     * if (!validUpgrade) {
+     * inpP.pass("You can't upgrade to that rank just yet!");
+     * } else {
+     * if (inpP.moveAfterUpgrade()) {
+     * PlayerActions.playerMove(p, locationManager, board, inpP, castingOffice,
+     * currencyManager);
+     * }
+     * validAction = true;
+     * }
+     * 
+     * } else {
+     * inpP.pass("You must be in the Casting Office to upgrade.");
+     * }
+     * break;
+     * case ('t'):
+     * if (PlayerActions.playerTakeRole(inpP, p,
+     * LocationManager.getPlayerLocation(p))) {
+     * validAction = true;
+     * } else {
+     * 
+     * }
+     * break;
+     * }
+     * }
+     * if (numActiveScenes == 1) {
+     * endDay();
+     * }
+     * }
+     * }
+     * }
+     */
 
     public static void endDay() {
         LocationManager.returnTrailers();
@@ -203,8 +207,8 @@ public class Deadwood {
         deck = new SceneDeck(xml.readCardData());
         board = new Board(xml.readBoardData());
         locationManager = new LocationManager(players, Board.roomByName("trailer"));
-        castingOffice = CastingOffice.getCastingOffice();
-        currencyManager = CurrencyManager.getCurrencyManager();
+        // castingOffice = CastingOffice.getCastingOffice();
+        // currencyManager = CurrencyManager.getCurrencyManager();
 
         // distribute scenes to every room
         for (int i = 2; i < board.getRooms().length; i++) {
