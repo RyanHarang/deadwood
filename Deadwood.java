@@ -12,11 +12,8 @@ public class Deadwood {
     private static InpParser inpP;
     private static Player activePlayer;
     private static int activeTurn;
-    // private static XMLParser xml = new XMLParser();
 
     public static void main(String[] args) {
-        // view = new View();
-        // View.open(args);
         start();
     }
 
@@ -176,20 +173,31 @@ public class Deadwood {
     // funcionality but for now just started by making it continue to the next
     // player instantly
     public static void endTurn() {
-        if (activeTurn < players.length - 1) {
-            activeTurn++;
-            activePlayer = players[activeTurn];
-        }
+        int count = players.length;
+        activeTurn++;
+        activePlayer = players[activeTurn % count];
     }
 
     // used to take a list of strings as input and create players
     public static void initializePlayers(ArrayList<String> names) {
-        players = new Player[names.size()];
+        int numPlayers = names.size();
+        players = new Player[numPlayers];
+        days = 4;
 
-        for (int i = 0; i < names.size(); i++) {
+        for (int i = 0; i < numPlayers; i++) {
             players[i] = new Player(names.get(i));
+            players[i] = (new Player(names.get(i)));
+            if (numPlayers < 4) {
+                days = 3;
+            }
+            if (numPlayers == 5) {
+                players[i].setCredits(2);
+            } else if (numPlayers == 6) {
+                players[i].setCredits(4);
+            } else if (numPlayers > 6) {
+                players[i].setRank(2);
+            }
         }
-        days = 0;
 
         XMLParser xml = new XMLParser();
         deck = new SceneDeck(xml.readCardData());
@@ -197,9 +205,12 @@ public class Deadwood {
         locationManager = new LocationManager(players, Board.roomByName("trailer"));
         castingOffice = CastingOffice.getCastingOffice();
         currencyManager = CurrencyManager.getCurrencyManager();
+
+        // distribute scenes to every room
         for (int i = 2; i < board.getRooms().length; i++) {
             board.getRooms()[i].setScene(deck.getScene());
         }
+
         System.out.println("Names: " + names.toString());
         // initialize player one as the active player
         // sets active turn to the index of the array of the player with turn
