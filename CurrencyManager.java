@@ -6,7 +6,6 @@ public class CurrencyManager {
 
     // constructor
     private CurrencyManager() {
-        // dice = new Dice();
     }
 
     public static CurrencyManager getCurrencyManager() {
