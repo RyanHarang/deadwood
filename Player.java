@@ -5,7 +5,13 @@ public class Player implements Comparable<Player> {
     private int practiceChips;
     private String name;
     private Role role = null;
+
     private boolean canUpgrade = false;
+    private boolean canMove = true;
+    private boolean canTakerole;
+    private boolean canAct = false;
+    private boolean canRehearse = false;
+    private boolean canEndTurn = false;
 
     // constructor
     public Player(String name) {
@@ -84,6 +90,34 @@ public class Player implements Comparable<Player> {
         this.canUpgrade = canUpgrade;
     }
 
+    public boolean getCanUpgrade(){
+        return canUpgrade;
+    }
+
+    public void setCanMove(boolean canMove){
+        this.canMove = canMove;
+    }
+
+    public boolean getCanMove(){
+        return canMove;
+    }
+
+    public void setCanAct(boolean canAct){
+        this.canAct = canAct;
+    }
+
+    public boolean getCanAct(){
+        return canAct;
+    }
+
+    public void setCanRehearse(boolean canRehearse){
+        this.canRehearse = canRehearse;
+    }
+
+    public boolean getCanRehearse(){
+        return canRehearse;
+    }
+
     public int compareTo(Player p) {
         if (role.getRank() == p.role.getRank()) {
             return 0;
@@ -93,4 +127,6 @@ public class Player implements Comparable<Player> {
             return -1;
         }
     }
+
+    
 }

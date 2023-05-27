@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class View extends Application {
     private static ArrayList<RadioButton> locations;
     private static ArrayList<Role> availableRoles;
+    private static ArrayList<RadioButton> upgrades;
 
     // constructor
     public View() {
@@ -30,6 +31,7 @@ public class View extends Application {
     public void start(Stage primaryStage) throws FileNotFoundException {
         // initialize rooms
         rooms();
+        upgrades();
 
         // root
         HBox root = new HBox();
@@ -125,133 +127,143 @@ public class View extends Application {
         move.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                // step 1: generating list of room names
-                ArrayList<Room> adjRooms = new ArrayList<Room>();
-                ArrayList<String> rNames = new ArrayList<String>();
-                System.out.println(Deadwood.getActivePlayer().toString());
-                System.out.println(LocationManager.getPlayerLocation(Deadwood.getActivePlayer()));
-                adjRooms = (LocationManager.getPlayerLocation(Deadwood.getActivePlayer()).getAdjacents());
+                if(Deadwood.getActivePlayer().getCanMove()){
+                                        // step 1: generating list of room names
+                    ArrayList<Room> adjRooms = new ArrayList<Room>();
+                    ArrayList<String> rNames = new ArrayList<String>();
+                    System.out.println(Deadwood.getActivePlayer().toString());
+                    System.out.println(LocationManager.getPlayerLocation(Deadwood.getActivePlayer()));
+                    adjRooms = (LocationManager.getPlayerLocation(Deadwood.getActivePlayer()).getAdjacents());
 
-                for (Room r : adjRooms) {
-                    rNames.add(r.getName());
-                }
-                System.out.println(rNames.toString());
-
-                // step 2: Create gridPane and popup with radio button options and submit button
-                GridPane movePane = new GridPane();
-                ToggleGroup moveToggleGroup = new ToggleGroup();
-                movePane.setId("popGrid");
-                Label moveLabel = new Label("Select a room to move to:");
-                for (int i = 0; i < rNames.size(); i++) {
-                    for (RadioButton rb : View.locations) {
-                        if (rb.getId().equals(rNames.get(i))) {
-                            movePane.add(rb, 0, i + 1);
-                            rb.setToggleGroup(moveToggleGroup);
-                            rb.setSelected(true);
-                        }
+                    for (Room r : adjRooms) {
+                        rNames.add(r.getName());
                     }
-                }
-                Popup movePopup = new Popup();
-                movePane.add(moveLabel, 0, 0);
-                Button moveSubmit = new Button("Submit");
-                moveSubmit.setId("submit");
-                movePane.add(moveSubmit, 0, rNames.size() + 1);
+                    System.out.println(rNames.toString());
 
-                // moveSubmit onClick
-                moveSubmit.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent e) {
-                        RadioButton rb = (RadioButton) moveToggleGroup.getSelectedToggle();
-                        System.out.println(rb.getId());
-                        LocationManager.move(Deadwood.getActivePlayer(), Board.roomByName(rb.getId()));
-                        movePopup.hide();
-
-                        // step 1: determine list of roles active player can choose from their new room
-                        // setting arraylist using method in playeractions, passing active player and
-                        // their new location
-                        availableRoles = PlayerActions.availableRoles(Deadwood.getActivePlayer(),
-                                Board.roomByName(rb.getId()));
-                        // step 2: make radio buttons using availableRoles
-                        Label roleLabel = new Label("Select a role to take, or none.");
-                        ToggleGroup roleTG = new ToggleGroup();
-                        RadioButton role1 = new RadioButton("");
-                        RadioButton role2 = new RadioButton("");
-                        RadioButton role3 = new RadioButton("");
-                        RadioButton role4 = new RadioButton("");
-                        RadioButton role5 = new RadioButton("");
-                        RadioButton role6 = new RadioButton("");
-                        RadioButton role7 = new RadioButton("");
-                        RadioButton none = new RadioButton("None");
-                        none.setId("none");
-                        role1.setToggleGroup(roleTG);
-                        role2.setToggleGroup(roleTG);
-                        role3.setToggleGroup(roleTG);
-                        role4.setToggleGroup(roleTG);
-                        role5.setToggleGroup(roleTG);
-                        role6.setToggleGroup(roleTG);
-                        role7.setToggleGroup(roleTG);
-                        none.setToggleGroup(roleTG);
-                        none.setSelected(true);
-
-                        GridPane rolePane = new GridPane();
-                        rolePane.setId("popGrid");
-                        rolePane.add(roleLabel, 0, 0);
-                        for (int i = 0; i < availableRoles.size(); i++) {
-                            if (i == 0) {
-                                role1.setText(availableRoles.get(i).getName());
-                                role1.setId("0");
-                                rolePane.add(role1, 0, i + 1);
-                            } else if (i == 1) {
-                                role2.setText(availableRoles.get(i).getName());
-                                role2.setId("1");
-                                rolePane.add(role2, 0, i + 1);
-                            } else if (i == 2) {
-                                role3.setText(availableRoles.get(i).getName());
-                                role3.setId("2");
-                                rolePane.add(role3, 0, i + 1);
-                            } else if (i == 3) {
-                                role4.setText(availableRoles.get(i).getName());
-                                role4.setId("3");
-                                rolePane.add(role4, 0, i + 1);
-                            } else if (i == 4) {
-                                role5.setText(availableRoles.get(i).getName());
-                                role5.setId("4");
-                                rolePane.add(role5, 0, i + 1);
-                            } else if (i == 5) {
-                                role6.setText(availableRoles.get(i).getName());
-                                role6.setId("5");
-                                rolePane.add(role6, 0, i + 1);
-                            } else if (i == 6) {
-                                role7.setText(availableRoles.get(i).getName());
-                                role7.setId("6");
-                                rolePane.add(role7, 0, i + 1);
+                    // step 2: Create gridPane and popup with radio button options and submit button
+                    GridPane movePane = new GridPane();
+                    ToggleGroup moveToggleGroup = new ToggleGroup();
+                    movePane.setId("popGrid");
+                    Label moveLabel = new Label("Select a room to move to:");
+                    for (int i = 0; i < rNames.size(); i++) {
+                        for (RadioButton rb : View.locations) {
+                            if (rb.getId().equals(rNames.get(i))) {
+                                movePane.add(rb, 0, i + 1);
+                                rb.setToggleGroup(moveToggleGroup);
+                                rb.setSelected(true);
                             }
                         }
-                        rolePane.add(none, 0, availableRoles.size() + 1);
-                        Button roleSubmit = new Button("Submit");
-                        roleSubmit.setId("submit");
-                        rolePane.add(roleSubmit, 0, availableRoles.size() + 2);
-                        Popup rolePopup = new Popup();
-                        rolePopup.getContent().add(rolePane);
-                        rolePopup.show(primaryStage);
+                    }
+                    Popup movePopup = new Popup();
+                    movePane.add(moveLabel, 0, 0);
+                    Button moveSubmit = new Button("Submit");
+                    moveSubmit.setId("submit");
+                    movePane.add(moveSubmit, 0, rNames.size() + 1);
+                    movePopup.getContent().add(movePane);
+                    movePopup.show(primaryStage);
+                    move.setId(move(move.getId()));
+                    
+                    // moveSubmit onClick
+                    moveSubmit.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent e) {
+                            
+                            RadioButton rb = (RadioButton) moveToggleGroup.getSelectedToggle();
+                            System.out.println(rb.getId());
+                            LocationManager.move(Deadwood.getActivePlayer(), Board.roomByName(rb.getId()));
+                            movePopup.hide();
 
-                        roleSubmit.setOnAction(new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent e) {
-                                RadioButton chose = (RadioButton) roleTG.getSelectedToggle();
-                                if (!chose.getId().equals("none")) {
-                                    Role chosen = availableRoles.get(Integer.parseInt(chose.getId()));
-                                    Deadwood.updateRole(chosen);
+                            // step 1: determine list of roles active player can choose from their new room
+                            // setting arraylist using method in playeractions, passing active player and
+                            // their new location
+                            availableRoles = PlayerActions.availableRoles(Deadwood.getActivePlayer(),
+                                    Board.roomByName(rb.getId()));
+                            // step 2: make radio buttons using availableRoles
+                            Label roleLabel = new Label("Select a role to take, or none.");
+                            ToggleGroup roleTG = new ToggleGroup();
+                            RadioButton role1 = new RadioButton("");
+                            RadioButton role2 = new RadioButton("");
+                            RadioButton role3 = new RadioButton("");
+                            RadioButton role4 = new RadioButton("");
+                            RadioButton role5 = new RadioButton("");
+                            RadioButton role6 = new RadioButton("");
+                            RadioButton role7 = new RadioButton("");
+                            RadioButton none = new RadioButton("None");
+                            none.setId("none");
+                            role1.setToggleGroup(roleTG);
+                            role2.setToggleGroup(roleTG);
+                            role3.setToggleGroup(roleTG);
+                            role4.setToggleGroup(roleTG);
+                            role5.setToggleGroup(roleTG);
+                            role6.setToggleGroup(roleTG);
+                            role7.setToggleGroup(roleTG);
+                            none.setToggleGroup(roleTG);
+                            none.setSelected(true);
+
+                            GridPane rolePane = new GridPane();
+                            rolePane.setId("popGrid");
+                            rolePane.add(roleLabel, 0, 0);
+                            for (int i = 0; i < availableRoles.size(); i++) {
+                                if (i == 0) {
+                                    role1.setText(availableRoles.get(i).getName());
+                                    role1.setId("0");
+                                    rolePane.add(role1, 0, i + 1);
+                                } else if (i == 1) {
+                                    role2.setText(availableRoles.get(i).getName());
+                                    role2.setId("1");
+                                    rolePane.add(role2, 0, i + 1);
+                                } else if (i == 2) {
+                                    role3.setText(availableRoles.get(i).getName());
+                                    role3.setId("2");
+                                    rolePane.add(role3, 0, i + 1);
+                                } else if (i == 3) {
+                                    role4.setText(availableRoles.get(i).getName());
+                                    role4.setId("3");
+                                    rolePane.add(role4, 0, i + 1);
+                                } else if (i == 4) {
+                                    role5.setText(availableRoles.get(i).getName());
+                                    role5.setId("4");
+                                    rolePane.add(role5, 0, i + 1);
+                                } else if (i == 5) {
+                                    role6.setText(availableRoles.get(i).getName());
+                                    role6.setId("5");
+                                    rolePane.add(role6, 0, i + 1);
+                                } else if (i == 6) {
+                                    role7.setText(availableRoles.get(i).getName());
+                                    role7.setId("6");
+                                    rolePane.add(role7, 0, i + 1);
                                 }
-                                rolePopup.hide();
                             }
-                        });
-                    }
-                });
+                            rolePane.add(none, 0, availableRoles.size() + 1);
+                            Button roleSubmit = new Button("Submit");
+                            roleSubmit.setId("submit");
+                            rolePane.add(roleSubmit, 0, availableRoles.size() + 2);
+                            Popup rolePopup = new Popup();
+                            rolePopup.getContent().add(rolePane);
+                            rolePopup.show(primaryStage);
 
-                movePopup.getContent().add(movePane);
-                movePopup.show(primaryStage);
-                move.setId(move(move.getId()));
+                            roleSubmit.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent e) {
+                                    RadioButton chose = (RadioButton) roleTG.getSelectedToggle();
+                                    if (!chose.getId().equals("none")) {
+                                        Role chosen = availableRoles.get(Integer.parseInt(chose.getId()));
+                                        Deadwood.updateRole(chosen);
+                                        Deadwood.getActivePlayer().setCanMove(false);
+                                        Deadwood.getActivePlayer().setCanAct(true);
+                                        Deadwood.getActivePlayer().setCanRehearse(true);
+                                    }
+                                    rolePopup.hide();
+                                }
+                            });
+                        }
+                    });
+                } else{
+                    System.out.println("You cant move with a role");
+                }
+
+
+
             }
         });
 
@@ -260,7 +272,60 @@ public class View extends Application {
             @Override
             public void handle(ActionEvent e) {
                 upgrade.setId(upgrade(upgrade.getId()));
+                if(Deadwood.getActivePlayer().getCanUpgrade()){
+                    Deadwood.getActivePlayer().setCanUpgrade(false);
 
+                    int[][] upgradeInfo = CastingOffice.validRanks(Deadwood.getActivePlayer());
+                    GridPane upgradePane = new GridPane();
+                    ToggleGroup upgradeToggleGroup = new ToggleGroup();
+                    upgradePane.setId("popGrid");
+                    Label moveLabel = new Label("Select your upgrade option");
+                    upgradePane.add(moveLabel, 1, 0);
+
+                    Label rank2 = new Label("Rank 2");
+                    Label rank3 = new Label("Rank 3");
+                    Label rank4 = new Label("Rank 4");
+                    Label rank5 = new Label("Rank 5");
+                    Label rank6 = new Label("Rank 6");
+
+                    upgradePane.add(rank2, 0, 1);
+                    upgradePane.add(rank3, 0, 2);
+                    upgradePane.add(rank4, 0, 3);
+                    upgradePane.add(rank5, 0, 4);
+                    upgradePane.add(rank6, 0, 5);
+
+                    for(RadioButton rb: upgrades){
+                        int buttonRank = Integer.parseInt(rb.getId().substring(0, 1));
+                        int isMoney = Integer.parseInt(rb.getId().substring(1)); // money is 0, credits is 1
+                        if(upgradeInfo[buttonRank-2][isMoney+1] == 1){
+                            rb.setToggleGroup(upgradeToggleGroup);
+                            upgradePane.add(rb, isMoney+1, buttonRank-1);
+                        }
+                    }
+                    Button submitUpgrade = new Button("Submit");
+                    upgradePane.add(submitUpgrade, 1, 6);
+                    Popup upgradePopup = new Popup();
+                    upgradePopup.getContent().add(upgradePane);
+                    upgradePopup.show(primaryStage);
+
+
+                    submitUpgrade.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent e) {
+                            RadioButton selectedUpgrade = (RadioButton)upgradeToggleGroup.getSelectedToggle();
+                            int buttonRank = Integer.parseInt(selectedUpgrade.getId().substring(0, 1));
+                            int isMoney = Integer.parseInt(selectedUpgrade.getId().substring(1));
+                            boolean upgradeWithMoney = isMoney == 0 ? true:false;
+                            CastingOffice.upgrade(Deadwood.getActivePlayer(), buttonRank, upgradeWithMoney);
+                            upgradePopup.hide();
+                        }
+                    });
+
+
+
+                    //get selected button, parse its id
+                    //player actions upgrade
+                }
             }
         });
 
@@ -268,8 +333,13 @@ public class View extends Application {
         act.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                act.setId(act(act.getId()));
-                PlayerActions.playerAct(Deadwood.getActivePlayer());
+                if(Deadwood.getActivePlayer().getCanAct()){
+                    PlayerActions.playerAct(Deadwood.getActivePlayer());
+                    act.setId(act(act.getId()));
+                } else{
+                    System.out.println("You need a role to be able to act");
+                }
+
             }
         });
 
@@ -277,13 +347,19 @@ public class View extends Application {
         rehearse.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                if(Deadwood.getActivePlayer().getCanRehearse()){
+                    /*boolean rehearsed =*/ PlayerActions.playerRehearse(Deadwood.getActivePlayer());
+                } else{
+                    System.out.println("You cant rehearse now!");
+                }
+                /*
                 rehearse.setId(rehearse(rehearse.getId()));
-                boolean rehearsed = PlayerActions.playerRehearse(Deadwood.getActivePlayer());
+                
                 if (rehearsed) {
                     System.out.println(Deadwood.getActivePlayer().getName() + " got a r-chip");
                 } else {
                     System.out.println("Unable to reheasre");
-                }
+                }*/
             }
         });
 
@@ -561,5 +637,56 @@ public class View extends Application {
         locationButtons.add(jail);
         locationButtons.add(generalStore);
         View.locations = locationButtons;
+    }
+
+    public void upgrades(){
+        ToggleGroup locationsGroup = new ToggleGroup();
+        RadioButton m2 = new RadioButton("4 Dollars"); 
+        RadioButton m3 = new RadioButton("10 Dollars"); 
+        RadioButton m4 = new RadioButton("18 Dollars"); 
+        RadioButton m5 = new RadioButton("28 Dollars"); 
+        RadioButton m6 = new RadioButton("40 Dollars"); 
+        RadioButton c2 = new RadioButton("5 Credits");   
+        RadioButton c3 = new RadioButton("10 Credits"); 
+        RadioButton c4 = new RadioButton("15 Credits"); 
+        RadioButton c5 = new RadioButton("20 Credits"); 
+        RadioButton c6 = new RadioButton("25 Credits"); 
+
+        m2.setId("20");
+        m3.setId("30");
+        m4.setId("40");
+        m5.setId("50");
+        m6.setId("60");
+        c2.setId("21");
+        c3.setId("31");
+        c4.setId("41");
+        c5.setId("51");
+        c6.setId("61");
+
+        /*m2.setToggleGroup(locationsGroup);
+        m3.setToggleGroup(locationsGroup);
+        m4.setToggleGroup(locationsGroup);
+        m5.setToggleGroup(locationsGroup);
+        m6.setToggleGroup(locationsGroup);
+        c2.setToggleGroup(locationsGroup);
+        c3.setToggleGroup(locationsGroup);
+        c4.setToggleGroup(locationsGroup);
+        c5.setToggleGroup(locationsGroup);
+        c6.setToggleGroup(locationsGroup);*/
+
+        ArrayList<RadioButton> upgradeButtons = new ArrayList<RadioButton>();
+        upgradeButtons.add(m2);
+        upgradeButtons.add(m3);
+        upgradeButtons.add(m4);
+        upgradeButtons.add(m5);
+        upgradeButtons.add(m6);
+        upgradeButtons.add(c2);
+        upgradeButtons.add(c3);
+        upgradeButtons.add(c4);
+        upgradeButtons.add(c5);
+        upgradeButtons.add(c6);
+        View.upgrades = upgradeButtons;
+
+        
     }
 }

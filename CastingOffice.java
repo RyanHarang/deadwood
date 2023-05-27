@@ -27,16 +27,8 @@ public class CastingOffice {
         return info;
     }
 
-    public boolean upgrade(Player player, int rank, boolean upgradingWithMoney) {
+    public static boolean upgrade(Player player, int rank, boolean upgradingWithMoney) {
         // cant upgrade to a lower or equal rank
-        if (player.getRank() >= rank) {
-            return false;
-        }
-        // verify player is in casting office
-        if (LocationManager.getPlayerLocation(player).getName() != "office") {
-            return false;
-        }
-
         // verify has enough money or credits
         if (upgradingWithMoney) {
             // if enough money
@@ -57,13 +49,13 @@ public class CastingOffice {
 
     }
 
-    public void upgradeMoney(Player player, int rank) {
+    public static void upgradeMoney(Player player, int rank) {
         player.setRank(rank);
         // remove money from info
         CurrencyManager.adjustMoney(-(info[rank - 2][1]), player);
     }
 
-    public void upgradeCredits(Player player, int rank) {
+    public static void upgradeCredits(Player player, int rank) {
         player.setRank(rank);
         // remove credits from info
         CurrencyManager.adjustCredits(-(info[rank - 2][2]), player);

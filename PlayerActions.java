@@ -145,8 +145,12 @@ public class PlayerActions {
             // inpP.pass("Scene has wrapped!");
             CurrencyManager.wrapPay(room);
             for (Player pl : LocationManager.getOccupants(room)) {
+                System.out.println("Scene has wrapped");
                 pl.setRole(null);
                 pl.setPracticeChip();
+                pl.setCanMove(true);
+                pl.setCanAct(false);
+                pl.setCanRehearse(false);
             }
             return true;// scene has wrapped
         }
@@ -198,13 +202,16 @@ public class PlayerActions {
     }
 
     public static boolean playerRehearse(Player p) {
-        System.out.println("hi");
         Room room = LocationManager.getPlayerLocation(p);
         int budget = room.getScene().getBudget();
         if (p.getPracticeChips() >= budget - 1) {
             return false;
         } else {
             p.addPracticeChip();
+            System.out.println("got a practice chip!");
+            if(p.getPracticeChips() >= budget - 1){
+                p.setCanRehearse(false);
+            }
             return true;
         }
     }
