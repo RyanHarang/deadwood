@@ -135,6 +135,13 @@
 #popGrid2 {
   background-color: #fff;
   background-color: #fef5ec;
+  border-color: #b17246;
+  border-width: 5;
+  border-radius: 30;
+  -fx-border-color: #b17246;
+  -fx-border-width: 5;
+  -fx-border-radius: 30;
+  -fx-background-radius: 30;
   -fx-background-color: #fef5ec;
 }
 
@@ -150,15 +157,6 @@
   min-height: 150;
   -fx-min-width: 380;
   -fx-min-height: 150;
-}
-
-#pc {
-  padding: 20 20;
-  font-size: 20px;
-  font-family: "PT Serif", serif;
-  -fx-font-family: "PT Serif", serif;
-  -fx-font-size: 20;
-  -fx-padding: 20 10;
 }
 
 .radio-button {
