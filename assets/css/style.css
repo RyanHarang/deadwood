@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap");
 
-/* Buttone Styling */
+/* Button Styling */
 #move,
 #upgrade,
 #act,
@@ -134,7 +134,15 @@
 #popGrid,
 #popGrid2 {
   background-color: #fff;
-  -fx-background-color: #fff;
+  background-color: #fef5ec;
+  border-color: #b17246;
+  border-width: 5;
+  border-radius: 30;
+  -fx-border-color: #b17246;
+  -fx-border-width: 5;
+  -fx-border-radius: 30;
+  -fx-background-radius: 30;
+  -fx-background-color: #fef5ec;
 }
 
 #popGrid {
@@ -151,26 +159,17 @@
   -fx-min-height: 150;
 }
 
-#pc {
-  padding: 20 20;
-  font-size: 20px;
-  font-family: "PT Serif", serif;
-  -fx-font-family: "PT Serif", serif;
-  -fx-font-size: 20;
-  -fx-padding: 20 10;
-}
-
 .radio-button {
-  padding: 20 20;
+  padding: 20;
   font-size: 20px;
   font-family: "PT Serif", serif;
   -fx-font-family: "PT Serif", serif;
   -fx-font-size: 20;
-  -fx-padding: 20 20;
+  -fx-padding: 20;
 }
 
 .label {
-  padding: 20 20;
+  padding: 20 10;
   font-size: 20px;
   font-family: "PT Serif", serif;
   -fx-font-family: "PT Serif", serif;
