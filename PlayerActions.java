@@ -129,6 +129,8 @@ public class PlayerActions {
     }
 
     public static boolean playerAct(Player p) {
+        p.setCanAct(false);
+        p.setCanRehearse(false);
 
         Room room = LocationManager.getPlayerLocation(p);
 
@@ -152,6 +154,7 @@ public class PlayerActions {
                 pl.setCanAct(false);
                 pl.setCanRehearse(false);
             }
+            room.setScene(null);
             return true;// scene has wrapped
         }
         return false;// scene not wrapped
@@ -209,9 +212,11 @@ public class PlayerActions {
         } else {
             p.addPracticeChip();
             System.out.println("got a practice chip!");
-            if(p.getPracticeChips() >= budget - 1){
+            /*if(p.getPracticeChips() >= budget - 1){
                 p.setCanRehearse(false);
-            }
+            }*/
+            p.setCanRehearse(false);
+            p.setCanAct(false);
             return true;
         }
     }

@@ -42,6 +42,7 @@ public class LocationManager {
                 player.setCanUpgrade(false);
             }
             System.out.println("moved " + player.getName() + " from " + test + " to " + new_location.getName());
+            player.setCanMove(false);
         }
         return isValidMove;
     }
