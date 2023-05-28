@@ -107,7 +107,8 @@
 #playerMoney,
 #playerCredits,
 #playerRole,
-#playerPracticeChips {
+#playerPracticeChips,
+#playerRank {
   font-size: 20px;
   font-weight: 700;
   font-family: "PT Serif", serif;
@@ -121,7 +122,8 @@
 #currentPlayerMoney,
 #currentPlayerCredits,
 #currentPlayerRole,
-#currentPlayerPracticeChips {
+#currentPlayerPracticeChips,
+#currentPlayerRank {
   font-size: 18px;
   font-weight: 700;
   font-family: "PT Serif", serif;
