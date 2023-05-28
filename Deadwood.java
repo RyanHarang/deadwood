@@ -202,6 +202,10 @@ public class Deadwood {
             activePlayer.setCanMove(true);
 
             activePlayer.setCanRehearse(false);
+
+            if (LocationManager.getPlayerLocation(activePlayer).getName().equals("office")) {
+                activePlayer.setCanUpgrade(true);
+            }
         }
     }
 

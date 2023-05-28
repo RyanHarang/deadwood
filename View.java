@@ -289,8 +289,8 @@ public class View extends Application {
                     GridPane upgradePane = new GridPane();
                     ToggleGroup upgradeToggleGroup = new ToggleGroup();
                     upgradePane.setId("popGrid");
-                    Label moveLabel = new Label("Select your upgrade option");
-                    upgradePane.add(moveLabel, 1, 0);
+                    Label moveLabel = new Label("Select an upgrade option:");
+                    upgradePane.add(moveLabel, 0, 0);
 
                     Label rank2 = new Label("Rank 2");
                     Label rank3 = new Label("Rank 3");
@@ -312,8 +312,14 @@ public class View extends Application {
                             upgradePane.add(rb, isMoney + 1, buttonRank - 1);
                         }
                     }
+                    RadioButton none = new RadioButton("None");
+                    none.setId("none");
+                    none.setToggleGroup(upgradeToggleGroup);
+                    none.setSelected(true);
+                    upgradePane.add(none, 1, 6);
                     Button submitUpgrade = new Button("Submit");
-                    upgradePane.add(submitUpgrade, 1, 6);
+                    submitUpgrade.setId("submit");
+                    upgradePane.add(submitUpgrade, 1, 7);
                     Popup upgradePopup = new Popup();
                     upgradePopup.getContent().add(upgradePane);
                     upgradePopup.show(primaryStage);
@@ -322,13 +328,17 @@ public class View extends Application {
                         @Override
                         public void handle(ActionEvent e) {
                             RadioButton selectedUpgrade = (RadioButton) upgradeToggleGroup.getSelectedToggle();
-                            int buttonRank = Integer.parseInt(selectedUpgrade.getId().substring(0, 1));
-                            int isMoney = Integer.parseInt(selectedUpgrade.getId().substring(1));
-                            boolean upgradeWithMoney = isMoney == 0 ? true : false;
-                            CastingOffice.upgrade(Deadwood.getActivePlayer(), buttonRank, upgradeWithMoney);
-                            currentPlayerCredits.setText(Integer.toString(Deadwood.getActivePlayer().getCredits()));
-                            currentPlayerMoney.setText("$" + Integer.toString(Deadwood.getActivePlayer().getMoney()));
-                            currentPlayerRank.setText("" + Deadwood.getActivePlayer().getRank());
+                            if (!selectedUpgrade.getId().equals("none")) {
+                                int buttonRank = Integer.parseInt(selectedUpgrade.getId().substring(0, 1));
+                                int isMoney = Integer.parseInt(selectedUpgrade.getId().substring(1));
+                                boolean upgradeWithMoney = isMoney == 0 ? true : false;
+                                CastingOffice.upgrade(Deadwood.getActivePlayer(), buttonRank, upgradeWithMoney);
+                                currentPlayerCredits.setText(Integer.toString(Deadwood.getActivePlayer().getCredits()));
+                                currentPlayerMoney
+                                        .setText("$" + Integer.toString(Deadwood.getActivePlayer().getMoney()));
+                                currentPlayerRank.setText("" + Deadwood.getActivePlayer().getRank());
+                            }
+                            upgrade.setId("deactivatedUpgrade");
                             upgradePopup.hide();
                         }
                     });
@@ -558,22 +568,16 @@ public class View extends Application {
                         names.add(tf2.getText());
                         for (int j = 3; j <= innerPlayerCount; j++) {
                             if (j == 3) {
-                                // System.out.println("Adding tf3 = " + tf3.getText());
                                 names.add(tf3.getText());
                             } else if (j == 4) {
-                                // System.out.println("Adding tf4 = " + tf4.getText());
                                 names.add(tf4.getText());
                             } else if (j == 5) {
-                                // System.out.println("Adding tf5 = " + tf5.getText());
                                 names.add(tf5.getText());
                             } else if (j == 6) {
-                                // System.out.println("Adding tf6 = " + tf6.getText());
                                 names.add(tf6.getText());
                             } else if (j == 7) {
-                                // System.out.println("Adding tf7 = " + tf7.getText());
                                 names.add(tf7.getText());
                             } else if (j == 8) {
-                                // System.out.println("Adding tf8 = " + tf8.getText());
                                 names.add(tf8.getText());
                             }
                         }
