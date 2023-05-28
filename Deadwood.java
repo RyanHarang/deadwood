@@ -12,7 +12,6 @@ public class Deadwood {
     private static InpParser inpP;
     private static Player activePlayer;
     private static int activeTurn;
-  
 
     // method to start a game
     /*
@@ -186,22 +185,22 @@ public class Deadwood {
         activeTurn++;
         activePlayer = players[activeTurn % count];
         // has role
-        if(activePlayer.getRole() != null){
+        if (activePlayer.getRole() != null) {
             activePlayer.setCanAct(true);
 
             Room room = LocationManager.getPlayerLocation(activePlayer);
             int budget = room.getScene().getBudget();
-            boolean canRehearse = (activePlayer.getPracticeChips() >= budget - 1) ? false:true;
+            boolean canRehearse = (activePlayer.getPracticeChips() >= budget - 1) ? false : true;
             activePlayer.setCanRehearse(canRehearse);
 
             activePlayer.setCanMove(false);
         }
         // has no role
-        else{
+        else {
             activePlayer.setCanAct(false);
 
             activePlayer.setCanMove(true);
-            
+
             activePlayer.setCanRehearse(false);
         }
     }
@@ -245,12 +244,11 @@ public class Deadwood {
         activeTurn = 0;
         activePlayer = players[0];
 
-
         // any time the end turn button is clicked, active player is incremented, unless
         // it's at last index in which case it restarts at index 0
     }
 
-    public static int getNumActiveScenes(){
+    public static int getNumActiveScenes() {
         return numActiveScenes;
     }
 
