@@ -133,6 +133,7 @@ public class View extends Application {
         move.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                endTurn.setVisible(false);
                 if (Deadwood.getActivePlayer().getCanMove()) {
                     // step 1: generating list of room names
                     ArrayList<Room> adjRooms = new ArrayList<Room>();
@@ -174,7 +175,6 @@ public class View extends Application {
                     moveSubmit.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent e) {
-
                             RadioButton rb = (RadioButton) moveToggleGroup.getSelectedToggle();
                             System.out.println(rb.getId());
                             Room newRoom = Board.roomByName(rb.getId());
@@ -267,13 +267,16 @@ public class View extends Application {
                                             currentPlayerRole.setText(chosen.getName());
                                         }
                                         rolePopup.hide();
+                                        endTurn.setVisible(true);
                                     }
                                 });
+                            } else {
+                                endTurn.setVisible(true);
                             }
                         }
                     });
                 } else {
-                    System.out.println("You cant move now");
+                    System.out.println("You can't move now.");
                 }
             }
         });
@@ -284,6 +287,7 @@ public class View extends Application {
             public void handle(ActionEvent e) {
                 if (Deadwood.getActivePlayer().getCanUpgrade()) {
                     Deadwood.getActivePlayer().setCanUpgrade(false);
+                    endTurn.setVisible(false);
 
                     int[][] upgradeInfo = CastingOffice.validRanks(Deadwood.getActivePlayer());
                     GridPane upgradePane = new GridPane();
@@ -316,10 +320,10 @@ public class View extends Application {
                     none.setId("none");
                     none.setToggleGroup(upgradeToggleGroup);
                     none.setSelected(true);
-                    upgradePane.add(none, 1, 6);
+                    upgradePane.add(none, 0, 6);
                     Button submitUpgrade = new Button("Submit");
                     submitUpgrade.setId("submit");
-                    upgradePane.add(submitUpgrade, 1, 7);
+                    upgradePane.add(submitUpgrade, 0, 7);
                     Popup upgradePopup = new Popup();
                     upgradePopup.getContent().add(upgradePane);
                     upgradePopup.show(primaryStage);
@@ -327,6 +331,7 @@ public class View extends Application {
                     submitUpgrade.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent e) {
+
                             RadioButton selectedUpgrade = (RadioButton) upgradeToggleGroup.getSelectedToggle();
                             if (!selectedUpgrade.getId().equals("none")) {
                                 int buttonRank = Integer.parseInt(selectedUpgrade.getId().substring(0, 1));
@@ -340,11 +345,9 @@ public class View extends Application {
                             }
                             upgrade.setId("deactivatedUpgrade");
                             upgradePopup.hide();
+                            endTurn.setVisible(true);
                         }
                     });
-
-                    // get selected button, parse its id
-                    // player actions upgrade
                 }
             }
         });
@@ -360,7 +363,7 @@ public class View extends Application {
                 } else {
                     System.out.println("You need a role to be able to act");
                 }
-
+                endTurn.setVisible(true);
             }
         });
 
@@ -432,7 +435,6 @@ public class View extends Application {
                 if (Deadwood.getNumActiveScenes() == 1) {
                     Deadwood.endDay();
                 }
-
             }
         });
 
@@ -489,6 +491,7 @@ public class View extends Application {
         EventHandler<ActionEvent> playerPopup = new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent e) {
+                endTurn.setVisible(false);
                 int playerCount = 0;
                 ArrayList<String> names = new ArrayList<String>();
                 if (r2.isSelected()) {
@@ -564,6 +567,7 @@ public class View extends Application {
                 nameSubmit.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
+                        endTurn.setVisible(false);
                         names.add(tf1.getText());
                         names.add(tf2.getText());
                         for (int j = 3; j <= innerPlayerCount; j++) {
@@ -592,6 +596,7 @@ public class View extends Application {
                         currentPlayerPracticeChips.setText("0");
 
                         namePopup.hide();
+                        endTurn.setVisible(true);
                         currentPlayerRank.setText("" + Deadwood.getActivePlayer().getRank());
                     }
                 });
@@ -607,6 +612,7 @@ public class View extends Application {
         primaryStage.setScene(mainScene);
         primaryStage.show();
         countPopup.show(primaryStage);
+        endTurn.setVisible(false);
     }
 
     public void startGame() {
