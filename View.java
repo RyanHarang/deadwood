@@ -129,6 +129,7 @@ public class View extends Application {
             @Override
             public void handle(ActionEvent e) {
                 if (move.getId().equals("move")) {
+                    // hiding buttons
                     endTurn.setVisible(false);
                     move.setVisible(false);
                     act.setVisible(false);
@@ -270,6 +271,7 @@ public class View extends Application {
                                             currentPlayerRole.setText(chosen.getName());
                                         }
                                         rolePopup.hide();
+                                        // showing buttons
                                         move.setVisible(true);
                                         act.setVisible(true);
                                         upgrade.setVisible(true);
@@ -278,6 +280,7 @@ public class View extends Application {
                                     }
                                 });
                             } else {
+                                // showing buttons
                                 move.setVisible(true);
                                 act.setVisible(true);
                                 upgrade.setVisible(true);
@@ -298,6 +301,7 @@ public class View extends Application {
             public void handle(ActionEvent e) {
                 if (Deadwood.getActivePlayer().getCanUpgrade()) {
                     Deadwood.getActivePlayer().setCanUpgrade(false);
+                    // hiding buttons
                     endTurn.setVisible(false);
                     move.setVisible(false);
                     act.setVisible(false);
@@ -360,6 +364,7 @@ public class View extends Application {
                             }
                             upgrade.setId("deactivatedUpgrade");
                             upgradePopup.hide();
+                            // showing buttons
                             endTurn.setVisible(true);
                             move.setVisible(true);
                             act.setVisible(true);
@@ -383,11 +388,13 @@ public class View extends Application {
                 } else {
                     System.out.println("You need a role to be able to act");
                 }
+                // showing buttons
                 endTurn.setVisible(true);
                 move.setVisible(true);
                 act.setVisible(true);
                 upgrade.setVisible(true);
                 rehearse.setVisible(true);
+                // update player info
                 currentPlayer.setText(p.getName());
                 currentPlayerCredits.setText(Integer.toString(p.getCredits()));
                 currentPlayerMoney.setText("$" + Integer.toString(p.getMoney()));
@@ -402,22 +409,13 @@ public class View extends Application {
             @Override
             public void handle(ActionEvent e) {
                 if (Deadwood.getActivePlayer().getCanRehearse()) {
-                    /* boolean rehearsed = */ PlayerActions.playerRehearse(Deadwood.getActivePlayer());
+                    PlayerActions.playerRehearse(Deadwood.getActivePlayer());
                     currentPlayerPracticeChips.setText(Integer.toString(Deadwood.getActivePlayer().getPracticeChips()));
                     rehearse.setId("deactivatedRehearse");
                     act.setId("deactivatedAct");
                 } else {
                     System.out.println("You cant rehearse now!");
                 }
-                /*
-                 * rehearse.setId(rehearse(rehearse.getId()));
-                 * 
-                 * if (rehearsed) {
-                 * System.out.println(Deadwood.getActivePlayer().getName() + " got a r-chip");
-                 * } else {
-                 * System.out.println("Unable to reheasre");
-                 * }
-                 */
             }
         });
 
@@ -450,15 +448,13 @@ public class View extends Application {
                 } else {
                     upgrade.setId("upgrade");
                 }
-
+                // updating player info
                 currentPlayer.setText(p.getName());
                 currentPlayerCredits.setText(Integer.toString(p.getCredits()));
                 currentPlayerMoney.setText("$" + Integer.toString(p.getMoney()));
                 currentPlayerRank.setText("" + p.getRank());
-
                 String roleName = (p.getCanAct() ? p.getRole().getName() : "N/A");
                 currentPlayerRole.setText(roleName);
-
                 currentPlayerPracticeChips.setText(Integer.toString(p.getPracticeChips()));
 
                 // if next day time
@@ -520,6 +516,7 @@ public class View extends Application {
         EventHandler<ActionEvent> playerPopup = new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent e) {
+                // hiding buttons
                 endTurn.setVisible(false);
                 move.setVisible(false);
                 act.setVisible(false);
@@ -593,18 +590,12 @@ public class View extends Application {
                 }
                 popGrid2.add(nameSubmit, 0, playerCount + 1);
                 Popup namePopup = new Popup();
-
                 namePopup.getContent().add(popGrid2);
                 namePopup.show(primaryStage);
 
                 nameSubmit.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
-                        endTurn.setVisible(false);
-                        move.setVisible(false);
-                        act.setVisible(false);
-                        upgrade.setVisible(false);
-                        rehearse.setVisible(false);
                         names.add(tf1.getText());
                         names.add(tf2.getText());
                         for (int j = 3; j <= innerPlayerCount; j++) {
@@ -633,6 +624,7 @@ public class View extends Application {
                         currentPlayerPracticeChips.setText("0");
 
                         namePopup.hide();
+                        // showing buttons
                         endTurn.setVisible(true);
                         move.setVisible(true);
                         act.setVisible(true);
@@ -653,6 +645,7 @@ public class View extends Application {
         primaryStage.setScene(mainScene);
         primaryStage.show();
         countPopup.show(primaryStage);
+        // hiding buttons
         endTurn.setVisible(false);
         move.setVisible(false);
         act.setVisible(false);
@@ -665,6 +658,7 @@ public class View extends Application {
         System.out.println("endTurn clicked");
     }
 
+    // method to create radio buttons for all rooms for moving
     public void rooms() {
         ToggleGroup locationsGroup = new ToggleGroup();
         RadioButton office = new RadioButton("Casting Office");
@@ -722,6 +716,7 @@ public class View extends Application {
         View.locations = locationButtons;
     }
 
+    // mwthod for creating upgrade radio buttons
     public void upgrades() {
         // ToggleGroup locationsGroup = new ToggleGroup();
         RadioButton m2 = new RadioButton("4 Dollars");
