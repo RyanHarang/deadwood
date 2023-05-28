@@ -392,10 +392,6 @@ public class View extends Application {
                 currentPlayerCredits.setText(Integer.toString(p.getCredits()));
                 currentPlayerMoney.setText("$" + Integer.toString(p.getMoney()));
                 currentPlayerRank.setText("" + p.getRank());
-
-                String roleName = (p.getCanAct() ? p.getRole().getName() : "N/A");
-                currentPlayerRole.setText(roleName);
-
                 currentPlayerPracticeChips.setText(Integer.toString(p.getPracticeChips()));
 
             }
