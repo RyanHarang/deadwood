@@ -59,22 +59,26 @@ public class View extends Application {
         Text playerCredits = new Text("Credits: ");
         Text playerRole = new Text("Role: ");
         Text playerPracticeChips = new Text("Practice chips:");
+        Text playerRank = new Text("Rank");
         Text currentPlayer = new Text("----");
         Text currentPlayerMoney = new Text("----");
         Text currentPlayerCredits = new Text("----");
         Text currentPlayerRole = new Text("----");
         Text currentPlayerPracticeChips = new Text("----");
+        Text currentPlayerRank = new Text("----");
 
         player.setId("player");
         playerMoney.setId("playerMoney");
         playerCredits.setId("playerCredits");
         playerRole.setId("playerRole");
         playerPracticeChips.setId("playerPracticeChips");
+        playerRank.setId("playerRank");
         currentPlayer.setId("currentPlayer");
         currentPlayerMoney.setId("currentPlayerMoney");
         currentPlayerCredits.setId("currentPlayerCredits");
         currentPlayerRole.setId("currentPlayerRole");
         currentPlayerPracticeChips.setId("currentPlayerPracticeChips");
+        currentPlayerRank.setId("currentPlayerRank");
 
         playerInfo.add(player, 0, 0);
         playerInfo.add(currentPlayer, 1, 0);
@@ -84,8 +88,10 @@ public class View extends Application {
         playerInfo.add(currentPlayerMoney, 1, 2);
         playerInfo.add(playerCredits, 0, 3);
         playerInfo.add(currentPlayerCredits, 1, 3);
-        playerInfo.add(playerRole, 0, 4);
-        playerInfo.add(currentPlayerRole, 1, 4);
+        playerInfo.add(playerRank, 0, 4);
+        playerInfo.add(currentPlayerRank, 1, 4);
+        playerInfo.add(playerRole, 0, 5);
+        playerInfo.add(currentPlayerRole, 1, 5);
         ui.getChildren().add(playerInfo);
 
         // Player buttons
@@ -127,8 +133,8 @@ public class View extends Application {
         move.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                if(Deadwood.getActivePlayer().getCanMove()){
-                                        // step 1: generating list of room names
+                if (Deadwood.getActivePlayer().getCanMove()) {
+                    // step 1: generating list of room names
                     ArrayList<Room> adjRooms = new ArrayList<Room>();
                     ArrayList<String> rNames = new ArrayList<String>();
                     System.out.println(Deadwood.getActivePlayer().toString());
@@ -163,28 +169,27 @@ public class View extends Application {
                     movePopup.show(primaryStage);
 
                     move.setId("deactivatedMove");
-                    
+
                     // moveSubmit onClick
                     moveSubmit.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent e) {
 
-                            
                             RadioButton rb = (RadioButton) moveToggleGroup.getSelectedToggle();
                             System.out.println(rb.getId());
                             Room newRoom = Board.roomByName(rb.getId());
                             LocationManager.move(Deadwood.getActivePlayer(), newRoom);
-                            if(newRoom.getName().equals("office")){
+                            if (newRoom.getName().equals("office")) {
                                 upgrade.setId("upgrade");
                             }
 
                             movePopup.hide();
-                            if(newRoom.getScene() != null){
+                            if (newRoom.getScene() != null) {
                                 // step 1: determine list of roles active player can choose from their new room
                                 // setting arraylist using method in playeractions, passing active player and
                                 // their new location
                                 availableRoles = PlayerActions.availableRoles(Deadwood.getActivePlayer(),
-                                Board.roomByName(rb.getId()));
+                                        Board.roomByName(rb.getId()));
                                 // step 2: make radio buttons using availableRoles
                                 Label roleLabel = new Label("Select a role to take, or none.");
                                 ToggleGroup roleTG = new ToggleGroup();
@@ -265,16 +270,11 @@ public class View extends Application {
                                     }
                                 });
                             }
-
-    
                         }
                     });
-                } else{
+                } else {
                     System.out.println("You cant move now");
                 }
-
-
-
             }
         });
 
@@ -282,7 +282,7 @@ public class View extends Application {
         upgrade.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                if(Deadwood.getActivePlayer().getCanUpgrade()){
+                if (Deadwood.getActivePlayer().getCanUpgrade()) {
                     Deadwood.getActivePlayer().setCanUpgrade(false);
 
                     int[][] upgradeInfo = CastingOffice.validRanks(Deadwood.getActivePlayer());
@@ -304,12 +304,12 @@ public class View extends Application {
                     upgradePane.add(rank5, 0, 4);
                     upgradePane.add(rank6, 0, 5);
 
-                    for(RadioButton rb: upgrades){
+                    for (RadioButton rb : upgrades) {
                         int buttonRank = Integer.parseInt(rb.getId().substring(0, 1));
                         int isMoney = Integer.parseInt(rb.getId().substring(1)); // money is 0, credits is 1
-                        if(upgradeInfo[buttonRank-2][isMoney+1] == 1){
+                        if (upgradeInfo[buttonRank - 2][isMoney + 1] == 1) {
                             rb.setToggleGroup(upgradeToggleGroup);
-                            upgradePane.add(rb, isMoney+1, buttonRank-1);
+                            upgradePane.add(rb, isMoney + 1, buttonRank - 1);
                         }
                     }
                     Button submitUpgrade = new Button("Submit");
@@ -318,25 +318,23 @@ public class View extends Application {
                     upgradePopup.getContent().add(upgradePane);
                     upgradePopup.show(primaryStage);
 
-
                     submitUpgrade.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent e) {
-                            RadioButton selectedUpgrade = (RadioButton)upgradeToggleGroup.getSelectedToggle();
+                            RadioButton selectedUpgrade = (RadioButton) upgradeToggleGroup.getSelectedToggle();
                             int buttonRank = Integer.parseInt(selectedUpgrade.getId().substring(0, 1));
                             int isMoney = Integer.parseInt(selectedUpgrade.getId().substring(1));
-                            boolean upgradeWithMoney = isMoney == 0 ? true:false;
+                            boolean upgradeWithMoney = isMoney == 0 ? true : false;
                             CastingOffice.upgrade(Deadwood.getActivePlayer(), buttonRank, upgradeWithMoney);
                             currentPlayerCredits.setText(Integer.toString(Deadwood.getActivePlayer().getCredits()));
                             currentPlayerMoney.setText("$" + Integer.toString(Deadwood.getActivePlayer().getMoney()));
+                            currentPlayerRank.setText("" + Deadwood.getActivePlayer().getRank());
                             upgradePopup.hide();
                         }
                     });
 
-
-
-                    //get selected button, parse its id
-                    //player actions upgrade
+                    // get selected button, parse its id
+                    // player actions upgrade
                 }
             }
         });
@@ -345,11 +343,11 @@ public class View extends Application {
         act.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                if(Deadwood.getActivePlayer().getCanAct()){
+                if (Deadwood.getActivePlayer().getCanAct()) {
                     PlayerActions.playerAct(Deadwood.getActivePlayer());
                     act.setId("deactivatedAct");
                     rehearse.setId("deactivatedRehearse");
-                } else{
+                } else {
                     System.out.println("You need a role to be able to act");
                 }
 
@@ -360,22 +358,23 @@ public class View extends Application {
         rehearse.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                if(Deadwood.getActivePlayer().getCanRehearse()){
-                    /*boolean rehearsed =*/ PlayerActions.playerRehearse(Deadwood.getActivePlayer());
+                if (Deadwood.getActivePlayer().getCanRehearse()) {
+                    /* boolean rehearsed = */ PlayerActions.playerRehearse(Deadwood.getActivePlayer());
                     currentPlayerPracticeChips.setText(Integer.toString(Deadwood.getActivePlayer().getPracticeChips()));
                     rehearse.setId("deactivatedRehearse");
                     act.setId("deactivatedAct");
-                } else{
+                } else {
                     System.out.println("You cant rehearse now!");
                 }
                 /*
-                rehearse.setId(rehearse(rehearse.getId()));
-                
-                if (rehearsed) {
-                    System.out.println(Deadwood.getActivePlayer().getName() + " got a r-chip");
-                } else {
-                    System.out.println("Unable to reheasre");
-                }*/
+                 * rehearse.setId(rehearse(rehearse.getId()));
+                 * 
+                 * if (rehearsed) {
+                 * System.out.println(Deadwood.getActivePlayer().getName() + " got a r-chip");
+                 * } else {
+                 * System.out.println("Unable to reheasre");
+                 * }
+                 */
             }
         });
 
@@ -385,33 +384,42 @@ public class View extends Application {
             public void handle(ActionEvent e) {
                 endTurn();
                 Player p = Deadwood.getActivePlayer();
-                if(!p.getCanAct()){
+                if (!p.getCanAct()) {
                     act.setId("deactivatedAct");
-                } else{ act.setId("act");}
+                } else {
+                    act.setId("act");
+                }
 
-                if(!p.getCanMove()){
+                if (!p.getCanMove()) {
                     move.setId("deactivatedMove");
-                }else{ move.setId("move");}
+                } else {
+                    move.setId("move");
+                }
 
-                if(!p.getCanRehearse()){
+                if (!p.getCanRehearse()) {
                     rehearse.setId("deactivatedRehearse");
-                }else{ rehearse.setId("rehearse");}
-                
-                if(!p.getCanUpgrade()){
+                } else {
+                    rehearse.setId("rehearse");
+                }
+
+                if (!p.getCanUpgrade()) {
                     upgrade.setId("deactivatedUpgrade");
-                }else{ upgrade.setId("upgrade");}
+                } else {
+                    upgrade.setId("upgrade");
+                }
 
                 currentPlayer.setText(p.getName());
                 currentPlayerCredits.setText(Integer.toString(p.getCredits()));
                 currentPlayerMoney.setText("$" + Integer.toString(p.getMoney()));
+                currentPlayerRank.setText("" + p.getRank());
 
-                String roleName = (p.getCanAct() ? p.getRole().getName():"N/A");
+                String roleName = (p.getCanAct() ? p.getRole().getName() : "N/A");
                 currentPlayerRole.setText(roleName);
 
                 currentPlayerPracticeChips.setText(Integer.toString(p.getPracticeChips()));
 
                 // if next day time
-                if(Deadwood.getNumActiveScenes() == 1){
+                if (Deadwood.getNumActiveScenes() == 1) {
                     Deadwood.endDay();
                 }
 
@@ -580,6 +588,7 @@ public class View extends Application {
                         currentPlayerPracticeChips.setText("0");
 
                         namePopup.hide();
+                        currentPlayerRank.setText("" + Deadwood.getActivePlayer().getRank());
                     }
                 });
                 countPopup.hide();
@@ -587,7 +596,7 @@ public class View extends Application {
         };
 
         countSubmit.setOnAction(playerPopup);
-        Scene mainScene = new Scene(root, 1100, 600);
+        Scene mainScene = new Scene(root, 1150, 600);
         mainScene.getStylesheets().add("/assets/css/style.css");
         // mainScene.getStylesheets().add("temp/style.css");
         primaryStage.setTitle("Deadwood");
@@ -695,18 +704,18 @@ public class View extends Application {
         View.locations = locationButtons;
     }
 
-    public void upgrades(){
+    public void upgrades() {
         ToggleGroup locationsGroup = new ToggleGroup();
-        RadioButton m2 = new RadioButton("4 Dollars"); 
-        RadioButton m3 = new RadioButton("10 Dollars"); 
-        RadioButton m4 = new RadioButton("18 Dollars"); 
-        RadioButton m5 = new RadioButton("28 Dollars"); 
-        RadioButton m6 = new RadioButton("40 Dollars"); 
-        RadioButton c2 = new RadioButton("5 Credits");   
-        RadioButton c3 = new RadioButton("10 Credits"); 
-        RadioButton c4 = new RadioButton("15 Credits"); 
-        RadioButton c5 = new RadioButton("20 Credits"); 
-        RadioButton c6 = new RadioButton("25 Credits"); 
+        RadioButton m2 = new RadioButton("4 Dollars");
+        RadioButton m3 = new RadioButton("10 Dollars");
+        RadioButton m4 = new RadioButton("18 Dollars");
+        RadioButton m5 = new RadioButton("28 Dollars");
+        RadioButton m6 = new RadioButton("40 Dollars");
+        RadioButton c2 = new RadioButton("5 Credits");
+        RadioButton c3 = new RadioButton("10 Credits");
+        RadioButton c4 = new RadioButton("15 Credits");
+        RadioButton c5 = new RadioButton("20 Credits");
+        RadioButton c6 = new RadioButton("25 Credits");
 
         m2.setId("20");
         m3.setId("30");
@@ -719,16 +728,18 @@ public class View extends Application {
         c5.setId("51");
         c6.setId("61");
 
-        /*m2.setToggleGroup(locationsGroup);
-        m3.setToggleGroup(locationsGroup);
-        m4.setToggleGroup(locationsGroup);
-        m5.setToggleGroup(locationsGroup);
-        m6.setToggleGroup(locationsGroup);
-        c2.setToggleGroup(locationsGroup);
-        c3.setToggleGroup(locationsGroup);
-        c4.setToggleGroup(locationsGroup);
-        c5.setToggleGroup(locationsGroup);
-        c6.setToggleGroup(locationsGroup);*/
+        /*
+         * m2.setToggleGroup(locationsGroup);
+         * m3.setToggleGroup(locationsGroup);
+         * m4.setToggleGroup(locationsGroup);
+         * m5.setToggleGroup(locationsGroup);
+         * m6.setToggleGroup(locationsGroup);
+         * c2.setToggleGroup(locationsGroup);
+         * c3.setToggleGroup(locationsGroup);
+         * c4.setToggleGroup(locationsGroup);
+         * c5.setToggleGroup(locationsGroup);
+         * c6.setToggleGroup(locationsGroup);
+         */
 
         ArrayList<RadioButton> upgradeButtons = new ArrayList<RadioButton>();
         upgradeButtons.add(m2);
@@ -743,6 +754,5 @@ public class View extends Application {
         upgradeButtons.add(c6);
         View.upgrades = upgradeButtons;
 
-        
     }
 }
