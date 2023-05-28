@@ -140,6 +140,8 @@
   border-color: #b17246;
   border-width: 5;
   border-radius: 30;
+  top: 0;
+  -fx-top: 0;
   -fx-border-color: #b17246;
   -fx-border-width: 5;
   -fx-border-radius: 30;
