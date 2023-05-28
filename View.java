@@ -19,11 +19,6 @@ public class View extends Application {
     private static ArrayList<Role> availableRoles;
     private static ArrayList<RadioButton> upgrades;
 
-    // constructor
-    public View() {
-
-    }
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -380,6 +375,7 @@ public class View extends Application {
         act.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                Player p = Deadwood.getActivePlayer();
                 if (Deadwood.getActivePlayer().getCanAct()) {
                     PlayerActions.playerAct(Deadwood.getActivePlayer());
                     act.setId("deactivatedAct");
@@ -392,6 +388,16 @@ public class View extends Application {
                 act.setVisible(true);
                 upgrade.setVisible(true);
                 rehearse.setVisible(true);
+                currentPlayer.setText(p.getName());
+                currentPlayerCredits.setText(Integer.toString(p.getCredits()));
+                currentPlayerMoney.setText("$" + Integer.toString(p.getMoney()));
+                currentPlayerRank.setText("" + p.getRank());
+
+                String roleName = (p.getCanAct() ? p.getRole().getName() : "N/A");
+                currentPlayerRole.setText(roleName);
+
+                currentPlayerPracticeChips.setText(Integer.toString(p.getPracticeChips()));
+
             }
         });
 
@@ -656,31 +662,6 @@ public class View extends Application {
         act.setVisible(false);
         upgrade.setVisible(false);
         rehearse.setVisible(false);
-    }
-
-    public String move(String id) {
-        System.out.println("move clicked");
-        if (id.equals("move")) {
-            return "deactivatedMove";
-        }
-
-        return "move";
-    }
-
-    public String act(String id) {
-        System.out.println("act clicked");
-        if (id.equals("act")) {
-            return "deactivatedAct";
-        }
-        return "act";
-    }
-
-    public String rehearse(String id) {
-        System.out.println("rehearse clicked");
-        if (id.equals("rehearse")) {
-            return "deactivatedRehearse";
-        }
-        return "rehearse";
     }
 
     public void endTurn() {
