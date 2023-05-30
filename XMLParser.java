@@ -62,12 +62,13 @@ public class XMLParser {
         Role roleHolder = null;
         ArrayList<Role> roles = new ArrayList<Role>();
         ArrayList<ArrayList<Role>> rolesLists = new ArrayList<ArrayList<Role>>(40);
+        int[] areas = new int[4];
 
         for (int i = 0; i < cards.getLength(); i++) {
             Node card = cards.item(i);
             NodeList children = card.getChildNodes();
             String cardName = "", img = "", sceneText = "", partName = "", partLine = "";
-            int budget = 0, sceneNum = 0, partLvl = 0;
+            int budget = 0, sceneNum = 0, partLvl = 0, partX = 0, partY = 0, partW = 0, partH = 0;
             cardName = card.getAttributes().getNamedItem("name").getNodeValue();
             img = card.getAttributes().getNamedItem("img").getNodeValue();
             budget = Integer.parseInt(card.getAttributes().getNamedItem("budget").getNodeValue());
@@ -85,11 +86,22 @@ public class XMLParser {
                     NodeList partChildren = sub.getChildNodes();
                     for (int k = 0; k < partChildren.getLength(); k++) {
                         Node partSub = partChildren.item(k);
-                        if ("line".equals(partSub.getNodeName())) {
+                        if ("area".equals(partSub.getNodeName())) {
+                            partX = Integer.parseInt(partSub.getAttributes().getNamedItem("x").getNodeValue());
+                            partY = Integer.parseInt(partSub.getAttributes().getNamedItem("y").getNodeValue());
+                            partH = Integer.parseInt(partSub.getAttributes().getNamedItem("h").getNodeValue());
+                            partW = Integer.parseInt(partSub.getAttributes().getNamedItem("w").getNodeValue());
+                            areas[0] = partX;
+                            areas[1] = partY;
+                            areas[2] = partH;
+                            areas[3] = partW;
+                        } else if ("line".equals(partSub.getNodeName())) {
                             partLine = partSub.getTextContent();
                         }
                     }
-                    roleHolder = new Role(partName, partLine, partLvl, true);
+                    int[] aCopy = new int[4];
+                    System.arraycopy(areas, 0, aCopy, 0, 4);
+                    roleHolder = new Role(partName, partLine, partLvl, aCopy, true);
                     roles.add(roleHolder);
                 }
             }
@@ -111,10 +123,11 @@ public class XMLParser {
         ArrayList<ArrayList<String>> allAdjs = new ArrayList<ArrayList<String>>();
         ArrayList<String> adjs = new ArrayList<String>();
         ArrayList<Role> roles = new ArrayList<Role>();
+        int[] areas = new int[4];
 
         Room[] rooms = new Room[12];
         String partName = "", setName = "", line = "";
-        int partLvl = 0, takes = 0;
+        int partLvl = 0, partX = 0, partY = 0, partW = 0, partH = 0, takes = 0;
 
         // creating a trailer room specially at index 0 of the rooms array
         Node tr = trailer.item(0);
@@ -213,11 +226,27 @@ public class XMLParser {
                             NodeList partGrandchildren = partSub.getChildNodes();
                             for (int h = 0; h < partGrandchildren.getLength(); h++) {
                                 Node partSubSub = partGrandchildren.item(h);
-                                if ("line".equals(partSubSub.getNodeName())) {
+                                if ("area".equals(partSubSub.getNodeName())) {
+                                    partX = Integer
+                                            .parseInt(partSubSub.getAttributes().getNamedItem("x").getNodeValue());
+                                    areas[0] = partX;
+                                    partY = Integer
+                                            .parseInt(partSubSub.getAttributes().getNamedItem("y").getNodeValue());
+                                    areas[1] = partY;
+                                    partH = Integer
+                                            .parseInt(partSubSub.getAttributes().getNamedItem("h").getNodeValue());
+                                    areas[2] = partH;
+                                    partW = Integer
+                                            .parseInt(partSubSub.getAttributes().getNamedItem("w").getNodeValue());
+                                    areas[3] = partW;
+
+                                } else if ("line".equals(partSubSub.getNodeName())) {
                                     line = partSubSub.getTextContent();
                                 }
                             }
-                            Role roleHolder = new Role(partName, line, partLvl, false);
+                            int[] areaCopy = new int[4];
+                            System.arraycopy(areas, 0, areaCopy, 0, 4);
+                            Role roleHolder = new Role(partName, line, partLvl, areaCopy, false);
                             roles.add(roleHolder);
                         }
                     }
