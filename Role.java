@@ -8,7 +8,7 @@ public class Role {
     private Player occupant = null;
 
     // constructor
-    public Role(String name, String line, int rank, /* int[] area, */ boolean isMain) {
+    public Role(String name, String line, int rank, int[] area, boolean isMain) {
         this.name = name;
         this.line = line;
         this.rank = rank;
