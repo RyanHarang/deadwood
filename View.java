@@ -124,7 +124,7 @@ public class View extends Application {
         rehearse.setId("rehearse");
         endTurn.setId("endTurn");
 
-        // move onCLick
+        // move onClick
         move.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -152,7 +152,7 @@ public class View extends Application {
                     // step 2: Create gridPane and popup with radio button options and submit button
                     GridPane movePane = new GridPane();
                     ToggleGroup moveToggleGroup = new ToggleGroup();
-                    movePane.setId("popGrid");
+                    movePane.setId("popGrid3");
                     Label moveLabel = new Label("Select a room to move to:");
                     for (int i = 0; i < rNames.size(); i++) {
                         for (RadioButton rb : View.locations) {
@@ -169,7 +169,7 @@ public class View extends Application {
                     moveSubmit.setId("submit");
                     movePane.add(moveSubmit, 0, rNames.size() + 1);
                     movePopup.getContent().add(movePane);
-                    movePopup.show(primaryStage);
+                    movePopup.show(primaryStage, 1020, 350);
 
                     move.setId("deactivatedMove");
 
@@ -256,7 +256,7 @@ public class View extends Application {
                                 rolePane.add(roleSubmit, 0, availableRoles.size() + 2);
                                 Popup rolePopup = new Popup();
                                 rolePopup.getContent().add(rolePane);
-                                rolePopup.show(primaryStage);
+                                rolePopup.show(primaryStage, 1020, 150);
 
                                 roleSubmit.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
