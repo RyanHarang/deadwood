@@ -1,16 +1,13 @@
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
-
 import java.util.ArrayList;
 
 public class XMLParser {
-
     private Document cardDoc = null;
     private Document boardDoc = null;
 
@@ -22,7 +19,6 @@ public class XMLParser {
     private void setCardDoc(String fileName) {
         try {
             cardDoc = getDocFromFile(fileName);
-
         } catch (Exception e) {
             System.out.println("Error = " + e);
         }
@@ -31,7 +27,6 @@ public class XMLParser {
     private void setBoardDoc(String fileName) {
         try {
             boardDoc = getDocFromFile(fileName);
-
         } catch (Exception e) {
             System.out.println("Error = " + e);
         }
@@ -40,11 +35,9 @@ public class XMLParser {
     private Document getDocFromFile(String filename)
             throws ParserConfigurationException {
         {
-
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = null;
-
             try {
                 doc = db.parse(filename);
             } catch (Exception ex) {
@@ -62,50 +55,33 @@ public class XMLParser {
         Role roleHolder = null;
         ArrayList<Role> roles = new ArrayList<Role>();
         ArrayList<ArrayList<Role>> rolesLists = new ArrayList<ArrayList<Role>>(40);
-        int[] areas = new int[4];
-
         for (int i = 0; i < cards.getLength(); i++) {
             Node card = cards.item(i);
             NodeList children = card.getChildNodes();
             String cardName = "", img = "", sceneText = "", partName = "", partLine = "";
-            int budget = 0, sceneNum = 0, partLvl = 0, partX = 0, partY = 0, partW = 0, partH = 0;
+            int budget = 0, sceneNum = 0, partLvl = 0;
             cardName = card.getAttributes().getNamedItem("name").getNodeValue();
             img = card.getAttributes().getNamedItem("img").getNodeValue();
             budget = Integer.parseInt(card.getAttributes().getNamedItem("budget").getNodeValue());
             for (int j = 0; j < children.getLength(); j++) {
                 Node sub = children.item(j);
-
                 if ("scene".equals(sub.getNodeName())) {
                     sceneNum = Integer.parseInt(sub.getAttributes().getNamedItem("number").getNodeValue());
                     sceneText = sub.getTextContent();
-
                 } else if ("part".equals(sub.getNodeName())) {
                     partName = sub.getAttributes().getNamedItem("name").getNodeValue();
                     partLvl = Integer.parseInt(sub.getAttributes().getNamedItem("level").getNodeValue());
-
                     NodeList partChildren = sub.getChildNodes();
                     for (int k = 0; k < partChildren.getLength(); k++) {
                         Node partSub = partChildren.item(k);
-                        if ("area".equals(partSub.getNodeName())) {
-                            partX = Integer.parseInt(partSub.getAttributes().getNamedItem("x").getNodeValue());
-                            partY = Integer.parseInt(partSub.getAttributes().getNamedItem("y").getNodeValue());
-                            partH = Integer.parseInt(partSub.getAttributes().getNamedItem("h").getNodeValue());
-                            partW = Integer.parseInt(partSub.getAttributes().getNamedItem("w").getNodeValue());
-                            areas[0] = partX;
-                            areas[1] = partY;
-                            areas[2] = partH;
-                            areas[3] = partW;
-                        } else if ("line".equals(partSub.getNodeName())) {
+                        if ("line".equals(partSub.getNodeName())) {
                             partLine = partSub.getTextContent();
                         }
                     }
-                    int[] aCopy = new int[4];
-                    System.arraycopy(areas, 0, aCopy, 0, 4);
-                    roleHolder = new Role(partName, partLine, partLvl, aCopy, true);
+                    roleHolder = new Role(partName, partLine, partLvl, true);
                     roles.add(roleHolder);
                 }
             }
-
             ArrayList<Role> alCopy = new ArrayList<Role>(roles);
             rolesLists.add(i, alCopy);
             SceneCard sceneHolder = new SceneCard(img, cardName, sceneText, budget, sceneNum, rolesLists.get(i));
@@ -123,25 +99,18 @@ public class XMLParser {
         ArrayList<ArrayList<String>> allAdjs = new ArrayList<ArrayList<String>>();
         ArrayList<String> adjs = new ArrayList<String>();
         ArrayList<Role> roles = new ArrayList<Role>();
-        int[] areas = new int[4];
-
         Room[] rooms = new Room[12];
         String partName = "", setName = "", line = "";
-        int partLvl = 0, partX = 0, partY = 0, partW = 0, partH = 0, takes = 0;
-
+        int partLvl = 0, takes = 0;
         // creating a trailer room specially at index 0 of the rooms array
         Node tr = trailer.item(0);
         NodeList trChildren = tr.getChildNodes();
-
         for (int t = 0; t < trChildren.getLength(); t++) {
             Node sub = trChildren.item(t);
-
             if ("neighbors".equals(sub.getNodeName())) {
-
                 NodeList neighborChildren = sub.getChildNodes();
                 for (int k = 0; k < neighborChildren.getLength(); k++) {
                     Node neighborSub = neighborChildren.item(k);
-
                     if ("neighbor".equals(neighborSub.getNodeName())) {
                         String neighbor = neighborSub.getAttributes().getNamedItem("name").getNodeValue();
                         adjs.add(neighbor);
@@ -150,7 +119,6 @@ public class XMLParser {
                 ArrayList<String> alCopy = new ArrayList<String>(adjs);
                 allAdjs.add(alCopy);
                 adjs.clear();
-
             } else if ("area".equals(sub.getNodeName())) {
                 rooms[0] = new Room(0, "trailer", null);
             }
@@ -158,16 +126,12 @@ public class XMLParser {
         // creating an office room speciall at index 1 in the room array
         Node of = office.item(0);
         NodeList ofChildren = of.getChildNodes();
-
         for (int o = 0; o < ofChildren.getLength(); o++) {
             Node sub = ofChildren.item(o);
-
             if ("neighbors".equals(sub.getNodeName())) {
-
                 NodeList neighborChildren = sub.getChildNodes();
                 for (int k = 0; k < neighborChildren.getLength(); k++) {
                     Node neighborSub = neighborChildren.item(k);
-
                     if ("neighbor".equals(neighborSub.getNodeName())) {
                         String neighbor = neighborSub.getAttributes().getNamedItem("name").getNodeValue();
                         adjs.add(neighbor);
@@ -176,26 +140,20 @@ public class XMLParser {
                 ArrayList<String> alCopy = new ArrayList<String>(adjs);
                 allAdjs.add(alCopy);
                 adjs.clear();
-
             } else if ("area".equals(sub.getNodeName())) {
                 rooms[1] = new Room(0, "office", null);
             }
         }
-
         for (int i = 0; i < sets.getLength(); i++) {
-
             Node set = sets.item(i);
             NodeList children = set.getChildNodes();
             setName = set.getAttributes().getNamedItem("name").getNodeValue();
             for (int j = 0; j < children.getLength(); j++) {
                 Node sub = children.item(j);
-
                 if ("neighbors".equals(sub.getNodeName())) {
-
                     NodeList neighborChildren = sub.getChildNodes();
                     for (int k = 0; k < neighborChildren.getLength(); k++) {
                         Node neighborSub = neighborChildren.item(k);
-
                         if ("neighbor".equals(neighborSub.getNodeName())) {
                             String neighbor = neighborSub.getAttributes().getNamedItem("name").getNodeValue();
                             adjs.add(neighbor);
@@ -208,7 +166,6 @@ public class XMLParser {
                     NodeList takeChildren = sub.getChildNodes();
                     for (int k = 0; k < takeChildren.getLength(); k++) {
                         Node takeSub = takeChildren.item(k);
-
                         if ("take".equals(takeSub.getNodeName())) {
                             takes++;
                         }
@@ -217,36 +174,17 @@ public class XMLParser {
                     NodeList partChildren = sub.getChildNodes();
                     for (int k = 0; k < partChildren.getLength(); k++) {
                         Node partSub = partChildren.item(k);
-
                         if ("part".equals(partSub.getNodeName())) {
                             partName = partSub.getAttributes().getNamedItem("name").getNodeValue();
-
                             partLvl = Integer.parseInt(partSub.getAttributes().getNamedItem("level").getNodeValue());
-
                             NodeList partGrandchildren = partSub.getChildNodes();
                             for (int h = 0; h < partGrandchildren.getLength(); h++) {
                                 Node partSubSub = partGrandchildren.item(h);
-                                if ("area".equals(partSubSub.getNodeName())) {
-                                    partX = Integer
-                                            .parseInt(partSubSub.getAttributes().getNamedItem("x").getNodeValue());
-                                    areas[0] = partX;
-                                    partY = Integer
-                                            .parseInt(partSubSub.getAttributes().getNamedItem("y").getNodeValue());
-                                    areas[1] = partY;
-                                    partH = Integer
-                                            .parseInt(partSubSub.getAttributes().getNamedItem("h").getNodeValue());
-                                    areas[2] = partH;
-                                    partW = Integer
-                                            .parseInt(partSubSub.getAttributes().getNamedItem("w").getNodeValue());
-                                    areas[3] = partW;
-
-                                } else if ("line".equals(partSubSub.getNodeName())) {
+                                if ("line".equals(partSubSub.getNodeName())) {
                                     line = partSubSub.getTextContent();
                                 }
                             }
-                            int[] areaCopy = new int[4];
-                            System.arraycopy(areas, 0, areaCopy, 0, 4);
-                            Role roleHolder = new Role(partName, line, partLvl, areaCopy, false);
+                            Role roleHolder = new Role(partName, line, partLvl, false);
                             roles.add(roleHolder);
                         }
                     }
