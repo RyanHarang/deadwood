@@ -7,12 +7,18 @@ public class Room {
     private SceneCard SceneCard = null;
     private ArrayList<Role> roles;
     private ArrayList<Room> adjacents;
+    private ArrayList<int[]> shotLocations;
+    private int[] area;
+    private int x;
+    private int y;
+
 
     // constructor
-    public Room(int shots, String name, ArrayList<Role> roles) {
+    public Room(int shots, String name, ArrayList<Role> roles, int[] area) {
         this.shots = shots;
         this.name = name;
         this.roles = roles;
+        this.area = area;
     }
 
     public String neighborsString() {
@@ -52,7 +58,24 @@ public class Room {
         return SceneCardDone;
     }
 
+    public int getX(){
+        return x;
+    }
+
+    
+    public int getY(){
+        return y;
+    }
+
     // setters
+    public void setX(int x){
+        this.x = x;
+    }
+
+    public void setY(int y){
+        this.y = y;
+    }
+
     public void setAdjacents(ArrayList<Room> rooms) {
         adjacents = rooms;
     }

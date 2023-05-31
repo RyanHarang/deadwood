@@ -13,157 +13,17 @@ public class Deadwood {
     private static Player activePlayer;
     private static int activeTurn;
 
-    // method to start a game
-    /*
-     * public static void start() {
-     * // creating an input parser, which creates an input manager
-     * // parser acts as the control, manager acts as the view
-     * inpP = new InpParser();
-     * // calling startgame in InpParser
-     * // initializes days and players
-     * inpP.startGame();
-     * days = inpP.getDays();
-     * players = inpP.getPlayers();
-     * 
-     * // creating an XMLParser which creates the board and scene deck
-     * XMLParser xml = new XMLParser();
-     * deck = new SceneDeck(xml.readCardData());
-     * // board gets created by parser, each room has no scene to start
-     * board = new Board(xml.readBoardData());
-     * castingOffice = CastingOffice.getCastingOffice();
-     * currencyManager = CurrencyManager.getCurrencyManager();
-     * // playerActions = new PlayerActions();
-     * // loop for setting an initial scene at each room
-     * 
-     * locationManager = new LocationManager(players, Board.roomByName("trailer"));
-     * // CurrencyManager.setLocMan(locationManager);
-     * numActiveScenes = 10;
-     * // gameLoop();
-     * }
-     */
+    private static String[][] iconNames = {
+        {"b1.png", "b2.png", "b3.png", "b4.png", "b5.png", "b6.png"},
+        {"c1.png", "c2.png", "c3.png", "c4.png", "c5.png", "c6.png"},
+        {"g1.png", "g2.png", "g3.png", "g4.png", "g5.png", "g6.png"}, 
+        {"o1.png", "o2.png", "o3.png", "o4.png", "o5.png", "o6.png"}, 
+        {"p1.png", "p2.png", "p3.png", "p4.png", "p5.png", "p6.png"}, 
+        {"r1.png", "r2.png", "r3.png", "r4.png", "r5.png", "r6.png"}, 
+        {"v1.png", "v2.png", "v3.png", "v4.png", "v5.png", "v6.png"}, 
+        {"y1.png", "y2.png", "y3.png", "y4.png", "y5.png", "y6.png"}, };
 
-    // method to end a game
-    /*
-     * public static void end() {
-     * // calculates score, determines winner
-     * int score = 0;
-     * ArrayList<Player> winners = new ArrayList<Player>();
-     * // first loop finds highest score
-     * for (Player player : players) {
-     * if (player.getScore() >= score) {
-     * score = player.getScore();
-     * }
-     * }
-     * // second loop adds all players who achieved this score to winners
-     * for (Player player : players) {
-     * inpP.pass(player.getName() + " scored " + player.getScore() + " points.");
-     * if (player.getScore() == score) {
-     * winners.add(player);
-     * inpP.pass("This was a winning score.");
-     * }
-     * }
-     * // close the scanner
-     * inpP.end();
-     * }
-     */
 
-    /*
-     * public static void gameLoop() {
-     * while (days > 0) {
-     * // start at 2 because 0 and 1 are office and trailer
-     * for (int i = 2; i < board.getRooms().length; i++) {
-     * board.getRooms()[i].setScene(deck.getScene());
-     * }
-     * dayLoop();
-     * days--;
-     * }
-     * end();
-     * }
-     */
-
-    /*
-     * public static void dayLoop() {
-     * 
-     * while (numActiveScenes > 1) {
-     * for (Player p : players) {
-     * ////////////
-     * // view.updatePlayer(p);
-     * ///////////////
-     * boolean validAction = false;
-     * Room loc = LocationManager.getPlayerLocation(p);
-     * inpP.pass("");
-     * inpP.pass("Current Player [" + p.toString() + "]");
-     * inpP.pass("Current Location [" + loc.toString() + "]");
-     * if (loc.getScene() != null) {
-     * inpP.pass("Current Scene  [" + loc.getScene().toString() + "]");
-     * }
-     * while (!validAction) {
-     * char action = inpP.handleAction();
-     * switch (action) {
-     * case ('m'):
-     * if (p.getRole() == null) {
-     * PlayerActions.playerMove(p, locationManager, board, inpP, castingOffice,
-     * currencyManager);
-     * validAction = true;
-     * } else {
-     * inpP.pass("You can't move while you have a role.");
-     * }
-     * break;
-     * case ('a'):
-     * if (p.getRole() != null) {
-     * if (PlayerActions.playerAct(p)) {
-     * numActiveScenes--;
-     * }
-     * validAction = true;
-     * } else {
-     * inpP.pass("You need to take a role before you can act.");
-     * }
-     * break;
-     * case ('r'):
-     * if (p.getRole() != null) {
-     * if (PlayerActions.playerRehearse(p)) {
-     * validAction = true;
-     * }
-     * } else {
-     * inpP.pass("You need to take a role before you can rehearse.");
-     * }
-     * break;
-     * case ('u'):
-     * if (LocationManager.getPlayerLocation(p).equals(Board.roomByName("office")))
-     * {
-     * boolean validUpgrade = PlayerActions.playerUpgrade(p, inpP, castingOffice,
-     * locationManager, currencyManager);
-     * if (!validUpgrade) {
-     * inpP.pass("You can't upgrade to that rank just yet!");
-     * } else {
-     * if (inpP.moveAfterUpgrade()) {
-     * PlayerActions.playerMove(p, locationManager, board, inpP, castingOffice,
-     * currencyManager);
-     * }
-     * validAction = true;
-     * }
-     * 
-     * } else {
-     * inpP.pass("You must be in the Casting Office to upgrade.");
-     * }
-     * break;
-     * case ('t'):
-     * if (PlayerActions.playerTakeRole(inpP, p,
-     * LocationManager.getPlayerLocation(p))) {
-     * validAction = true;
-     * } else {
-     * 
-     * }
-     * break;
-     * }
-     * }
-     * if (numActiveScenes == 1) {
-     * endDay();
-     * }
-     * }
-     * }
-     * }
-     */
 
     public static void endDay() {
         LocationManager.returnTrailers();
@@ -217,9 +77,11 @@ public class Deadwood {
         days = 4;
         numActiveScenes = 10;
 
+
         for (int i = 0; i < numPlayers; i++) {
             players[i] = new Player(names.get(i));
             players[i] = (new Player(names.get(i)));
+            players[i].setIconIndex(i);
             if (numPlayers < 4) {
                 days = 3;
             }
@@ -232,9 +94,7 @@ public class Deadwood {
             }
         }
 
-        XMLParser xml = new XMLParser();
-        deck = new SceneDeck(xml.readCardData());
-        board = new Board(xml.readBoardData());
+
         locationManager = new LocationManager(players, Board.roomByName("trailer"));
 
         // distribute scenes to every room
@@ -248,6 +108,11 @@ public class Deadwood {
         activeTurn = 0;
         activePlayer = players[0];
 
+    }
+
+    public static void updatePlayerIcon(int rank){
+        int index = activePlayer.getIconIndex();
+        activePlayer.setIconName(iconNames[index][activePlayer.getRank()-1]);
     }
 
     public static int getNumActiveScenes() {
@@ -267,5 +132,12 @@ public class Deadwood {
     public static void decrementScenes() {
         System.out.println("numScenes decremented");
         numActiveScenes--;
+    }
+
+    public static void setDeck(SceneDeck deck){
+        Deadwood.deck = deck;
+    }
+    public static void setBoard(Board board){
+        Deadwood.board = board;
     }
 }

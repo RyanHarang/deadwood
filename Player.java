@@ -13,6 +13,9 @@ public class Player implements Comparable<Player> {
     private boolean canRehearse = false;
     private boolean canEndTurn = false;
 
+    private String iconName;
+    private int iconIndex;
+
     // constructor
     public Player(String name) {
         this.name = name;
@@ -116,6 +119,22 @@ public class Player implements Comparable<Player> {
 
     public boolean getCanRehearse(){
         return canRehearse;
+    }
+
+    public void setIconIndex(int iconIndex){
+        this.iconIndex = iconIndex;
+    }
+
+    public int getIconIndex(){
+        return iconIndex;
+    }
+
+    public void setIconName(String iconName){
+        this.iconName = iconName;
+    }
+
+    public String getIconName(){
+        return iconName;
     }
 
     public int compareTo(Player p) {

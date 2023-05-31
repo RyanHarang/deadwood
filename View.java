@@ -27,11 +27,14 @@ public class View extends Application {
         // initialize rooms
         rooms();
         upgrades();
+        XMLParser xml = new XMLParser();
+        Deadwood.setDeck(new SceneDeck(xml.readCardData()));
+        Deadwood.setBoard(new Board(xml.readBoardData()));
 
         // setting root and back layer of stackpane
         HBox back = new HBox();
-        back.setMaxSize(1150, 600);
-        back.setMinSize(1150, 600);
+        back.setMaxSize(1725, 900);
+        back.setMinSize(1725, 600);
         Pane root = new Pane(back);
 
         // stage image
@@ -39,8 +42,10 @@ public class View extends Application {
         Image board = new Image(boardStream, 0, 0, true, true);
         ImageView boardView = new ImageView(board);
         boardView.setPreserveRatio(true);
-        boardView.setFitHeight(600);
+        boardView.setFitHeight(900);
         back.getChildren().add(boardView);
+
+
 
         // creating 10 scenes, one for each room
         FileInputStream cardBackStream = new FileInputStream("assets/images/cardBack.jpg");
@@ -66,40 +71,53 @@ public class View extends Application {
         // creating and placeing scenes
         for (Map.Entry<String, ImageView> entry : scenes.entrySet()) {
             String name = entry.getKey();
+            System.out.println(name);
             ImageView cur = entry.getValue();
+            //System.out.println(1);
+            Room room = Board.roomByName(name);
+            //System.out.println(2);
+            int x = room.getX();
+            int y = room.getY();
+            System.out.print(x);
+            System.out.print(", ");
+            System.out.println(y);
+            //System.out.println(3);
+            cur.setLayoutX(x);
+            cur.setLayoutY(y);
             cur.setPreserveRatio(true);
-            cur.setFitHeight(76);
+            cur.setFitHeight(115);
+/*
             if (name.equals("Train Station")) {
-                cur.setLayoutX(14);
-                cur.setLayoutY(44.5);
+                cur.setLayoutX(21);
+                cur.setLayoutY(69);
             } else if (name.equals("Jail")) {
-                cur.setLayoutX(188);
-                cur.setLayoutY(17.5);
+                cur.setLayoutX(281);
+                cur.setLayoutY(27);
             } else if (name.equals("Main Street")) {
-                cur.setLayoutX(646);
-                cur.setLayoutY(17.5);
+                cur.setLayoutX(969);
+                cur.setLayoutY(28);
             } else if (name.equals("General Store")) {
-                cur.setLayoutX(248);
-                cur.setLayoutY(188.5);
+                cur.setLayoutX(370);
+                cur.setLayoutY(282);
             } else if (name.equals("Saloon")) {
-                cur.setLayoutX(422);
-                cur.setLayoutY(186.5);
+                cur.setLayoutX(632);
+                cur.setLayoutY(280);
             } else if (name.equals("Ranch")) {
-                cur.setLayoutX(169);
-                cur.setLayoutY(319);
+                cur.setLayoutX(252);
+                cur.setLayoutY(478);
             } else if (name.equals("Bank")) {
-                cur.setLayoutX(416);
-                cur.setLayoutY(318);
+                cur.setLayoutX(623);
+                cur.setLayoutY(475);
             } else if (name.equals("Secret Hideout")) {
-                cur.setLayoutX(18);
-                cur.setLayoutY(489);
+                cur.setLayoutX(27);
+                cur.setLayoutY(732);
             } else if (name.equals("Church")) {
-                cur.setLayoutX(416);
-                cur.setLayoutY(490);
+                cur.setLayoutX(623);
+                cur.setLayoutY(734);
             } else if (name.equals("Hotel")) {
-                cur.setLayoutX(646);
-                cur.setLayoutY(494);
-            }
+                cur.setLayoutX(969);
+                cur.setLayoutY(740);
+            } */
             root.getChildren().add(cur);
         }
 
@@ -727,7 +745,7 @@ public class View extends Application {
         };
 
         countSubmit.setOnAction(playerPopup);
-        Scene mainScene = new Scene(root, 1150, 600);
+        Scene mainScene = new Scene(root, 1725, 900);
         mainScene.getStylesheets().add("/assets/css/style.css");
         // mainScene.getStylesheets().add("temp/style.css");
         primaryStage.setTitle("Deadwood");
