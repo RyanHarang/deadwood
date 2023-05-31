@@ -3,7 +3,7 @@ public class Role {
     private String name;
     private String line;
     private int rank;
-    // private int[] area;
+    private int[] area;
     private boolean occupied = false;
     private Player occupant = null;
 
@@ -12,7 +12,7 @@ public class Role {
         this.name = name;
         this.line = line;
         this.rank = rank;
-        // this.area = area;
+        this.area = area;
         this.isMain = isMain;
     }
 
@@ -29,11 +29,9 @@ public class Role {
         return rank;
     }
 
-    /*
-     * public int[] getArea() {
-     * return area;
-     * }
-     */
+    public int[] getArea() {
+        return area;
+    }
 
     public Player getOccupant() {
         return occupant;
