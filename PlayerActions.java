@@ -165,9 +165,9 @@ public class PlayerActions {
                 pl.setCanRehearse(false);
             }
             room.setScene(null);
-            return true;// scene has wrapped
+            return true; // scene has wrapped
         }
-        return false;// scene not wrapped
+        return false; // scene not wrapped
     }
 
     private static boolean actOnCard(Player player, int roomBudget) {

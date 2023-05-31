@@ -12,7 +12,7 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.text.*;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class View extends Application {
     private static ArrayList<RadioButton> locations;
@@ -28,8 +28,11 @@ public class View extends Application {
         rooms();
         upgrades();
 
-        // root
-        HBox root = new HBox();
+        // setting root and back layer of stackpane
+        HBox back = new HBox();
+        back.setMaxSize(1150, 600);
+        back.setMinSize(1150, 600);
+        Pane root = new Pane(back);
 
         // stage image
         FileInputStream boardStream = new FileInputStream("assets/images/board.jpg");
@@ -37,7 +40,68 @@ public class View extends Application {
         ImageView boardView = new ImageView(board);
         boardView.setPreserveRatio(true);
         boardView.setFitHeight(600);
-        root.getChildren().add(boardView);
+        back.getChildren().add(boardView);
+
+        // creating 10 scenes, one for each room
+        FileInputStream cardBackStream = new FileInputStream("assets/images/cardBack.jpg");
+        Image cardBack = new Image(cardBackStream, 0, 0, true, true);
+        // mapping scene images to room names
+        Map<String, ImageView> scenes = new HashMap<String, ImageView>();
+        ImageView scene0View = new ImageView(cardBack), scene1View = new ImageView(cardBack),
+                scene2View = new ImageView(cardBack), scene3View = new ImageView(cardBack),
+                scene4View = new ImageView(cardBack), scene5View = new ImageView(cardBack),
+                scene6View = new ImageView(cardBack), scene7View = new ImageView(cardBack),
+                scene8View = new ImageView(cardBack), scene9View = new ImageView(cardBack);
+        scenes.put("Train Station", scene0View); // train station
+        scenes.put("Jail", scene1View); // jail
+        scenes.put("Main Street", scene2View); // main street
+        scenes.put("General Store", scene3View); // general store
+        scenes.put("Saloon", scene4View); // saloon
+        scenes.put("Ranch", scene5View); // ranch
+        scenes.put("Bank", scene6View); // bank
+        scenes.put("Secret Hideout", scene7View); // secret hideout
+        scenes.put("Church", scene8View); // church
+        scenes.put("Hotel", scene9View); // hotel
+
+        // creating and placeing scenes
+        for (Map.Entry<String, ImageView> entry : scenes.entrySet()) {
+            String name = entry.getKey();
+            ImageView cur = entry.getValue();
+            cur.setPreserveRatio(true);
+            cur.setFitHeight(76);
+            if (name.equals("Train Station")) {
+                cur.setLayoutX(14);
+                cur.setLayoutY(44.5);
+            } else if (name.equals("Jail")) {
+                cur.setLayoutX(188);
+                cur.setLayoutY(17.5);
+            } else if (name.equals("Main Street")) {
+                cur.setLayoutX(646);
+                cur.setLayoutY(17.5);
+            } else if (name.equals("General Store")) {
+                cur.setLayoutX(248);
+                cur.setLayoutY(188.5);
+            } else if (name.equals("Saloon")) {
+                cur.setLayoutX(422);
+                cur.setLayoutY(186.5);
+            } else if (name.equals("Ranch")) {
+                cur.setLayoutX(169);
+                cur.setLayoutY(319);
+            } else if (name.equals("Bank")) {
+                cur.setLayoutX(416);
+                cur.setLayoutY(318);
+            } else if (name.equals("Secret Hideout")) {
+                cur.setLayoutX(18);
+                cur.setLayoutY(489);
+            } else if (name.equals("Church")) {
+                cur.setLayoutX(416);
+                cur.setLayoutY(490);
+            } else if (name.equals("Hotel")) {
+                cur.setLayoutX(646);
+                cur.setLayoutY(494);
+            }
+            root.getChildren().add(cur);
+        }
 
         // User interface
         VBox ui = new VBox();
@@ -171,6 +235,7 @@ public class View extends Application {
                     movePopup.getContent().add(movePane);
                     movePopup.show(primaryStage, 1020, 350);
 
+                    // deactivate move, only one move per turn
                     move.setId("deactivatedMove");
 
                     // moveSubmit onClick
@@ -181,6 +246,18 @@ public class View extends Application {
                             System.out.println(rb.getId());
                             Room newRoom = Board.roomByName(rb.getId());
                             LocationManager.move(Deadwood.getActivePlayer(), newRoom);
+
+                            // change scene image in that room if neccesary
+                            SceneCard currentScene = newRoom.getScene();
+                            if (currentScene != null) {
+                                if (!currentScene.isFaceUp()) {
+                                    currentScene.flip();
+                                    System.out.println(currentScene.getImg());
+                                    String newLoc = "assets/images/cards/" + currentScene.getImg();
+                                    Image faceUp = new Image(newLoc);
+                                    scenes.get(newRoom.getName()).setImage(faceUp);
+                                }
+                            }
                             if (newRoom.getName().equals("office")) {
                                 upgrade.setId("upgrade");
                             } else {
@@ -381,8 +458,14 @@ public class View extends Application {
             @Override
             public void handle(ActionEvent e) {
                 Player p = Deadwood.getActivePlayer();
-                if (Deadwood.getActivePlayer().getCanAct()) {
-                    PlayerActions.playerAct(Deadwood.getActivePlayer());
+                String roomName = LocationManager.getPlayerLocation(p).getName();
+                if (p.getCanAct()) {
+                    // if the scene wraps and playerAct returns true, flip the
+                    // scene back over, and decremetn activeScenes
+                    if (PlayerActions.playerAct(p)) {
+                        scenes.get(roomName).setImage(null);
+                        Deadwood.decrementScenes();
+                    }
                     act.setId("deactivatedAct");
                     rehearse.setId("deactivatedRehearse");
                 } else {
@@ -459,7 +542,13 @@ public class View extends Application {
 
                 // if next day time
                 if (Deadwood.getNumActiveScenes() == 1) {
+                    // iterate through and set each scene image back to the cardback
+                    for (Map.Entry<String, ImageView> entry : scenes.entrySet()) {
+                        entry.getValue().setImage(cardBack);
+
+                    }
                     Deadwood.endDay();
+
                 }
             }
         });
@@ -472,7 +561,7 @@ public class View extends Application {
         actions.add(endTurn, 0, 2, 2, 1);
 
         ui.getChildren().add(actions);
-        root.getChildren().add(ui);
+        back.getChildren().add(ui);
 
         GridPane popGrid = new GridPane();
         // creating 7 radio buttons and adding them to a toggle group

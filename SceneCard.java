@@ -45,6 +45,10 @@ public class SceneCard {
         return name;
     }
 
+    public String getImg() {
+        return img;
+    }
+
     public String getDescription() {
         return description;
     }

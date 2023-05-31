@@ -43,27 +43,29 @@ public class Deadwood {
      */
 
     // method to end a game
-    public static void end() {
-        // calculates score, determines winner
-        int score = 0;
-        ArrayList<Player> winners = new ArrayList<Player>();
-        // first loop finds highest score
-        for (Player player : players) {
-            if (player.getScore() >= score) {
-                score = player.getScore();
-            }
-        }
-        // second loop adds all players who achieved this score to winners
-        for (Player player : players) {
-            inpP.pass(player.getName() + " scored " + player.getScore() + " points.");
-            if (player.getScore() == score) {
-                winners.add(player);
-                inpP.pass("This was a winning score.");
-            }
-        }
-        // close the scanner
-        inpP.end();
-    }
+    /*
+     * public static void end() {
+     * // calculates score, determines winner
+     * int score = 0;
+     * ArrayList<Player> winners = new ArrayList<Player>();
+     * // first loop finds highest score
+     * for (Player player : players) {
+     * if (player.getScore() >= score) {
+     * score = player.getScore();
+     * }
+     * }
+     * // second loop adds all players who achieved this score to winners
+     * for (Player player : players) {
+     * inpP.pass(player.getName() + " scored " + player.getScore() + " points.");
+     * if (player.getScore() == score) {
+     * winners.add(player);
+     * inpP.pass("This was a winning score.");
+     * }
+     * }
+     * // close the scanner
+     * inpP.end();
+     * }
+     */
 
     /*
      * public static void gameLoop() {
@@ -166,9 +168,11 @@ public class Deadwood {
     public static void endDay() {
         LocationManager.returnTrailers();
         adjustDays();
+        System.out.println("Day has ended");
         if (days == 0) {
             System.out.println("Game has ended");
         }
+        numActiveScenes = 10;
     }
 
     public static void updateRole(Role role) {
@@ -192,15 +196,12 @@ public class Deadwood {
             int budget = room.getScene().getBudget();
             boolean canRehearse = (activePlayer.getPracticeChips() >= budget - 1) ? false : true;
             activePlayer.setCanRehearse(canRehearse);
-
             activePlayer.setCanMove(false);
         }
         // has no role
         else {
             activePlayer.setCanAct(false);
-
             activePlayer.setCanMove(true);
-
             activePlayer.setCanRehearse(false);
 
             if (LocationManager.getPlayerLocation(activePlayer).getName().equals("office")) {
@@ -214,6 +215,7 @@ public class Deadwood {
         int numPlayers = names.size();
         players = new Player[numPlayers];
         days = 4;
+        numActiveScenes = 10;
 
         for (int i = 0; i < numPlayers; i++) {
             players[i] = new Player(names.get(i));
@@ -234,8 +236,6 @@ public class Deadwood {
         deck = new SceneDeck(xml.readCardData());
         board = new Board(xml.readBoardData());
         locationManager = new LocationManager(players, Board.roomByName("trailer"));
-        // castingOffice = CastingOffice.getCastingOffice();
-        // currencyManager = CurrencyManager.getCurrencyManager();
 
         // distribute scenes to every room
         for (int i = 2; i < board.getRooms().length; i++) {
@@ -248,8 +248,6 @@ public class Deadwood {
         activeTurn = 0;
         activePlayer = players[0];
 
-        // any time the end turn button is clicked, active player is incremented, unless
-        // it's at last index in which case it restarts at index 0
     }
 
     public static int getNumActiveScenes() {
@@ -267,6 +265,7 @@ public class Deadwood {
     }
 
     public static void decrementScenes() {
+        System.out.println("numScenes decremented");
         numActiveScenes--;
     }
 }
