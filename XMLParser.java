@@ -307,9 +307,12 @@ public class XMLParser {
             rooms[h].setAdjacents(neighborCopy);
             neighbors.clear();
         }
-        for (Room room : rooms) {
-            System.out.println(room.toString());
-        }
+
+        /*
+         * for (Room room : rooms) {
+         * System.out.println(room.toString());
+         * }
+         */
         return rooms;
     }
 }
