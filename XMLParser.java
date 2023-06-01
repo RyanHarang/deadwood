@@ -96,7 +96,6 @@ public class XMLParser {
                     int[] aCopy = new int[4];
                     System.arraycopy(areas, 0, aCopy, 0, 4);
                     roleHolder = new Role(partName, partLine, partLvl, aCopy, true);
-                    // roleHolder = new Role(partName, partLine, partLvl, true);
                     roles.add(roleHolder);
                 }
             }
@@ -152,7 +151,6 @@ public class XMLParser {
                 int[] aCopy = new int[4];
                 System.arraycopy(sceneAreas, 0, aCopy, 0, 4);
                 rooms[0] = new Room(0, aCopy, "trailer", null);
-                // rooms[0] = new Room(0, "trailer", null);
             }
         }
         // creating an office room speciall at index 1 in the room array
@@ -184,7 +182,6 @@ public class XMLParser {
                 int[] aCopy = new int[4];
                 System.arraycopy(sceneAreas, 0, aCopy, 0, 4);
                 rooms[1] = new Room(0, aCopy, "office", null);
-                // rooms[1] = new Room(0, "office", null);
             }
         }
         for (int i = 0; i < sets.getLength(); i++) {
@@ -273,7 +270,6 @@ public class XMLParser {
                             int[] areaCopy = new int[4];
                             System.arraycopy(areas, 0, areaCopy, 0, 4);
                             Role roleHolder = new Role(partName, line, partLvl, areaCopy, false);
-                            // Role roleHolder = new Role(partName, line, partLvl, false);
                             roles.add(roleHolder);
                         }
                     }
@@ -283,7 +279,6 @@ public class XMLParser {
             int[] sceneAreaCopy = new int[4];
             System.arraycopy(sceneAreas, 0, sceneAreaCopy, 0, 4);
             rooms[i + 2] = new Room(takes, sceneAreaCopy, setName, roleCopy);
-            // rooms[i + 2] = new Room(takes, setName, roleCopy);
             takes = 0;
             roles.clear();
         }
@@ -307,12 +302,6 @@ public class XMLParser {
             rooms[h].setAdjacents(neighborCopy);
             neighbors.clear();
         }
-
-        /*
-         * for (Room room : rooms) {
-         * System.out.println(room.toString());
-         * }
-         */
         return rooms;
     }
 }
