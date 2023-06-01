@@ -2,23 +2,19 @@ import java.util.ArrayList;
 
 public class Room {
     private int shots;
+    private int[] area;
     private String name;
     private boolean SceneCardDone = false;
     private SceneCard SceneCard = null;
     private ArrayList<Role> roles;
     private ArrayList<Room> adjacents;
-    private ArrayList<int[]> shotLocations;
-    private int[] area;
-    private int x;
-    private int y;
-
 
     // constructor
-    public Room(int shots, String name, ArrayList<Role> roles, int[] area) {
+    public Room(int shots, int[] area, String name, ArrayList<Role> roles) {
         this.shots = shots;
+        this.area = area;
         this.name = name;
         this.roles = roles;
-        this.area = area;
     }
 
     public String neighborsString() {
@@ -50,6 +46,10 @@ public class Room {
         return shots;
     }
 
+    public int[] getArea() {
+        return area;
+    }
+
     public SceneCard getScene() {
         return SceneCard;
     }
@@ -58,24 +58,7 @@ public class Room {
         return SceneCardDone;
     }
 
-    public int getX(){
-        return x;
-    }
-
-    
-    public int getY(){
-        return y;
-    }
-
     // setters
-    public void setX(int x){
-        this.x = x;
-    }
-
-    public void setY(int y){
-        this.y = y;
-    }
-
     public void setAdjacents(ArrayList<Room> rooms) {
         adjacents = rooms;
     }

@@ -76,8 +76,8 @@ public class View extends Application {
             //System.out.println(1);
             Room room = Board.roomByName(name);
             //System.out.println(2);
-            int x = room.getX();
-            int y = room.getY();
+            int x = room.getArea()[0];
+            int y = room.getArea()[1];
             System.out.print(x);
             System.out.print(", ");
             System.out.println(y);

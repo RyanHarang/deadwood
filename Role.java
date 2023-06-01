@@ -29,11 +29,9 @@ public class Role {
         return rank;
     }
 
-    
     public int[] getArea() {
-    return area;
+        return area;
     }
-    
 
     public Player getOccupant() {
         return occupant;
