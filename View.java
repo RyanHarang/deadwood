@@ -81,7 +81,7 @@ public class View extends Application {
             root.getChildren().add(cur);
         }
 
-        //create 8 player icons. 
+        // create 8 player icons.
         String basePath = "assets/images/dice/";
         Image dice1 = null;
         Image dice2 = null;
@@ -91,24 +91,25 @@ public class View extends Application {
         Image dice6 = null;
         Image dice7 = null;
         Image dice8 = null;
-        Image[] diceArray = {dice1, dice2, dice3, dice4, dice5, dice6, dice7, dice8};
+        Image[] diceArray = { dice1, dice2, dice3, dice4, dice5, dice6, dice7, dice8 };
         ImageView dice1View = null, dice2View = null, dice3View = null, dice4View = null,
-                  dice5View = null, dice6View = null, dice7View = null, dice8View = null;
-        ImageView[] diceViewArray = {dice1View, dice2View, dice3View, dice4View, dice5View, dice6View, dice7View, dice8View};
+                dice5View = null, dice6View = null, dice7View = null, dice8View = null;
+        ImageView[] diceViewArray = { dice1View, dice2View, dice3View, dice4View, dice5View, dice6View, dice7View,
+                dice8View };
         Map<Player, ImageView> playerDiceMap = new HashMap<Player, ImageView>();
         Map<String, int[]> noRole = new HashMap<String, int[]>();
-        int[] officeXY = {125, 540};
-        int[] trailerXY = {1115, 290};
-        int[] ranchXY = {298, 629};
-        int[] saloonXY = {837, 395};
-        int[] hotelXY = {1144, 855};
-        int[] secretHideoutXY = {232, 847};
-        int[] trainStationXY = {67, 230};
-        int[] mainStreetXY = {1144, 143};
-        int[] jailXY = {486, 142};
-        int[] churchXY = {798, 849};
-        int[] bankXY = {831, 590};
-        int[] generalStoreXY = {324, 397};
+        int[] officeXY = { 125, 540 };
+        int[] trailerXY = { 1115, 290 };
+        int[] ranchXY = { 298, 629 };
+        int[] saloonXY = { 837, 395 };
+        int[] hotelXY = { 1144, 855 };
+        int[] secretHideoutXY = { 232, 847 };
+        int[] trainStationXY = { 67, 230 };
+        int[] mainStreetXY = { 1144, 143 };
+        int[] jailXY = { 486, 142 };
+        int[] churchXY = { 798, 849 };
+        int[] bankXY = { 831, 590 };
+        int[] generalStoreXY = { 324, 397 };
         noRole.put("office", officeXY);
         noRole.put("trailer", trailerXY);
         noRole.put("Ranch", ranchXY);
@@ -121,9 +122,6 @@ public class View extends Application {
         noRole.put("Church", churchXY);
         noRole.put("Bank", bankXY);
         noRole.put("General Store", generalStoreXY);
-        
-
-
 
         // User interface
         VBox ui = new VBox();
@@ -283,19 +281,18 @@ public class View extends Application {
                             if (newRoom.getName().equals("office")) {
                                 upgrade.setId("upgrade");
                                 ImageView cur = playerDiceMap.get(Deadwood.getActivePlayer());
-                                int[] xy = noRole.get(LocationManager.getPlayerLocation(Deadwood.getActivePlayer()).getName());
+                                int[] xy = noRole
+                                        .get(LocationManager.getPlayerLocation(Deadwood.getActivePlayer()).getName());
                                 cur.setLayoutX(xy[0]);
                                 cur.setLayoutY(xy[1]);
-                            
-                                
-                            } 
-                            if (newRoom.getName().equals("trailer")) {
+
+                            } else if (newRoom.getName().equals("trailer")) {
                                 ImageView cur = playerDiceMap.get(Deadwood.getActivePlayer());
-                                int[] xy = noRole.get(LocationManager.getPlayerLocation(Deadwood.getActivePlayer()).getName());
+                                int[] xy = noRole
+                                        .get(LocationManager.getPlayerLocation(Deadwood.getActivePlayer()).getName());
                                 cur.setLayoutX(xy[0]);
                                 cur.setLayoutY(xy[1]);
-                            }
-                                else {
+                            } else {
                                 upgrade.setId("deactivatedUpgrade");
                             }
 
@@ -382,23 +379,25 @@ public class View extends Application {
                                             Deadwood.getActivePlayer().setCanAct(true);
                                             Deadwood.getActivePlayer().setCanRehearse(true);
                                             currentPlayerRole.setText(chosen.getName());
-                                            
-                                            if(chosen.isMain()){
-                                                Room currentRoom = LocationManager.getPlayerLocation(Deadwood.getActivePlayer());
+
+                                            if (chosen.isMain()) {
+                                                Room currentRoom = LocationManager
+                                                        .getPlayerLocation(Deadwood.getActivePlayer());
                                                 int roomX = currentRoom.getArea()[0];
                                                 int roomY = currentRoom.getArea()[1];
                                                 cur.setLayoutX(chosen.getArea()[0] + roomX);
                                                 cur.setLayoutY(chosen.getArea()[1] + roomY);
-                                            }else{
+                                            } else {
                                                 cur.setLayoutX(chosen.getArea()[0]);
                                                 cur.setLayoutY(chosen.getArea()[1]);
                                             }
 
                                         }
 
-                                        else{
-                                            
-                                            int[] xy = noRole.get(LocationManager.getPlayerLocation(Deadwood.getActivePlayer()).getName());
+                                        else {
+
+                                            int[] xy = noRole.get(LocationManager
+                                                    .getPlayerLocation(Deadwood.getActivePlayer()).getName());
                                             cur.setLayoutX(xy[0]);
                                             cur.setLayoutY(xy[1]);
 
@@ -410,7 +409,7 @@ public class View extends Application {
                                         upgrade.setVisible(true);
                                         rehearse.setVisible(true);
                                         endTurn.setVisible(true);
-                                        
+
                                     }
                                 });
                             } else {
@@ -761,30 +760,26 @@ public class View extends Application {
                         }
                         Deadwood.initializePlayers(names);
 
-                        //setting up dice
-                        for(int i = 0; i < Deadwood.getPlayers().length; i++){
+                        // setting up dice
+                        for (int i = 0; i < Deadwood.getPlayers().length; i++) {
                             Player p = Deadwood.getPlayers()[i];
                             int index = p.getIconIndex();
                             int rank = p.getRank();
-                            diceArray[i] = new Image(basePath + Deadwood.iconNames[index][rank-1], 0, 0, true, true);
+                            diceArray[i] = new Image(basePath + Deadwood.iconNames[index][rank - 1], 0, 0, true, true);
                             diceViewArray[i] = new ImageView(diceArray[i]);
                             playerDiceMap.put(p, diceViewArray[i]);
                         }
                         int count = 0;
-                        for(Map.Entry<Player, ImageView> entry: playerDiceMap.entrySet()) {
-                            Player p = entry.getKey();
+                        for (Map.Entry<Player, ImageView> entry : playerDiceMap.entrySet()) {
+                            // Player p = entry.getKey();
                             ImageView cur = entry.getValue();
-                            cur.setLayoutX(991 + count*20);
+                            cur.setLayoutX(991 + count * 20);
                             cur.setLayoutY(280);
                             cur.setPreserveRatio(true);
                             cur.setFitHeight(46);
                             root.getChildren().add(cur);
-                            count+=1;
+                            count += 1;
                         }
-
-
-
-
 
                         rehearse.setId("deactivatedRehearse");
                         act.setId("deactivatedAct");
