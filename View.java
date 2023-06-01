@@ -369,7 +369,6 @@ public class View extends Application {
                         @Override
                         public void handle(ActionEvent e) {
                             RadioButton rb = (RadioButton) moveToggleGroup.getSelectedToggle();
-                            System.out.println(rb.getId());
                             Room newRoom = Board.roomByName(rb.getId());
                             LocationManager.move(Deadwood.getActivePlayer(), newRoom);
 
@@ -527,8 +526,6 @@ public class View extends Application {
                             }
                         }
                     });
-                } else {
-                    System.out.println("You can't move now.");
                 }
             }
         });
@@ -631,8 +628,6 @@ public class View extends Application {
                     act.setId("deactivatedAct");
                     rehearse.setId("deactivatedRehearse");
                     shotsMap.get(roomName).get(loc.getShots()).setImage(null);
-                } else {
-                    System.out.println("You need a role to be able to act");
                 }
                 // showing buttons
                 endTurn.setVisible(true);
@@ -658,8 +653,6 @@ public class View extends Application {
                     currentPlayerPracticeChips.setText(Integer.toString(Deadwood.getActivePlayer().getPracticeChips()));
                     rehearse.setId("deactivatedRehearse");
                     act.setId("deactivatedAct");
-                } else {
-                    System.out.println("You cant rehearse now!");
                 }
             }
         });
@@ -935,7 +928,6 @@ public class View extends Application {
 
     public void endTurn() {
         Deadwood.endTurn();
-        System.out.println("endTurn clicked");
     }
 
     // method to create radio buttons for all rooms for moving
