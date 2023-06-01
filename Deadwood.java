@@ -4,12 +4,8 @@ public class Deadwood {
     private static int days;
     private static int numActiveScenes;
     private static Player[] players;
-    private static LocationManager locationManager;
-    // private static CurrencyManager currencyManager;
-    // private static CastingOffice castingOffice;
     private static Board board;
     private static SceneDeck deck;
-    private static InpParser inpP;
     private static Player activePlayer;
     private static int activeTurn;
 
@@ -77,7 +73,6 @@ public class Deadwood {
         days = 4;
         numActiveScenes = 10;
 
-
         for (int i = 0; i < numPlayers; i++) {
             players[i] = new Player(names.get(i));
             players[i] = (new Player(names.get(i)));
@@ -93,9 +88,7 @@ public class Deadwood {
                 players[i].setRank(2);
             }
         }
-
-
-        locationManager = new LocationManager(players, Board.roomByName("trailer"));
+        LocationManager.initialize(players, Board.roomByName("trailer"));
 
         // distribute scenes to every room
         for (int i = 2; i < board.getRooms().length; i++) {
@@ -110,9 +103,9 @@ public class Deadwood {
 
     }
 
-    public static void updatePlayerIcon(int rank){
+    public static void updatePlayerIcon(int rank) {
         int index = activePlayer.getIconIndex();
-        activePlayer.setIconName(iconNames[index][activePlayer.getRank()-1]);
+        activePlayer.setIconName(iconNames[index][activePlayer.getRank() - 1]);
     }
 
     public static int getNumActiveScenes() {
@@ -134,10 +127,11 @@ public class Deadwood {
         numActiveScenes--;
     }
 
-    public static void setDeck(SceneDeck deck){
+    public static void setDeck(SceneDeck deck) {
         Deadwood.deck = deck;
     }
-    public static void setBoard(Board board){
+
+    public static void setBoard(Board board) {
         Deadwood.board = board;
     }
     public static Player[] getPlayers(){

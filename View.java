@@ -45,8 +45,6 @@ public class View extends Application {
         boardView.setFitHeight(900);
         back.getChildren().add(boardView);
 
-
-
         // creating 10 scenes, one for each room
         FileInputStream cardBackStream = new FileInputStream("assets/images/cardBack.jpg");
         Image cardBack = new Image(cardBackStream, 0, 0, true, true);
@@ -79,6 +77,7 @@ public class View extends Application {
             cur.setLayoutY(y);
             cur.setPreserveRatio(true);
             cur.setFitHeight(115);
+
             root.getChildren().add(cur);
         }
 
@@ -256,7 +255,7 @@ public class View extends Application {
                     moveSubmit.setId("submit");
                     movePane.add(moveSubmit, 0, rNames.size() + 1);
                     movePopup.getContent().add(movePane);
-                    movePopup.show(primaryStage, 1020, 350);
+                    movePopup.show(primaryStage, 1180, 350);
 
                     // deactivate move, only one move per turn
                     move.setId("deactivatedMove");
@@ -369,7 +368,7 @@ public class View extends Application {
                                 rolePane.add(roleSubmit, 0, availableRoles.size() + 2);
                                 Popup rolePopup = new Popup();
                                 rolePopup.getContent().add(rolePane);
-                                rolePopup.show(primaryStage, 1020, 150);
+                                rolePopup.show(primaryStage, 1180, 220);
 
                                 roleSubmit.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override

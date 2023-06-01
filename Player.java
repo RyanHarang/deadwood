@@ -8,10 +8,10 @@ public class Player implements Comparable<Player> {
 
     private boolean canUpgrade = false;
     private boolean canMove = true;
-    private boolean canTakerole;
+    // private boolean canTakerole;
     private boolean canAct = false;
     private boolean canRehearse = false;
-    private boolean canEndTurn = false;
+    // private boolean canEndTurn = false;
 
     private String iconName;
     private int iconIndex;
@@ -89,51 +89,51 @@ public class Player implements Comparable<Player> {
         this.credits = credits;
     }
 
-    public void setCanUpgrade(boolean canUpgrade){
+    public void setCanUpgrade(boolean canUpgrade) {
         this.canUpgrade = canUpgrade;
     }
 
-    public boolean getCanUpgrade(){
+    public boolean getCanUpgrade() {
         return canUpgrade;
     }
 
-    public void setCanMove(boolean canMove){
+    public void setCanMove(boolean canMove) {
         this.canMove = canMove;
     }
 
-    public boolean getCanMove(){
+    public boolean getCanMove() {
         return canMove;
     }
 
-    public void setCanAct(boolean canAct){
+    public void setCanAct(boolean canAct) {
         this.canAct = canAct;
     }
 
-    public boolean getCanAct(){
+    public boolean getCanAct() {
         return canAct;
     }
 
-    public void setCanRehearse(boolean canRehearse){
+    public void setCanRehearse(boolean canRehearse) {
         this.canRehearse = canRehearse;
     }
 
-    public boolean getCanRehearse(){
+    public boolean getCanRehearse() {
         return canRehearse;
     }
 
-    public void setIconIndex(int iconIndex){
+    public void setIconIndex(int iconIndex) {
         this.iconIndex = iconIndex;
     }
 
-    public int getIconIndex(){
+    public int getIconIndex() {
         return iconIndex;
     }
 
-    public void setIconName(String iconName){
+    public void setIconName(String iconName) {
         this.iconName = iconName;
     }
 
-    public String getIconName(){
+    public String getIconName() {
         return iconName;
     }
 
@@ -147,5 +147,4 @@ public class Player implements Comparable<Player> {
         }
     }
 
-    
 }
