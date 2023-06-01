@@ -93,18 +93,6 @@ public class PlayerActions {
         }
     }
 
-    public static boolean playerUpgrade(Player p, InpParser inpP, CastingOffice castingOffice,
-            LocationManager locationManager,
-            CurrencyManager currencyManager) {
-        int[] upgrade = inpP.upgradeInfo();
-        int rank = upgrade[1];
-        Boolean upgradingWithMoney = false;
-        if (upgrade[0] == 1) {
-            upgradingWithMoney = true;
-        }
-        return CastingOffice.upgrade(p, rank, upgradingWithMoney);
-    }
-
     public static boolean playerRehearse(Player p) {
         Room room = LocationManager.getPlayerLocation(p);
         int budget = room.getScene().getBudget();
