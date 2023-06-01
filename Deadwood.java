@@ -4,26 +4,20 @@ public class Deadwood {
     private static int days;
     private static int numActiveScenes;
     private static Player[] players;
-    private static LocationManager locationManager;
-    // private static CurrencyManager currencyManager;
-    // private static CastingOffice castingOffice;
     private static Board board;
     private static SceneDeck deck;
-    private static InpParser inpP;
     private static Player activePlayer;
     private static int activeTurn;
 
     private static String[][] iconNames = {
-        {"b1.png", "b2.png", "b3.png", "b4.png", "b5.png", "b6.png"},
-        {"c1.png", "c2.png", "c3.png", "c4.png", "c5.png", "c6.png"},
-        {"g1.png", "g2.png", "g3.png", "g4.png", "g5.png", "g6.png"}, 
-        {"o1.png", "o2.png", "o3.png", "o4.png", "o5.png", "o6.png"}, 
-        {"p1.png", "p2.png", "p3.png", "p4.png", "p5.png", "p6.png"}, 
-        {"r1.png", "r2.png", "r3.png", "r4.png", "r5.png", "r6.png"}, 
-        {"v1.png", "v2.png", "v3.png", "v4.png", "v5.png", "v6.png"}, 
-        {"y1.png", "y2.png", "y3.png", "y4.png", "y5.png", "y6.png"}, };
-
-
+            { "b1.png", "b2.png", "b3.png", "b4.png", "b5.png", "b6.png" },
+            { "c1.png", "c2.png", "c3.png", "c4.png", "c5.png", "c6.png" },
+            { "g1.png", "g2.png", "g3.png", "g4.png", "g5.png", "g6.png" },
+            { "o1.png", "o2.png", "o3.png", "o4.png", "o5.png", "o6.png" },
+            { "p1.png", "p2.png", "p3.png", "p4.png", "p5.png", "p6.png" },
+            { "r1.png", "r2.png", "r3.png", "r4.png", "r5.png", "r6.png" },
+            { "v1.png", "v2.png", "v3.png", "v4.png", "v5.png", "v6.png" },
+            { "y1.png", "y2.png", "y3.png", "y4.png", "y5.png", "y6.png" }, };
 
     public static void endDay() {
         LocationManager.returnTrailers();
@@ -77,7 +71,6 @@ public class Deadwood {
         days = 4;
         numActiveScenes = 10;
 
-
         for (int i = 0; i < numPlayers; i++) {
             players[i] = new Player(names.get(i));
             players[i] = (new Player(names.get(i)));
@@ -93,9 +86,7 @@ public class Deadwood {
                 players[i].setRank(2);
             }
         }
-
-
-        locationManager = new LocationManager(players, Board.roomByName("trailer"));
+        LocationManager.initialize(players, Board.roomByName("trailer"));
 
         // distribute scenes to every room
         for (int i = 2; i < board.getRooms().length; i++) {
@@ -110,9 +101,9 @@ public class Deadwood {
 
     }
 
-    public static void updatePlayerIcon(int rank){
+    public static void updatePlayerIcon(int rank) {
         int index = activePlayer.getIconIndex();
-        activePlayer.setIconName(iconNames[index][activePlayer.getRank()-1]);
+        activePlayer.setIconName(iconNames[index][activePlayer.getRank() - 1]);
     }
 
     public static int getNumActiveScenes() {
@@ -134,10 +125,11 @@ public class Deadwood {
         numActiveScenes--;
     }
 
-    public static void setDeck(SceneDeck deck){
+    public static void setDeck(SceneDeck deck) {
         Deadwood.deck = deck;
     }
-    public static void setBoard(Board board){
+
+    public static void setBoard(Board board) {
         Deadwood.board = board;
     }
 }

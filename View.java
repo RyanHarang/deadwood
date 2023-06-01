@@ -45,8 +45,6 @@ public class View extends Application {
         boardView.setFitHeight(900);
         back.getChildren().add(boardView);
 
-
-
         // creating 10 scenes, one for each room
         FileInputStream cardBackStream = new FileInputStream("assets/images/cardBack.jpg");
         Image cardBack = new Image(cardBackStream, 0, 0, true, true);
@@ -73,51 +71,52 @@ public class View extends Application {
             String name = entry.getKey();
             System.out.println(name);
             ImageView cur = entry.getValue();
-            //System.out.println(1);
+            // System.out.println(1);
             Room room = Board.roomByName(name);
-            //System.out.println(2);
+            // System.out.println(2);
             int x = room.getArea()[0];
             int y = room.getArea()[1];
             System.out.print(x);
             System.out.print(", ");
             System.out.println(y);
-            //System.out.println(3);
+            // System.out.println(3);
             cur.setLayoutX(x);
             cur.setLayoutY(y);
             cur.setPreserveRatio(true);
             cur.setFitHeight(115);
-/*
-            if (name.equals("Train Station")) {
-                cur.setLayoutX(21);
-                cur.setLayoutY(69);
-            } else if (name.equals("Jail")) {
-                cur.setLayoutX(281);
-                cur.setLayoutY(27);
-            } else if (name.equals("Main Street")) {
-                cur.setLayoutX(969);
-                cur.setLayoutY(28);
-            } else if (name.equals("General Store")) {
-                cur.setLayoutX(370);
-                cur.setLayoutY(282);
-            } else if (name.equals("Saloon")) {
-                cur.setLayoutX(632);
-                cur.setLayoutY(280);
-            } else if (name.equals("Ranch")) {
-                cur.setLayoutX(252);
-                cur.setLayoutY(478);
-            } else if (name.equals("Bank")) {
-                cur.setLayoutX(623);
-                cur.setLayoutY(475);
-            } else if (name.equals("Secret Hideout")) {
-                cur.setLayoutX(27);
-                cur.setLayoutY(732);
-            } else if (name.equals("Church")) {
-                cur.setLayoutX(623);
-                cur.setLayoutY(734);
-            } else if (name.equals("Hotel")) {
-                cur.setLayoutX(969);
-                cur.setLayoutY(740);
-            } */
+            /*
+             * if (name.equals("Train Station")) {
+             * cur.setLayoutX(21);
+             * cur.setLayoutY(69);
+             * } else if (name.equals("Jail")) {
+             * cur.setLayoutX(281);
+             * cur.setLayoutY(27);
+             * } else if (name.equals("Main Street")) {
+             * cur.setLayoutX(969);
+             * cur.setLayoutY(28);
+             * } else if (name.equals("General Store")) {
+             * cur.setLayoutX(370);
+             * cur.setLayoutY(282);
+             * } else if (name.equals("Saloon")) {
+             * cur.setLayoutX(632);
+             * cur.setLayoutY(280);
+             * } else if (name.equals("Ranch")) {
+             * cur.setLayoutX(252);
+             * cur.setLayoutY(478);
+             * } else if (name.equals("Bank")) {
+             * cur.setLayoutX(623);
+             * cur.setLayoutY(475);
+             * } else if (name.equals("Secret Hideout")) {
+             * cur.setLayoutX(27);
+             * cur.setLayoutY(732);
+             * } else if (name.equals("Church")) {
+             * cur.setLayoutX(623);
+             * cur.setLayoutY(734);
+             * } else if (name.equals("Hotel")) {
+             * cur.setLayoutX(969);
+             * cur.setLayoutY(740);
+             * }
+             */
             root.getChildren().add(cur);
         }
 
@@ -251,7 +250,7 @@ public class View extends Application {
                     moveSubmit.setId("submit");
                     movePane.add(moveSubmit, 0, rNames.size() + 1);
                     movePopup.getContent().add(movePane);
-                    movePopup.show(primaryStage, 1020, 350);
+                    movePopup.show(primaryStage, 1180, 350);
 
                     // deactivate move, only one move per turn
                     move.setId("deactivatedMove");
@@ -351,7 +350,7 @@ public class View extends Application {
                                 rolePane.add(roleSubmit, 0, availableRoles.size() + 2);
                                 Popup rolePopup = new Popup();
                                 rolePopup.getContent().add(rolePane);
-                                rolePopup.show(primaryStage, 1020, 150);
+                                rolePopup.show(primaryStage, 1180, 220);
 
                                 roleSubmit.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override

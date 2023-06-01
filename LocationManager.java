@@ -16,6 +16,15 @@ public class LocationManager {
         // all players in the trailers make list for later use of all players
     }
 
+    public static void initialize(Player[] playerList, Room nTrailers) {
+        trailers = nTrailers;
+        for (Player p : playerList) {
+            locations.put(p, trailers);
+        }
+        players = playerList;
+        // all players in the trailers make list for later use of all players
+    }
+
     // method to check if moves are legal, called by move
     private static boolean validateMove(Player player, Room new_location) {
         // array of rooms adjacent to the player
@@ -35,10 +44,9 @@ public class LocationManager {
             // System.out.println(locations.get(player).toString());
             String test = locations.get(player).getName();
             locations.put(player, new_location);
-            if(new_location.getName() == "office"){
+            if (new_location.getName() == "office") {
                 player.setCanUpgrade(true);
-            }
-            else{
+            } else {
                 player.setCanUpgrade(false);
             }
             System.out.println("moved " + player.getName() + " from " + test + " to " + new_location.getName());
