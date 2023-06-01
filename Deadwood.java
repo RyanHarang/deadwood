@@ -13,7 +13,7 @@ public class Deadwood {
     private static Player activePlayer;
     private static int activeTurn;
 
-    private static String[][] iconNames = {
+    public static String[][] iconNames = {
         {"b1.png", "b2.png", "b3.png", "b4.png", "b5.png", "b6.png"},
         {"c1.png", "c2.png", "c3.png", "c4.png", "c5.png", "c6.png"},
         {"g1.png", "g2.png", "g3.png", "g4.png", "g5.png", "g6.png"}, 
@@ -139,5 +139,8 @@ public class Deadwood {
     }
     public static void setBoard(Board board){
         Deadwood.board = board;
+    }
+    public static Player[] getPlayers(){
+        return players;
     }
 }
