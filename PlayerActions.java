@@ -53,7 +53,6 @@ public class PlayerActions {
             }
         }
         if (room.getShots() == 0) {
-            // inpP.pass("Scene has wrapped!");
             CurrencyManager.wrapPay(room);
             for (Player pl : LocationManager.getOccupants(room)) {
                 System.out.println("Scene has wrapped");

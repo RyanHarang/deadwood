@@ -17,18 +17,6 @@ public class Room {
         this.roles = roles;
     }
 
-    public String neighborsString() {
-        String neighbors = "";
-        for (Room r : adjacents) {
-            neighbors += r.getName() + ", ";
-        }
-        return neighbors.substring(0, neighbors.length() - 2);
-    }
-
-    public String toString() {
-        return "RoomName: " + name + " | Shots: " + shots;
-    }
-
     // getters
     public ArrayList<Role> getRoles() {
         return roles;

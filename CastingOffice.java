@@ -11,8 +11,6 @@ public class CastingOffice {
             { 6, 40, 25 }
     };
 
-
-
     // constructor
     private CastingOffice() {
 
@@ -46,7 +44,6 @@ public class CastingOffice {
             }
         }
         return true;
-
     }
 
     public static void upgradeMoney(Player player, int rank) {
@@ -61,19 +58,18 @@ public class CastingOffice {
         CurrencyManager.adjustCredits(-(info[rank - 2][2]), player);
     }
 
-    public static int[][] validRanks(Player p){
+    public static int[][] validRanks(Player p) {
         int[][] ranks = new int[5][3];
-        for(int i = 2; i < 7; i++){
-            ranks[i-2][0] = i;
-            if(p.getRank() < i){
+        for (int i = 2; i < 7; i++) {
+            ranks[i - 2][0] = i;
+            if (p.getRank() < i) {
                 if (p.getMoney() >= info[i - 2][1]) {
-                    ranks[i-2][1] = 1;
+                    ranks[i - 2][1] = 1;
                 }
-                if (p.getCredits() >= info[i  -2][2]){
-                    ranks[i-2][2] = 1;
-                }  
+                if (p.getCredits() >= info[i - 2][2]) {
+                    ranks[i - 2][2] = 1;
+                }
             }
-
         }
         return ranks;
     }

@@ -5,14 +5,10 @@ public class Player implements Comparable<Player> {
     private int practiceChips;
     private String name;
     private Role role = null;
-
     private boolean canUpgrade = false;
     private boolean canMove = true;
-    // private boolean canTakerole;
     private boolean canAct = false;
     private boolean canRehearse = false;
-    // private boolean canEndTurn = false;
-
     private String iconName;
     private int iconIndex;
 
@@ -23,16 +19,6 @@ public class Player implements Comparable<Player> {
         credits = 0;
         practiceChips = 0;
         rank = 1;
-    }
-
-    public String toString() {
-        String roleString = "none";
-        if (role != null) {
-            roleString = role.toString();
-        }
-        return "Name: " + name + " | Credits: " + credits + " | Rank: " + rank + " | Money: " + money
-                + " | Practice Chips: " + practiceChips
-                + " |\n\t\tActive Role: " + roleString;
     }
 
     // getters
@@ -146,5 +132,4 @@ public class Player implements Comparable<Player> {
             return -1;
         }
     }
-
 }

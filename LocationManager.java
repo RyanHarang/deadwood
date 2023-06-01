@@ -6,14 +6,7 @@ public class LocationManager {
     private static Room trailers;
 
     // constructor
-    public LocationManager(Player[] playerList, Room nTrailers) {
-        trailers = nTrailers;
-        for (Player p : playerList) {
-            locations.put(p, trailers);
-        }
-
-        players = playerList;
-        // all players in the trailers make list for later use of all players
+    public LocationManager() {
     }
 
     public static void initialize(Player[] playerList, Room nTrailers) {
@@ -41,15 +34,12 @@ public class LocationManager {
     public static boolean move(Player player, Room new_location) {
         boolean isValidMove = validateMove(player, new_location);
         if (isValidMove) {
-            // System.out.println(locations.get(player).toString());
-            String test = locations.get(player).getName();
             locations.put(player, new_location);
             if (new_location.getName() == "office") {
                 player.setCanUpgrade(true);
             } else {
                 player.setCanUpgrade(false);
             }
-            System.out.println("moved " + player.getName() + " from " + test + " to " + new_location.getName());
             player.setCanMove(false);
         }
         return isValidMove;

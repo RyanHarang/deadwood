@@ -16,10 +16,6 @@ public class Role {
         this.isMain = isMain;
     }
 
-    public String toString() {
-        return "RoleName: " + name + " | RoleLine: " + line + " | RoleRank: " + rank;
-    }
-
     // getters
     public String getName() {
         return name;
