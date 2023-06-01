@@ -66,7 +66,7 @@ public class View extends Application {
         scenes.put("Church", scene8View); // church
         scenes.put("Hotel", scene9View); // hotel
 
-        // creating and placeing scenes
+        // creating and placing scenes
         for (Map.Entry<String, ImageView> entry : scenes.entrySet()) {
             String name = entry.getKey();
             ImageView cur = entry.getValue();
@@ -77,11 +77,10 @@ public class View extends Application {
             cur.setLayoutY(y);
             cur.setPreserveRatio(true);
             cur.setFitHeight(115);
-
             root.getChildren().add(cur);
         }
 
-        // create 8 player icons.
+        // create 8 player icons
         String basePath = "assets/images/dice/";
         Image dice1 = null;
         Image dice2 = null;
@@ -122,6 +121,116 @@ public class View extends Application {
         noRole.put("Church", churchXY);
         noRole.put("Bank", bankXY);
         noRole.put("General Store", generalStoreXY);
+
+        // creating shot images for each room
+        FileInputStream shotStream = new FileInputStream("assets/images/shot.png");
+        Image shot = new Image(shotStream, 0, 0, true, true);
+        ImageView[] shotViews = new ImageView[22];
+        for (int i = 0; i < 22; i++) {
+            shotViews[i] = new ImageView(shot);
+            shotViews[i].setPreserveRatio(true);
+            shotViews[i].setFitHeight(47);
+        }
+        Map<String, ArrayList<ImageView>> shotsMap = new HashMap<String, ArrayList<ImageView>>();
+        shotsMap.put("Ranch", null);
+        shotsMap.put("Saloon", null);
+        shotsMap.put("Hotel", null);
+        shotsMap.put("Secret Hideout", null);
+        shotsMap.put("Train Station", null);
+        shotsMap.put("Main Street", null);
+        shotsMap.put("Jail", null);
+        shotsMap.put("Church", null);
+        shotsMap.put("Bank", null);
+        shotsMap.put("General Store", null);
+        // created a map to hold room names and arraylists of their corresponding shots
+        for (Map.Entry<String, ArrayList<ImageView>> entry : shotsMap.entrySet()) {
+            ArrayList<ImageView> shots = new ArrayList<ImageView>();
+            String name = entry.getKey();
+            if (name.equals("Train Station")) {
+                shotViews[0].setLayoutX(141);
+                shotViews[1].setLayoutX(89);
+                shotViews[2].setLayoutX(36);
+                shotViews[0].setLayoutY(11);
+                shotViews[1].setLayoutY(11);
+                shotViews[2].setLayoutY(11);
+                shots.add(shotViews[0]);
+                shots.add(shotViews[1]);
+                shots.add(shotViews[2]);
+            } else if (name.equals("Jail")) {
+                shotViews[3].setLayoutX(442);
+                shotViews[3].setLayoutY(156);
+                shots.add(shotViews[3]);
+            } else if (name.equals("Main Street")) {
+                shotViews[4].setLayoutX(804);
+                shotViews[5].setLayoutX(858);
+                shotViews[6].setLayoutX(912);
+                shotViews[4].setLayoutY(23);
+                shotViews[5].setLayoutY(23);
+                shotViews[6].setLayoutY(23);
+                shots.add(shotViews[4]);
+                shots.add(shotViews[5]);
+                shots.add(shotViews[6]);
+            } else if (name.equals("General Store")) {
+                shotViews[7].setLayoutX(313);
+                shotViews[8].setLayoutX(313);
+                shotViews[7].setLayoutY(330);
+                shotViews[8].setLayoutY(277);
+                shots.add(shotViews[7]);
+                shots.add(shotViews[8]);
+            } else if (name.equals("Saloon")) {
+                shotViews[9].setLayoutX(679);
+                shotViews[10].setLayoutX(626);
+                shotViews[9].setLayoutY(216);
+                shotViews[10].setLayoutY(216);
+                shots.add(shotViews[9]);
+                shots.add(shotViews[10]);
+            } else if (name.equals("Ranch")) {
+                shotViews[11].setLayoutX(525);
+                shotViews[12].setLayoutX(472);
+                shotViews[11].setLayoutY(473);
+                shotViews[12].setLayoutY(473);
+                shots.add(shotViews[11]);
+                shots.add(shotViews[12]);
+            } else if (name.equals("Bank")) {
+                shotViews[13].setLayoutX(840);
+                shotViews[13].setLayoutY(549);
+                shots.add(shotViews[13]);
+            } else if (name.equals("Secret Hideout")) {
+                shotViews[14].setLayoutX(354);
+                shotViews[15].setLayoutX(299);
+                shotViews[16].setLayoutX(244);
+                shotViews[14].setLayoutY(764);
+                shotViews[15].setLayoutY(764);
+                shotViews[16].setLayoutY(764);
+                shots.add(shotViews[14]);
+                shots.add(shotViews[15]);
+                shots.add(shotViews[16]);
+            } else if (name.equals("Church")) {
+                shotViews[17].setLayoutX(682);
+                shotViews[18].setLayoutX(623);
+                shotViews[17].setLayoutY(675);
+                shotViews[18].setLayoutY(675);
+                shots.add(shotViews[17]);
+                shots.add(shotViews[18]);
+            } else if (name.equals("Hotel")) {
+                shotViews[19].setLayoutX(1111);
+                shotViews[20].setLayoutX(1058);
+                shotViews[21].setLayoutX(1005);
+                shotViews[19].setLayoutY(683);
+                shotViews[20].setLayoutY(683);
+                shotViews[21].setLayoutY(683);
+                shots.add(shotViews[19]);
+                shots.add(shotViews[20]);
+                shots.add(shotViews[21]);
+            }
+            ArrayList<ImageView> copy = new ArrayList<ImageView>(shots);
+            entry.setValue(copy);
+            shots.clear();
+        }
+
+        for (int p = 0; p < 22; p++) {
+            root.getChildren().add(shotViews[p]);
+        }
 
         // User interface
         VBox ui = new VBox();
@@ -224,14 +333,11 @@ public class View extends Application {
                     // step 1: generating list of room names
                     ArrayList<Room> adjRooms = new ArrayList<Room>();
                     ArrayList<String> rNames = new ArrayList<String>();
-                    System.out.println(Deadwood.getActivePlayer().toString());
-                    System.out.println(LocationManager.getPlayerLocation(Deadwood.getActivePlayer()));
                     adjRooms = (LocationManager.getPlayerLocation(Deadwood.getActivePlayer()).getAdjacents());
 
                     for (Room r : adjRooms) {
                         rNames.add(r.getName());
                     }
-                    System.out.println(rNames.toString());
 
                     // step 2: Create gridPane and popup with radio button options and submit button
                     GridPane movePane = new GridPane();
@@ -272,7 +378,6 @@ public class View extends Application {
                             if (currentScene != null) {
                                 if (!currentScene.isFaceUp()) {
                                     currentScene.flip();
-                                    System.out.println(currentScene.getImg());
                                     String newLoc = "assets/images/cards/" + currentScene.getImg();
                                     Image faceUp = new Image(newLoc);
                                     scenes.get(newRoom.getName()).setImage(faceUp);
@@ -514,7 +619,8 @@ public class View extends Application {
             @Override
             public void handle(ActionEvent e) {
                 Player p = Deadwood.getActivePlayer();
-                String roomName = LocationManager.getPlayerLocation(p).getName();
+                Room loc = LocationManager.getPlayerLocation(p);
+                String roomName = loc.getName();
                 if (p.getCanAct()) {
                     // if the scene wraps and playerAct returns true, flip the
                     // scene back over, and decremetn activeScenes
@@ -524,6 +630,7 @@ public class View extends Application {
                     }
                     act.setId("deactivatedAct");
                     rehearse.setId("deactivatedRehearse");
+                    shotsMap.get(roomName).get(loc.getShots()).setImage(null);
                 } else {
                     System.out.println("You need a role to be able to act");
                 }
@@ -539,7 +646,6 @@ public class View extends Application {
                 currentPlayerMoney.setText("$" + Integer.toString(p.getMoney()));
                 currentPlayerRank.setText("" + p.getRank());
                 currentPlayerPracticeChips.setText(Integer.toString(p.getPracticeChips()));
-
             }
         });
 
@@ -602,6 +708,13 @@ public class View extends Application {
                     for (Map.Entry<String, ImageView> entry : scenes.entrySet()) {
                         entry.getValue().setImage(cardBack);
 
+                    }
+                    // iterate through and reset each shot counter
+                    for (Map.Entry<String, ArrayList<ImageView>> entry : shotsMap.entrySet()) {
+                        ArrayList<ImageView> temp = entry.getValue();
+                        for (int i = 0; i < temp.size(); i++) {
+                            temp.get(i).setImage(shot);
+                        }
                     }
                     Deadwood.endDay();
 
