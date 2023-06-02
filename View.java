@@ -494,17 +494,8 @@ public class View extends Application {
                                                 cur.setLayoutX(chosen.getArea()[0]);
                                                 cur.setLayoutY(chosen.getArea()[1]);
                                             }
-
                                         }
 
-                                        /*else {
-
-                                            int[] xy = noRole.get(LocationManager
-                                                    .getPlayerLocation(Deadwood.getActivePlayer()).getName());
-                                            cur.setLayoutX(xy[0]);
-                                            cur.setLayoutY(xy[1]);
-
-                                        }*/
                                         rolePopup.hide();
                                         // showing buttons
                                         move.setVisible(true);
@@ -512,7 +503,6 @@ public class View extends Application {
                                         upgrade.setVisible(true);
                                         rehearse.setVisible(true);
                                         endTurn.setVisible(true);
-
                                     }
                                 });
                             } else {
@@ -610,7 +600,8 @@ public class View extends Application {
                             int rank = p.getRank();
 
                             ImageView cur = playerDiceMap.get(p);
-                            cur.setImage(new Image(basePath + Deadwood.iconNames[playerIndex][rank-1], 0, 0, true, true));
+                            cur.setImage(
+                                    new Image(basePath + Deadwood.iconNames[playerIndex][rank - 1], 0, 0, true, true));
                         }
                     });
                 }
@@ -624,7 +615,7 @@ public class View extends Application {
                 Player p = Deadwood.getActivePlayer();
                 Room loc = LocationManager.getPlayerLocation(p);
                 String roomName = loc.getName();
-                
+
                 if (p.getCanAct()) {
                     // if the scene wraps and playerAct returns true, flip the
                     // scene back over, and decremetn activeScenes
@@ -634,20 +625,10 @@ public class View extends Application {
                     }
                     act.setId("deactivatedAct");
                     rehearse.setId("deactivatedRehearse");
-                    shotsMap.get(roomName).get(loc.getShots()).setImage(null);
-                } 
-
-                /*boolean success = PlayerActions.playerAct(p);
-                System.out.println("Act outcome was: " + success);
-                if(success){
-                    shotsMap.get(roomName).get(loc.getShots()).setImage(null);
+                    if (loc.getShots() < shotsMap.get(roomName).size()) {
+                        shotsMap.get(roomName).get(loc.getShots()).setImage(null);
+                    }
                 }
-                if(loc.getShots() == 0){
-                    scenes.get(roomName).setImage(null);
-                    Deadwood.decrementScenes();
-                }
-                act.setId("deactivatedAct");
-                rehearse.setId("deactivatedRehearse");*/
 
                 // showing buttons
                 endTurn.setVisible(true);
@@ -688,19 +669,16 @@ public class View extends Application {
                 } else {
                     act.setId("act");
                 }
-
                 if (!p.getCanMove()) {
                     move.setId("deactivatedMove");
                 } else {
                     move.setId("move");
                 }
-
                 if (!p.getCanRehearse()) {
                     rehearse.setId("deactivatedRehearse");
                 } else {
                     rehearse.setId("rehearse");
                 }
-
                 if (!p.getCanUpgrade()) {
                     upgrade.setId("deactivatedUpgrade");
                 } else {
@@ -732,19 +710,18 @@ public class View extends Application {
 
                     // move dice to trailers
                     int count = 0;
-                    for(Map.Entry<Player, ImageView> entry : playerDiceMap.entrySet()){
+                    for (Map.Entry<Player, ImageView> entry : playerDiceMap.entrySet()) {
                         ImageView cur = entry.getValue();
                         cur.setLayoutX(991 + count * 20);
                         cur.setLayoutY(280);
-                        count += 1;
+                        count++;
                     }
 
                     Deadwood.endDay();
 
-                    if(Deadwood.getDays() == 0){
+                    if (Deadwood.getDays() == 0) {
                         // scoring
                     }
-
                 }
             }
         });
@@ -921,8 +898,6 @@ public class View extends Application {
                             count += 1;
                         }
 
-
-
                         rehearse.setId("deactivatedRehearse");
                         act.setId("deactivatedAct");
                         upgrade.setId("deactivatedUpgrade");
@@ -940,9 +915,6 @@ public class View extends Application {
                         upgrade.setVisible(true);
                         rehearse.setVisible(true);
                         currentPlayerRank.setText("" + Deadwood.getActivePlayer().getRank());
-
-
-
 
                     }
                 });
@@ -1053,19 +1025,6 @@ public class View extends Application {
         c5.setId("51");
         c6.setId("61");
 
-        /*
-         * m2.setToggleGroup(locationsGroup);
-         * m3.setToggleGroup(locationsGroup);
-         * m4.setToggleGroup(locationsGroup);
-         * m5.setToggleGroup(locationsGroup);
-         * m6.setToggleGroup(locationsGroup);
-         * c2.setToggleGroup(locationsGroup);
-         * c3.setToggleGroup(locationsGroup);
-         * c4.setToggleGroup(locationsGroup);
-         * c5.setToggleGroup(locationsGroup);
-         * c6.setToggleGroup(locationsGroup);
-         */
-
         ArrayList<RadioButton> upgradeButtons = new ArrayList<RadioButton>();
         upgradeButtons.add(m2);
         upgradeButtons.add(m3);
@@ -1078,6 +1037,5 @@ public class View extends Application {
         upgradeButtons.add(c5);
         upgradeButtons.add(c6);
         View.upgrades = upgradeButtons;
-
     }
 }
