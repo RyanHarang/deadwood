@@ -362,7 +362,7 @@ public class View extends Application {
                     moveSubmit.setId("submit");
                     movePane.add(moveSubmit, 0, rNames.size() + 1);
                     movePopup.getContent().add(movePane);
-                    movePopup.show(primaryStage, 1180, 350);
+                    movePopup.show(primaryStage, 1220, 350);
 
                     // deactivate move, only one move per turn
                     move.setId("deactivatedMove");
@@ -468,7 +468,7 @@ public class View extends Application {
                                 rolePane.add(roleSubmit, 0, availableRoles.size() + 2);
                                 Popup rolePopup = new Popup();
                                 rolePopup.getContent().add(rolePane);
-                                rolePopup.show(primaryStage, 1180, 220);
+                                rolePopup.show(primaryStage, 1220, 220);
 
                                 roleSubmit.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
