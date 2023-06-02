@@ -718,7 +718,7 @@ public class View extends Application {
                     }
 
                     // remove roles, only can move
-                    for(Player pl: Deadwood.getPlayers()){
+                    for (Player pl : Deadwood.getPlayers()) {
                         pl.setRole(null);
                         pl.setCanAct(false);
                         pl.setCanRehearse(false);
@@ -736,14 +736,14 @@ public class View extends Application {
                     if (Deadwood.getDays() == 0) {
                         GridPane scores = new GridPane();
                         scores.setId("popGrid");
-                        Text first = new Text("Player Scores:");
+                        Label first = new Label("Player Scores:");
                         scores.add(first, 0, 0);
                         Player[] players = Deadwood.getPlayers();
                         for (int i = 0; i < players.length; i++) {
                             String name = players[i].getName();
                             int score = players[i].getScore();
                             String add = "Name: " + name + " | Score: " + score;
-                            scores.add(new Text(add), 0, i);
+                            scores.add(new Label(add), 0, i + 1);
                         }
                         Popup scorePopup = new Popup();
                         scorePopup.getContent().add(scores);
@@ -946,15 +946,6 @@ public class View extends Application {
                         upgrade.setVisible(true);
                         rehearse.setVisible(true);
                         currentPlayerRank.setText("" + Deadwood.getActivePlayer().getRank());
-
-                        Deadwood.decrementScenes();
-                        Deadwood.decrementScenes();
-                        Deadwood.decrementScenes();
-                        Deadwood.decrementScenes();
-                        Deadwood.decrementScenes();
-                        Deadwood.decrementScenes();
-                        Deadwood.decrementScenes();
-                        Deadwood.decrementScenes();
                     }
                 });
                 countPopup.hide();
