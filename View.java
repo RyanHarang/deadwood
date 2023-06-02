@@ -716,6 +716,21 @@ public class View extends Application {
                         cur.setLayoutY(280);
                         count++;
                     }
+
+                    // remove roles, only can move
+                    for(Player pl: Deadwood.getPlayers()){
+                        pl.setRole(null);
+                        pl.setCanAct(false);
+                        pl.setCanRehearse(false);
+                        pl.setCanUpgrade(false);
+                        pl.setCanMove(true);
+
+                        rehearse.setId("deactivatedRehearse");
+                        act.setId("deactivatedAct");
+                        upgrade.setId("deactivatedUpgrade");
+                        move.setId("move");
+                    }
+
                     Deadwood.endDay();
 
                     if (Deadwood.getDays() == 0) {
@@ -931,6 +946,7 @@ public class View extends Application {
                         upgrade.setVisible(true);
                         rehearse.setVisible(true);
                         currentPlayerRank.setText("" + Deadwood.getActivePlayer().getRank());
+
 
                     }
                 });
