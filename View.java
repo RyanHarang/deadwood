@@ -947,7 +947,14 @@ public class View extends Application {
                         rehearse.setVisible(true);
                         currentPlayerRank.setText("" + Deadwood.getActivePlayer().getRank());
 
-
+                        Deadwood.decrementScenes();
+                        Deadwood.decrementScenes();
+                        Deadwood.decrementScenes();
+                        Deadwood.decrementScenes();
+                        Deadwood.decrementScenes();
+                        Deadwood.decrementScenes();
+                        Deadwood.decrementScenes();
+                        Deadwood.decrementScenes();
                     }
                 });
                 countPopup.hide();

@@ -25,6 +25,11 @@ public class Deadwood {
         if (days == 0) {
             // compute scores, set a global variable so that view can parse through it and
             // make a popup
+        } else{
+            for (int i = 2; i < board.getRooms().length; i++) {
+                board.getRooms()[i].setScene(deck.getScene());
+                board.getRooms()[i].resetRoom();
+            }
         }
         numActiveScenes = 10;
     }

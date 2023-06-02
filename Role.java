@@ -16,6 +16,21 @@ public class Role {
         this.isMain = isMain;
     }
 
+    public Role(){}
+
+    //clone for offcard roles
+    public Role clone(){
+        Role r = new Role();
+        r.isMain = this.isMain;
+        r.name = this.name;
+        r.line = this.line;
+        r.rank = this.rank;
+        r.area = this.area;
+        r.occupied = false;
+        r.occupant = null;
+        return r;
+    }
+
     // getters
     public String getName() {
         return name;
@@ -47,7 +62,13 @@ public class Role {
 
     // setters
     public void setOccupant(Player player) {
-        occupant = player;
-        occupied = true;
+        if(player == null){
+            occupied = false;
+            occupant = null;
+        } else{
+            occupant = player;
+            occupied = true;
+        }
+
     }
 }
