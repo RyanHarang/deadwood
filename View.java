@@ -716,11 +716,28 @@ public class View extends Application {
                         cur.setLayoutY(280);
                         count++;
                     }
-
                     Deadwood.endDay();
 
                     if (Deadwood.getDays() == 0) {
-                        // scoring
+                        GridPane scores = new GridPane();
+                        scores.setId("popGrid");
+                        Text first = new Text("Player Scores:");
+                        scores.add(first, 0, 0);
+                        Player[] players = Deadwood.getPlayers();
+                        for (int i = 0; i < players.length; i++) {
+                            String name = players[i].getName();
+                            int score = players[i].getScore();
+                            String add = "Name: " + name + " | Score: " + score;
+                            scores.add(new Text(add), 0, i);
+                        }
+                        Popup scorePopup = new Popup();
+                        scorePopup.getContent().add(scores);
+                        scorePopup.show(primaryStage);
+                        endTurn.setVisible(false);
+                        move.setVisible(false);
+                        act.setVisible(false);
+                        upgrade.setVisible(false);
+                        rehearse.setVisible(false);
                     }
                 }
             }
@@ -888,14 +905,13 @@ public class View extends Application {
                         }
                         int count = 0;
                         for (Map.Entry<Player, ImageView> entry : playerDiceMap.entrySet()) {
-                            // Player p = entry.getKey();
                             ImageView cur = entry.getValue();
                             cur.setLayoutX(991 + count * 20);
                             cur.setLayoutY(280);
                             cur.setPreserveRatio(true);
                             cur.setFitHeight(46);
                             root.getChildren().add(cur);
-                            count += 1;
+                            count++;
                         }
 
                         rehearse.setId("deactivatedRehearse");
