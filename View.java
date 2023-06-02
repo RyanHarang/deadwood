@@ -15,6 +15,7 @@ import javafx.scene.text.*;
 import java.util.*;
 
 public class View extends Application {
+    // private variables for use within onClick events
     private static ArrayList<RadioButton> locations;
     private static ArrayList<Role> availableRoles;
     private static ArrayList<RadioButton> upgrades;
@@ -228,6 +229,7 @@ public class View extends Application {
             shots.clear();
         }
 
+        // showing all 22 shots
         for (int p = 0; p < 22; p++) {
             root.getChildren().add(shotViews[p]);
         }
@@ -242,11 +244,11 @@ public class View extends Application {
         playerInfo.setHgap(5);
         playerInfo.setAlignment(Pos.CENTER);
         // Info Text
-        Text player = new Text("Active player: ");
+        Text player = new Text("Player: ");
         Text playerMoney = new Text("Money: ");
         Text playerCredits = new Text("Credits: ");
         Text playerRole = new Text("Role: ");
-        Text playerPracticeChips = new Text("Practice chips:");
+        Text playerPracticeChips = new Text("Chips:");
         Text playerRank = new Text("Rank");
         Text currentPlayer = new Text("----");
         Text currentPlayerMoney = new Text("----");
@@ -289,6 +291,7 @@ public class View extends Application {
         actions.setVgap(5);
         actions.setHgap(5);
         actions.setAlignment(Pos.CENTER);
+        // actions.setAlignment(Pos.CENTER_LEFT);
 
         Button move = new Button("Move");
         Button upgrade = new Button("Upgrade");

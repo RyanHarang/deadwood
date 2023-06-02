@@ -55,7 +55,6 @@ public class PlayerActions {
         if (room.getShots() == 0) {
             CurrencyManager.wrapPay(room);
             for (Player pl : LocationManager.getOccupants(room)) {
-                System.out.println("Scene has wrapped");
                 pl.setRole(null);
                 pl.setPracticeChip();
                 pl.setCanMove(true);

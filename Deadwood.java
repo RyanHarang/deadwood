@@ -32,9 +32,7 @@ public class Deadwood {
         role.setOccupant(activePlayer);
     }
 
-    // method to be called when the end turn button is clicked, will need further
-    // funcionality but for now just started by making it continue to the next
-    // player instantly
+    // method to be called when the end turn button is clicked
     public static void endTurn() {
         int count = players.length;
         activeTurn++;
@@ -69,7 +67,6 @@ public class Deadwood {
         numActiveScenes = 10;
 
         for (int i = 0; i < numPlayers; i++) {
-            players[i] = new Player(names.get(i));
             players[i] = (new Player(names.get(i)));
             players[i].setIconIndex(i);
             if (numPlayers < 4) {
