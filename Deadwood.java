@@ -23,7 +23,8 @@ public class Deadwood {
         LocationManager.returnTrailers();
         adjustDays();
         if (days == 0) {
-            // compute scores, set a global variable so that view can parse through it and make a popup
+            // compute scores, set a global variable so that view can parse through it and
+            // make a popup
         }
         numActiveScenes = 10;
     }
@@ -92,7 +93,6 @@ public class Deadwood {
         // sets active turn to the index of the array of the player with turn
         activeTurn = 0;
         activePlayer = players[0];
-
     }
 
     public static void updatePlayerIcon(int rank) {
@@ -109,7 +109,7 @@ public class Deadwood {
         return activePlayer;
     }
 
-    public static int getDays(){
+    public static int getDays() {
         return days;
     }
 
