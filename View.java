@@ -385,20 +385,16 @@ public class View extends Application {
                                     scenes.get(newRoom.getName()).setImage(faceUp);
                                 }
                             }
+
+                            ImageView cur = playerDiceMap.get(Deadwood.getActivePlayer());
+                            int[] xy = noRole
+                                    .get(LocationManager.getPlayerLocation(Deadwood.getActivePlayer()).getName());
+                            cur.setLayoutX(xy[0]);
+                            cur.setLayoutY(xy[1]);
+
                             if (newRoom.getName().equals("office")) {
                                 upgrade.setId("upgrade");
-                                ImageView cur = playerDiceMap.get(Deadwood.getActivePlayer());
-                                int[] xy = noRole
-                                        .get(LocationManager.getPlayerLocation(Deadwood.getActivePlayer()).getName());
-                                cur.setLayoutX(xy[0]);
-                                cur.setLayoutY(xy[1]);
 
-                            } else if (newRoom.getName().equals("trailer")) {
-                                ImageView cur = playerDiceMap.get(Deadwood.getActivePlayer());
-                                int[] xy = noRole
-                                        .get(LocationManager.getPlayerLocation(Deadwood.getActivePlayer()).getName());
-                                cur.setLayoutX(xy[0]);
-                                cur.setLayoutY(xy[1]);
                             } else {
                                 upgrade.setId("deactivatedUpgrade");
                             }
@@ -501,14 +497,14 @@ public class View extends Application {
 
                                         }
 
-                                        else {
+                                        /*else {
 
                                             int[] xy = noRole.get(LocationManager
                                                     .getPlayerLocation(Deadwood.getActivePlayer()).getName());
                                             cur.setLayoutX(xy[0]);
                                             cur.setLayoutY(xy[1]);
 
-                                        }
+                                        }*/
                                         rolePopup.hide();
                                         // showing buttons
                                         move.setVisible(true);
@@ -608,6 +604,13 @@ public class View extends Application {
                             act.setVisible(true);
                             upgrade.setVisible(true);
                             rehearse.setVisible(true);
+
+                            Player p = Deadwood.getActivePlayer();
+                            int playerIndex = p.getIconIndex();
+                            int rank = p.getRank();
+
+                            ImageView cur = playerDiceMap.get(p);
+                            cur.setImage(new Image(basePath + Deadwood.iconNames[playerIndex][rank-1], 0, 0, true, true));
                         }
                     });
                 }
@@ -621,6 +624,7 @@ public class View extends Application {
                 Player p = Deadwood.getActivePlayer();
                 Room loc = LocationManager.getPlayerLocation(p);
                 String roomName = loc.getName();
+                
                 if (p.getCanAct()) {
                     // if the scene wraps and playerAct returns true, flip the
                     // scene back over, and decremetn activeScenes
@@ -631,7 +635,20 @@ public class View extends Application {
                     act.setId("deactivatedAct");
                     rehearse.setId("deactivatedRehearse");
                     shotsMap.get(roomName).get(loc.getShots()).setImage(null);
+                } 
+
+                /*boolean success = PlayerActions.playerAct(p);
+                System.out.println("Act outcome was: " + success);
+                if(success){
+                    shotsMap.get(roomName).get(loc.getShots()).setImage(null);
                 }
+                if(loc.getShots() == 0){
+                    scenes.get(roomName).setImage(null);
+                    Deadwood.decrementScenes();
+                }
+                act.setId("deactivatedAct");
+                rehearse.setId("deactivatedRehearse");*/
+
                 // showing buttons
                 endTurn.setVisible(true);
                 move.setVisible(true);
@@ -712,7 +729,21 @@ public class View extends Application {
                             temp.get(i).setImage(shot);
                         }
                     }
+
+                    // move dice to trailers
+                    int count = 0;
+                    for(Map.Entry<Player, ImageView> entry : playerDiceMap.entrySet()){
+                        ImageView cur = entry.getValue();
+                        cur.setLayoutX(991 + count * 20);
+                        cur.setLayoutY(280);
+                        count += 1;
+                    }
+
                     Deadwood.endDay();
+
+                    if(Deadwood.getDays() == 0){
+                        // scoring
+                    }
 
                 }
             }
@@ -890,6 +921,8 @@ public class View extends Application {
                             count += 1;
                         }
 
+
+
                         rehearse.setId("deactivatedRehearse");
                         act.setId("deactivatedAct");
                         upgrade.setId("deactivatedUpgrade");
@@ -907,6 +940,17 @@ public class View extends Application {
                         upgrade.setVisible(true);
                         rehearse.setVisible(true);
                         currentPlayerRank.setText("" + Deadwood.getActivePlayer().getRank());
+
+                        Deadwood.decrementScenes();
+                        Deadwood.decrementScenes();
+                        Deadwood.decrementScenes();
+                        Deadwood.decrementScenes();
+                        Deadwood.decrementScenes();
+                        Deadwood.decrementScenes();
+                        Deadwood.decrementScenes();
+                        Deadwood.decrementScenes();
+
+
                     }
                 });
                 countPopup.hide();

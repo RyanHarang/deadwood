@@ -23,6 +23,7 @@ public class Deadwood {
         LocationManager.returnTrailers();
         adjustDays();
         if (days == 0) {
+            // compute scores, set a global variable so that view can parse through it and make a popup
         }
         numActiveScenes = 10;
     }
@@ -106,6 +107,10 @@ public class Deadwood {
     // getters
     public static Player getActivePlayer() {
         return activePlayer;
+    }
+
+    public static int getDays(){
+        return days;
     }
 
     // setters
